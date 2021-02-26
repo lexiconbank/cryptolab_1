@@ -1,0 +1,87 @@
+body {
+    background-color: #fcfcfc;
+}
+
+.main {
+    .nav-title {
+        padding: 5px 10px;
+        background-color: #f4f4f4;
+        border-bottom: 1px solid #e5e5e5;
+        font-weight: 500;
+        color: #333;
+    }
+    .nav-list {
+        background-color: #fff;
+
+        .nav {
+            font-weight: 500;
+            font-size: 14px;
+
+            i {
+                color: $primary;
+                font-size: 18px;
+            }
+
+            .nav-sub {
+                border-top: 1px solid #eee;
+                overflow: auto;
+                background-color: #fafafa;
+
+                .nav-item { 
+                    
+                    font-weight: normal;
+                    padding: 5px;
+                    cursor: pointer;
+                    margin-right: 10px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    padding: 5px;
+                    margin-left: 0;
+                    padding-left: 72px;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    
+                    &:hover {
+                        background-color: #f1f2ef;
+                    }
+                    &.active {
+                        background-color: #f1f2ef;
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.documentation {
+    width: 1000px;
+    max-width: 95%;
+    margin: auto;
+    margin-top: 40px;
+    border: 1px solid #eee;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px 40px;
+    color: #333;
+    margin-bottom: 40px; 
+
+    
+    .component {
+
+        border: 1px dashed #eee;
+        background-color: #fafafa;
+        padding: 30px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    .form-container {
+        text-align: left;
+        background-color: #fff;
+        width: 500px;
+        margin: auto;
+        border-radius: 5px;
+        padding: 25px;
+        border: 1px solid #ccc;
+    }
+}
