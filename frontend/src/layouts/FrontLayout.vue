@@ -1,6 +1,6 @@
 <template>
     <q-layout view="hHh lpR fff">
-        <q-header class="text-white bg-transparent nav__main">
+        <q-header class="text-white bg-white nav__main">
             <q-toolbar>
                 <q-toolbar-title> 
                     
@@ -43,7 +43,9 @@
             </q-toolbar>
             
         </q-header>
-       
+        <q-page-container>
+           <router-view/>
+       </q-page-container>
         <q-drawer side="right" v-model="drawerLeft" bordered>
                 <q-toolbar>
                     <div class="column full-width">
@@ -53,15 +55,7 @@
         </q-drawer>
 
         <q-footer class="shadow-up-5 custom__footer bg-grey-10"> 
-            <!-- <div class="row" align="center">
-                <div class="col-3" style="margin-top:10px">
-                   
-                </div>
-                <div class="col-5" align="center">
-                      <q-input filled label="Filled" />
-                </div>
-                 
-            </div> -->
+          
              <div class="row" align="center">
                 <div class="col-12 col-md-3 costum__col"><h5 class="custom__p text-weight-bolder">GET THE LATEST CRYPTO NEWS</h5></div>
                 <div class="col-12 col-md-6 costum__col"><q-input style="background:white;border-radius:10px;" outlined label="Email address" /></div>
@@ -138,7 +132,7 @@
             </div>
 
 
-        </q-footer> 
+        </q-footer>  
     </q-layout>
 </template>
 <script>
@@ -205,6 +199,9 @@ export default
 }
 .custom__nav li a:hover::after{
     transform:scale(1,1);
+}
+.custom__nav li a:hover{
+    color:black;
 }
 .custom__nav li:nth-child(1) a::after,
 .custom__nav li:nth-child(7) a::after,

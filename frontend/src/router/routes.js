@@ -8,7 +8,9 @@ const routes =
             // { name: 'front_dashboard', path: '', component: () => import('pages/Front/Dashboard.vue') },
             // { name: 'front_login', path: 'landing', component: () => import('pages/Front/Login.vue') },
         
-        { name: 'front_landing', path: 'asd', component: () => import('pages/Front/Landing.vue') },	    
+        { name: 'front_landing', path: '/', component: () => import('pages/Front/Landing.vue') },	    
+        { name: 'front_login', path: '/login', component: () => import('src/pages/Front/Login.vue') },	    
+        { name: 'front_registration', path: '/registration', component: () => import('src/pages/Front/Registration.vue') },	
         { name: 'wallet_balance', path: 'wallet/balance', component: () => import('components/UQWalletBalance.vue') },
         { name: 'transaction_history', path: 'transanction_history', component: () => import('components/UQTransactionHistory.vue') },
         ]
