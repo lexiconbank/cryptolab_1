@@ -16,5 +16,3 @@ backend/Dockerfile.dev
 nginx/
 nginx/*
 docker-compose.yml
-public/
-public/*
