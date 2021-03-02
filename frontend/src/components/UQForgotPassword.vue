@@ -6,7 +6,7 @@
         <div class="custom_div col-12"><q-btn outline rounded color="primary" label="Reset Password" /></div>
     </div>
 </template>
-
+<!-- -->
 <style lang="scss">
     .forgot_password{
         display: flex;
