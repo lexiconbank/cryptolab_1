@@ -5,7 +5,7 @@ const routes =
         component: () => import('layouts/FrontLayout.vue'),
         children:
         [
-            // { name: 'front_dashboard', path: '', component: () => import('pages/Front/Dashboard.vue') },
+            { name: 'front_landing', path: 'asd', component: () => import('pages/Front/Landing.vue') },
             // { name: 'front_login', path: 'landing', component: () => import('pages/Front/Login.vue') },
         ]
     },
