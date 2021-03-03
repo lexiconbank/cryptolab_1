@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="margin: 0; padding: 0; background:  #f5f5ef;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td style="padding: 10px 0 30px 0;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style=" border-collapse: collapse;">
+                    <tr>
+                        <td align="right" bgcolor="white" style="padding: 60px 0 50px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif; background-image: url(https://i.imgur.com/RirwBCL.jpg); background-position: center; background-repeat: no-repeat; background-size: cover;">
+                            <img src="https://i.imgur.com/qY4kHR1.png" alt="Lexicon Bank" width="230" height="68" style="display: block; margin-right: 65px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="white" style="padding: 30px 42px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="padding: 0 0 15px 0; color: #404040; font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 20px;text-align: left;">
+                                        Dear Sir/Madam,
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 0 35px 0; color: #404040; font-family: 'Open Sans', sans-serif; line-height: 20px; font-size: 15px; text-align: left;">
+                                        You have requested access to our website. We have generated a one-time password for you.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #404040; font-family: 'Open Sans', sans-serif; font-size: 20px; text-align: center;">
+                                        <b>Enter this One-Time Password to be recognize</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td valign="top">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tr>
+                                                            <td style="padding: 0px 0 0px 0;display: block; margin-top: 10px; margin-left:20px; text-align: center; font-size: 20px">
+                                                                <h1 style="padding: 5px 0 5px 0; color: #673878; font-family: 'Open Sans', sans-serif; letter-spacing: 7px;" id="demo"> 
+                                                                    <%= otp %>
+                                                                </h1>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding: 25px 0 0 0; color: #404040; font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 20px;text-align: left;">
+                                                                DO NOT SHARE THE CODE WITH ANYONE. If you did not make this request,
+                                                                contact Lexicon Bank support and change your password immediately.
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding: 25px 0 0 0; color: #404040; font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 20px;text-align: left;">
+                                                                <b>TAKE NOTE:</b> The code indicated above will only be valid for 5 minutes. If you are not able to confirm the code to your account within the alloted time,
+                                                                your account will not be opened with the system, you will need to request a new verification code from the website to continue your action.
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding: 25px 0 0 0; color: #153643; font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 20px;text-align: left; ">
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding: 25px 0 0 0; color: #153643; font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 20px;text-align: left; ">
+                                                                Regards,<br><br>
+                                                                Baristocrat Team
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="font-size: 0; line-height: 0;" width="20">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <p style="text-align: center; font-family: 'Open Sans', sans-serif; font-size: 12px">©2021 BARISTORCRAT / All Rights Reserved</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+<script>
+  document.getElementById("demo").innerHTML = Math.floor((Math.random() * 100000));
+</script>

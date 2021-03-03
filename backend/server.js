@@ -9,12 +9,13 @@ app.use(express.json());
 
 app.post('/api/front/login', AccountController.login);
 app.post('/api/front/registration', AccountController.registration);
+app.post('/api/front/forgotpassword', AccountController.forgotPassword);
 
 app.listen({port: 4000}, (err) => {
     if(err) {
         console.log(err);
         process.exit(1);
     }else {
-        console.log('Camelot server is running on port 4000...');
+        console.log('Cryptolab server is running on port 4000...');
     }
 });
