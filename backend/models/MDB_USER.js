@@ -32,6 +32,12 @@ class MDB_USER extends MODEL
         const res = await this.collection.findOne({ email: info.email, password: info.password });
         return res ? res : null;
     }
+
+    async findByEmail(email)
+    {
+        let res = await this.collection.findOne({email});
+        return res;
+    }
 }
 
 module.exports = MDB_USER;
