@@ -18,6 +18,11 @@ const schema    = new Schema({
         type:       String,
         required:   true
     },
+    country: 
+    {
+        type:       String,
+        required:   true
+    }
 });
 
 class MDB_USER extends MODEL

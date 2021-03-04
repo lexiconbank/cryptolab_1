@@ -1,9 +1,9 @@
 <template>
     <div class="row forgot_password">
-        <div class="custom_div col-12 text-h4">Reset Password</div>
+        <div class="custom_div col-12 text-h5 text-weight-bolder active" align="center">Reset Password</div>
         <div class="custom_div col-12"><q-input outlined v-model="form_data.password" label="Password" /></div>
         <div class="custom_div col-12"><q-input outlined v-model="form_data.password_1" label="Confirm Password" /></div>
-        <div class="custom_div col-12"><q-btn outline rounded color="primary" label="Reset Password" @click="resetpassword()" /></div>
+        <div class="custom_div col-12"><q-btn  class="full-width q-mt-xl" size="20px" color="primary" label="RESET PASSWORD" @click="resetpassword()" /></div>
     </div>
 </template>
 
@@ -40,4 +40,17 @@
     .forgot_password .custom_div{
         padding: 10px;
     }
+    .active{
+    color: #1976D2;
+    margin-bottom:50px;
+    margin-top:30px;
+}
+.active::after{
+    content:"";
+    display:block;
+    width:50%;
+    height:2px;
+    background:#1976D2;;
+
+}
 </style>

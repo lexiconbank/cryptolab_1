@@ -6,7 +6,7 @@
 </template>
 <script>
 import UQHeroMain from '../../components/Hero/UQHeroMain.vue'
-export default {
+export default {    
     components:{
         UQHeroMain
     }
