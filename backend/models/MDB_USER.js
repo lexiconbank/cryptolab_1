@@ -1,6 +1,7 @@
 const MONGOOSE  = require('../config/mongo');
 const MODEL     = require('./MODEL');
 const Schema    = MONGOOSE.Schema;
+const findOrCreate          = require('mongoose-findorcreate');
 
 const schema    = new Schema({
     full_name : 
@@ -20,6 +21,10 @@ const schema    = new Schema({
     },
 });
 
+schema.plugin(findOrCreate);
+
+let User = new MONGOOSE.model("users", schema);
+
 class MDB_USER extends MODEL
 {
     constructor ()
@@ -38,6 +43,14 @@ class MDB_USER extends MODEL
         let res = await this.collection.findOne({email});
         return res;
     }
+
+    async resetpass(email, new_password)
+    {
+        console.log('here', email);
+        const res = await this.collection.findOneAndUpdate({email}, { password: new_password }, {new: true});    
+        return res ? res : null;
+    }
 }
 
 module.exports = MDB_USER;
+module.exports.User = User;

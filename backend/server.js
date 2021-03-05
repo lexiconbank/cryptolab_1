@@ -10,6 +10,8 @@ app.use(express.json());
 app.post('/api/front/login', AccountController.login);
 app.post('/api/front/registration', AccountController.registration);
 app.post('/api/front/forgotpassword', AccountController.forgotPassword);
+app.post('/api/front/forgotpassword/:key', AccountController.resetUserPassword);
+app.get('/api/front/forgotpassword/:key', AccountController.validateLinkKey);
 
 app.listen({port: 4000}, (err) => {
     if(err) {
