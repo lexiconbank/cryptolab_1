@@ -1,5 +1,5 @@
 <template>
-    <q-layout view="hHh lpR fff">
+    <q-layout class="custom__layout" view="hHh lpR fff">
         <q-header class="text-white bg-white nav__main">
             <q-toolbar>
                 <q-toolbar-title> 
@@ -43,16 +43,10 @@
             </q-toolbar>
             
         </q-header>
-        <q-page-container>
+        <q-page-container >
            <router-view/>
        </q-page-container>
-        <q-drawer side="right" v-model="drawerLeft" bordered>
-                <q-toolbar>
-                    <div class="column full-width">
-                    asdasdsa
-                    </div>
-                </q-toolbar>
-        </q-drawer>
+   
 
         <q-footer class="shadow-up-5 custom__footer bg-grey-10"> 
           
@@ -154,7 +148,9 @@ export default
     padding:0;
     box-sizing: border-box;
 }
-
+.custom__layout{
+    position:relative;
+}
 
 /* CUSTOMIZATION FOR HEADER ANDN AV BAR */
 
@@ -227,7 +223,8 @@ all:unset;
 .custom__footer{
     display:flex;
     flex-direction:column;
-   
+   position: absolute;
+  bottom: 0;
     padding:30px 120px;
 }
 .custom__btn{
