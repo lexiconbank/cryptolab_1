@@ -86,4 +86,17 @@
     .forgot_password .custom_div{
         padding: 10px;
     }
+    .active{
+    color: #1976D2;
+    margin-bottom:50px;
+    margin-top:30px;
+}
+.active::after{
+    content:"";
+    display:block;
+    width:50%;
+    height:2px;
+    background:#1976D2;;
+
+}
 </style>

@@ -19,6 +19,11 @@ const schema    = new Schema({
         type:       String,
         required:   true
     },
+    country: 
+    {
+        type:       String,
+        required:   true
+    }
 });
 
 schema.plugin(findOrCreate);

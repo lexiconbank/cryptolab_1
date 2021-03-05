@@ -65,6 +65,27 @@ module.exports = class AccountClass
         return res;
     }
 
+    async validate()
+    { 
+        let res = {};
+        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '')
+        {
+            res.status      = "error";
+            res.message     = "You need to fill up all fields in order to proceed.";
+        }
+        else if(this.user_information.confirm_password !== this.user_information.password)
+        {
+            res.status      = "error";
+            res.message     = "The password you entered didn't match.";
+        }
+        else
+        {
+            res.status = "success";
+        }
+
+        return res;
+    }
+
     async create()
     {
         let res = {};
@@ -76,11 +97,12 @@ module.exports = class AccountClass
             { 
                 full_name: this.user_information.full_name,
                 email: this.user_information.email,
-                password: this.user_information.password
+                password: this.user_information.password,
+                country:this.user_information.country
             }
 
             await this.mdb_user.add(add_form);
-        }
+        }   
         catch (error)
         {
             res.status = "error";
@@ -89,6 +111,8 @@ module.exports = class AccountClass
 
         return res;
     }
+
+
 
 
     //FORGOT PASSWORD

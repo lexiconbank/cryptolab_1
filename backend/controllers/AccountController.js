@@ -4,6 +4,7 @@ const MDB_OTP        = require('../models/MDB_OTP');
 const bcrypt         = require('bcryptjs');
 const saltRounds     = 10;
 
+const { render } = require('ejs');
 module.exports =
 {
     async login(req, res)
@@ -22,15 +23,18 @@ module.exports =
             res.status(400).send({ message: authenticate.message })
         }
     },
-
     async registration(req, res)
     {
+        // remove {req, res} parameter if MDB.register doesn't need extra params anymore {req, res}
+
+
         let user_information =
         {
             full_name: req.body.full_name,
             email: req.body.email,
             password: req.body.password,
-            confirm_password: req.body.confirm_password
+            confirm_password: req.body.confirm_password,
+            country: req.body.country
         }
 
         let account_class = new AccountClass(user_information);

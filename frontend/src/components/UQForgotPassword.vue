@@ -1,9 +1,10 @@
 <template>
     <div class="row forgot_password">
         <div class="custom_div col-12 text-h4">Forgot your password?</div>
-        <div class="custom_div col-12 caption">Fill in your email and we'll send you a link to reset your password</div>
-        <div class="custom_div col-12"><q-input outlined v-model="form_data.email" label="Email Address" /></div>
-        <div class="custom_div col-12"><q-btn outline rounded color="primary" label="Reset Password" @click="sendForgotPasswordLink()" /></div>
+        <div class="custom_div col-12 caption"><p>Fill in your email and we'll send you a link to reset your password</p></div>
+        <div class="custom_div col-12" style="margin-bottom:50px"><q-input outlined v-model="form_data.email" label="Email Address" /></div>
+        <div class="custom_div col-12"><q-btn class="full-width" size="20px" color="primary" label="Reset Password" @click="sendForgotPasswordLink()" /></div>
+        <div class="custom_div col-12"><q-btn outline class="full-width" color="primary" size="20px" label="LOGIN" @click="$router.push({ name: 'front_resetpassword' })"  /></div>
     </div>
 </template>
 <!-- -->
