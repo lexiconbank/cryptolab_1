@@ -15,8 +15,9 @@ const routes =
         { name: 'transaction_history', path: 'transanction_history', component: () => import('components/UQTransactionHistory.vue') },
         { name: 'reset_password', path: 'forgot_password/:key', component: () => import('components/UQResetPassword.vue') },
         { name: 'registration_otp', path: 'registration/otp', component: () => import('src/pages/Front/RegistrationOtp.vue') },
-        { name: 'front_resetpassword', path: 'login/reset_password', component: () => import('src/pages/Front/ResetPassword.vue') },
+        { name: 'front_resetpassword', path: 'login/reset_password/:key', component: () => import('src/pages/Front/ResetPassword.vue') },
         { name: 'front_forgotpassword', path: 'login/forgot_password', component: () => import('src/pages/Front/ForgotPassword.vue') },
+        { name: 'front_success_password', path: 'success/reset_password', component: () => import('src/pages/Front/SuccessResetPassword.vue') },
         ]
     },
     

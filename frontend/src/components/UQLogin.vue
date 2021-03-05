@@ -37,7 +37,7 @@
                <div class=text-right>
                    <p class="text-weight-medium custom__forgot" @click="$router.push({ name: 'front_forgotpassword' })" >Forgot Password?</p>
                </div>
-		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="18px" class="full-width">Login</q-btn></div>
+		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="15px" class="full-width">Login</q-btn></div>
 
 	   		</q-form>
 	    </div>

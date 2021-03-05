@@ -64,12 +64,12 @@
             },
             async resetpassword()
             {
+                this.$q.loading.show();
                 let key = this.$route.params.key;
                 let link = `${postResetPassword}/${key}`;
                 let forgot_link_obj = await this.$_post(link, this.form_data);
-                if (forgot_link_obj) {
-                    this.$router.push({name: 'front_reset_pass_success'});
-                }
+                this.$q.loading.hide();
+                this.$router.push({name: 'front_success_password'});
             }
     }
     }

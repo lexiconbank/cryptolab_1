@@ -51,8 +51,8 @@ class MDB_USER extends MODEL
 
     async resetpass(email, new_password)
     {
-        console.log('here', email);
-        const res = await this.collection.findOneAndUpdate({email}, { password: new_password }, {new: true});    
+        const res = await this.collection.findOneAndUpdate({email}, { password: new_password }, {new: true});   
+        console.log(res); 
         return res ? res : null;
     }
 }
