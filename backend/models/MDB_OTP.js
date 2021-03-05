@@ -37,12 +37,15 @@ class MDB_OTP extends MODEL
 
     async createUserOtp(options = {})
     {
+        console.log('here', { options });
+
         let { otp_for } = options;
 
         let otp = {};
 
         if (otp_for == 'forgot_password') {
             otp   = await super.add({email: options.email, otp: options.otp, for: options.otp_for});
+            console.log('hehe');
         } else {
             otp   = await super.add({email: options.email, username: options.username, otp: options.otp, for: options.otp_for});
         }
@@ -52,6 +55,7 @@ class MDB_OTP extends MODEL
 
     async removeOtpByUserOrEmail(usernameOrEmail)
     {
+        console.log('there');
         return this.collection.findOneAndRemove({$or:[{
             username: usernameOrEmail,
         },{
@@ -102,6 +106,7 @@ class MDB_OTP extends MODEL
 
         return res;
     }
+
 }
 
 module.exports = MDB_OTP;

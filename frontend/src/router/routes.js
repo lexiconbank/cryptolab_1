@@ -14,6 +14,9 @@ const routes =
         { name: 'wallet_balance', path: 'wallet/balance', component: () => import('components/UQWalletBalance.vue') },
         { name: 'transaction_history', path: 'transanction_history', component: () => import('components/UQTransactionHistory.vue') },
         { name: 'reset_password', path: 'forgot_password/:key', component: () => import('components/UQResetPassword.vue') },
+        { name: 'registration_otp', path: 'registration/otp', component: () => import('src/pages/Front/RegistrationOtp.vue') },
+        { name: 'front_resetpassword', path: 'login/reset_password', component: () => import('src/pages/Front/ResetPassword.vue') },
+        { name: 'front_forgotpassword', path: 'login/forgot_password', component: () => import('src/pages/Front/ForgotPassword.vue') },
         ]
     },
     
@@ -49,6 +52,7 @@ const routes =
             { name: 'documentation_convert', path: 'convert', component: () => import('pages/Documentation/Convert.vue') },
             { name: 'documentation_forgot_passsword', path: 'forgot_password', component: () => import('pages/Documentation/ForgotPassword.vue') },
             { name: 'documentation_reset_passsword', path: 'reset_password/:key', component: () => import('pages/Documentation/ResetPassword.vue') },
+            { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
         ]
     },
     // Always leave this as last one,

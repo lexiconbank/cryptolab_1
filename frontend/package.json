@@ -16,7 +16,8 @@
     "country-codes": "0.0.3",
     "country-codes-list": "^1.6.8",
     "country-list": "^2.2.0",
-    "quasar": "^1.13.2"
+    "quasar": "^1.13.2",
+    "sweetalert2": "^10.15.5"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
