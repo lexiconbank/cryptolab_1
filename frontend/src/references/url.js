@@ -2,6 +2,8 @@
 exports.postLoginUser 	        = 'front/login'
 exports.postRegistrationUser    = 'front/registration'
 exports.postForgotPassword      = 'front/forgotpassword'
+exports.postResetPassword       = 'front/forgotpassword'
+exports.getValidateLinkKey      = 'front/forgotpassword'
 
 // admin
 exports.postListUsers           = 'admin/users/list'
