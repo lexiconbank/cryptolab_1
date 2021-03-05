@@ -54,7 +54,6 @@ module.exports =
 
     async forgotPassword (req, res)
     {
-        console.log('click here');
         const email = req.body.email;
 
         let account_class = new AccountClass();
@@ -104,9 +103,6 @@ module.exports =
             let email = reset_password.email;
             let password = reset_data.password;
             let id = reset_password.user_id;
-            console.log('success!!');
-            
-            console.log(reset_password, password)
 
             // const salt = await bcrypt.genSalt(10);
             //reset_data.password = await bcrypt.genSaltSync(reset_data.password, salt);
