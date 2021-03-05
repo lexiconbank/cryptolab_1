@@ -2,6 +2,7 @@
 exports.postLoginUser 	        = 'front/login'
 exports.postRegistrationUser    = 'front/registration'
 exports.postForgotPassword      = 'front/forgotpassword'
+exports.postdashboardmain     = 'front/dashboardmain'
 
 // admin
 exports.postListUsers           = 'admin/users/list'

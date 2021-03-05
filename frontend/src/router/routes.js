@@ -16,6 +16,25 @@ const routes =
         { name: 'reset_password', path: 'forgot_password/:key', component: () => import('components/UQResetPassword.vue') },
         ]
     },
+    
+    {
+        path: '/dashboard',
+        component: () => import('layouts/UserLayout.vue'),
+        children:
+        [
+          //   { name: 'dashboard_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },	  
+        //   { name: 'front_registration', path: '/registration', component: () => import('src/pages/Front/Registration.vue') },	
+        ]
+    },
+    {
+        path: '/dashboardMain',
+        component: () => import('layouts/DashboardLayout.vue'),
+        children:
+        [
+           //  { name: 'dashboard_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },	  
+           { name: 'front_dashboardmain', path: 'dashboardmain', component: () => import('pages/Front/DashboardMain.vue') }, 
+        ]
+    },
     {
         path: '/documentation',
         component: () => import('layouts/DocumentationLayout.vue'),
