@@ -4,6 +4,7 @@
         <div class="custom_div col-12"><q-input outlined v-model="form_data.password" label="Password" /></div>
         <div class="custom_div col-12"><q-input outlined v-model="form_data.password_1" label="Confirm Password" /></div>
         <div class="custom_div col-12"><q-btn  class="full-width q-mt-xl" size="20px" color="primary" label="RESET PASSWORD" @click="resetpassword()" /></div>
+
     </div>
 </template>
 
