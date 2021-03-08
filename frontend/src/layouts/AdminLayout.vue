@@ -5,15 +5,16 @@
                 <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
 
                 <q-toolbar-title>
-                    Uniq Builder Documentation
+                    <span class="gt-xs">Cryptolab Admin-Side</span> 
                 </q-toolbar-title>
-
-                <div><b>v1.0</b></div>
+                <div > <span class="text-uppercase text-bold"> {{admin_name}} </span> | <span> {{role}}</span></div>
+                <q-btn  class="q-ma-xs" unelevated @click="signOut" color="primary" icon="logout" />
             </q-toolbar>
         </q-header>
 
            <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
-			<div class="nav-title">Navigation</div>
+			
+            <div class="q-pa-xl bg-white"> <q-img src="icons/main_logo.png" style="width:100%;margin-left:-20px;" /> </div>
 			<q-list class="nav-list" v-for="(nav,key) of navigation" :key="key" >
 				<template >
 					<q-item class="nav" v-if="!nav.hasOwnProperty('sub')" @click="$router.push({ name: nav.route })" clickable v-ripple :active="$route.name == nav.route">
@@ -29,6 +30,7 @@
 					</q-expansion-item>
 				</template>
 			</q-list>
+            
         </q-drawer>
 
         <q-page-container>
@@ -39,7 +41,7 @@
 <script>
 import EssentialLink    from 'components/EssentialLink.vue'
 import Layout           from './DocumentationLayout.scss'
-import navigation       from '../references/nav'
+import navigation       from '../references/navAdmin'
 
 export default
 {
@@ -52,6 +54,8 @@ export default
 		package_data: { version: '0.0.0' },
 		leftDrawerOpen: false,
 		navigation: [],
+        admin_name: "Michael Merin",
+        role: "Administrator",
 	}),
     mounted()
     {
@@ -59,6 +63,9 @@ export default
     },
     methods:
     {
+        signOut(){
+            alert("sign-out backend codes here!");
+        }
     },
 }
 </script>
