@@ -30,6 +30,9 @@ const routes =
             { name: 'documentation_convert', path: 'convert', component: () => import('pages/Documentation/Convert.vue') },
             { name: 'documentation_forgot_passsword', path: 'forgot_password', component: () => import('pages/Documentation/ForgotPassword.vue') },
             { name: 'documentation_reset_passsword', path: 'reset_password/:key', component: () => import('pages/Documentation/ResetPassword.vue') },
+            { name: 'documentation_kyc', path: 'kyc', component: () => import('pages/Documentation/Kyc.vue') },
+            { name: 'documentation_multer', path: 'multer', component: () => import('pages/Documentation/Multer.vue') },
+
         ]
     },
     // Always leave this as last one,

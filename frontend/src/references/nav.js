@@ -23,7 +23,8 @@ module.exports =
         icon: 'fa fa-home',
         sub:
         [
-
+            { label: 'Kyc', route: 'documentation_kyc' },
+            { label: 'Multer', route: 'documentation_multer' },
         ]
     },
     {

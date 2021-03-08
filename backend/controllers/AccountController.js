@@ -65,5 +65,37 @@ module.exports =
         }
     },
 
+    async kyc(req, res)
+    {
+
+        let kyc_info =
+        {
+            id: req.body.id,
+            first_name: req.body.first_name,
+            middle_name: req.body.middle_name,
+            last_name: req.body.last_name,
+            birth_date: req.body.birth_date,
+            country: req.body.country,
+            nationality: req.body.nationality,
+            mobile_number: req.body.mobile_number,
+            address_line: req.body.address_line,
+            street: req.body.street,
+            city: req.body.city,
+            zip_code: req.body.zip_code,
+            id_type: req.body.id_type,
+            id_number: req.body.id_number,
+            id_expiry: req.body.id_expiry,
+            security_question: req.body.security_question,
+            security_answer: req.body.security_answer,
+            code: req.body.code,
+            frontId: req.body.frontId,
+            selfieId: req.body.selfieId
+        }
+        let account_class = new AccountClass(kyc_info);
+        let resp = await account_class.postKyc();
+        res.send(resp);
+    },
+
+
    
 }

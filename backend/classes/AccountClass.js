@@ -208,6 +208,46 @@ module.exports = class AccountClass
         return Math.random() * (max - min) + min;
     }
 
+    async postKyc(){
+        let res = {};
+        try
+        {
+            res.status = "success";
+
+            let kyc_info =
+            { 
+                id: this.user_information.id,
+                first_name: this.user_information.first_name,
+                middle_name: this.user_information.middle_name,
+                last_name: this.user_information.last_name,
+                birth_date: this.user_information.birth_date,
+                country: this.user_information.country,
+                nationality: this.user_information.nationality,
+                mobile_number: this.user_information.mobile_number,
+                address_line: this.user_information.address_line,
+                street: this.user_information.street,
+                city: this.user_information.city,
+                zip_code: this.user_information.zip_code,
+                id_type: this.user_information.id_type,
+                id_number: this.user_information.id_number,
+                id_expiry: this.user_information.id_expiry,
+                security_question: this.user_information.security_question,
+                security_answer: this.user_information.security_answer,
+                code: this.user_information.code,
+                frontId: this.user_information.frontId,
+                selfieId: this.user_information.selfieId
+            }
+           await this.mdb_user.postKyc(kyc_info);
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
 }
 
 
