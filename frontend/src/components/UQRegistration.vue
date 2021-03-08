@@ -31,7 +31,7 @@
                                         v-bind="scope.itemProps"
                                         v-on="scope.itemEvents"
                                         >
-                                        <q-item-section side>
+                                        <q-item-section side>;
                                             <img :src="'https://www.countryflags.io/' + scope.opt.countryCode + '/flat/32.png'" />
                                         </q-item-section>
                                         <q-item-section>

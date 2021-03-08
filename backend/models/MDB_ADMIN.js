@@ -18,21 +18,15 @@ const schema    = new Schema({
         type:       String,
         required:   true
     },
-    country: 
-    {
-        type:       String,
-        required:   true
-    }
+ 
 });
 
 
-let User = new MONGOOSE.model("users", schema);
-
-class MDB_USER extends MODEL
+class MDB_ADMIN extends MODEL
 {
     constructor ()
     {
-        super('users', schema);
+        super('admin_users', schema);
     }
     
     async findByUsernameAndPassword(info)
@@ -41,19 +35,14 @@ class MDB_USER extends MODEL
         return res ? res : null;
     }
 
+
     async findByEmail(email)
     {
         let res = await this.collection.findOne({email});
         return res;
     }
 
-    async resetpass(email, new_password)
-    {
-        const res = await this.collection.findOneAndUpdate({email}, { password: new_password }, {new: true});   
-        console.log(res); 
-        return res ? res : null;
-    }
+
 }
 
-module.exports = MDB_USER;
-module.exports.User = User;
+module.exports = MDB_ADMIN;

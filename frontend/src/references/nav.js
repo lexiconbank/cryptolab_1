@@ -42,7 +42,7 @@ module.exports =
         icon: 'fa fa-home',
         sub:
         [
-            
+            { label: 'Login', route: 'admin_login' },
         ]
     },
     {
@@ -50,5 +50,5 @@ module.exports =
         label: 'Coding Standards',
         icon: 'fa fa-question',
         route: 'documentation_guide',
-    },
+    }
 ]

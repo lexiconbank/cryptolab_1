@@ -1,23 +1,23 @@
 <template>
     <div class="row" style="height:100vh">
-        <div class=" custom__left col-12 col-md-3">
+        <div class="custom__left col-12 col-md-3">
             <div class="custom__row row" align="center">
-                <div class="col-5"><h5 class="active text-weight-bold">LOGIN</h5></div>
-                <div class="col-2"><span></span></div>
-                <div class="col-5"><h5 class="notActive" @click="$router.push({ name: 'front_registration' })">SIGN UP</h5></div>
+              <div class="col-12" align="center">
+                      <q-img src="icons/main_logo.png" @click="$router.push({ name: 'front_login' })" style="cursor:pointer" width="250px" id="logo"/>
+                </div>
             </div>
-            <u-q-login class="q-px-xl"></u-q-login>
+            <u-q-success-reset-password class="q-px-xl"></u-q-success-reset-password>
         </div>       
         <div class="custom__right col-9">
         </div>
     </div>
 </template>
 <script>
+import UQSuccessResetPassword from '../../components/UQSuccessResetPassword'
 
-import UQLogin from '../../components/UQLogin'
 export default {
     components:{
-        UQLogin,
+        UQSuccessResetPassword,
     }
 }
 </script>
@@ -57,7 +57,6 @@ span{
     background-image:url("../../../public/icons/65978.png");
     background-position: center;
     background-size: cover;
-        background-repeat: no-repeat;
 }
 .notActive::after{
     content:"";

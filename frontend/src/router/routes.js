@@ -15,8 +15,35 @@ const routes =
         { name: 'transaction_history', path: 'transanction_history', component: () => import('components/UQTransactionHistory.vue') },
         { name: 'reset_password', path: 'forgot_password/:key', component: () => import('components/UQResetPassword.vue') },
         { name: 'registration_otp', path: 'registration/otp', component: () => import('src/pages/Front/RegistrationOtp.vue') },
-        { name: 'front_resetpassword', path: 'login/reset_password', component: () => import('src/pages/Front/ResetPassword.vue') },
+        { name: 'front_resetpassword', path: 'login/reset_password/:key', component: () => import('src/pages/Front/ResetPassword.vue') },
         { name: 'front_forgotpassword', path: 'login/forgot_password', component: () => import('src/pages/Front/ForgotPassword.vue') },
+        { name: 'front_success_password', path: 'success/reset_password', component: () => import('src/pages/Front/SuccessResetPassword.vue') },
+        ]
+    },
+    
+    {
+        path: '/dashboard',
+        component: () => import('layouts/UserLayout.vue'),
+        children:
+        [
+          //   { name: 'dashboard_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },	  
+        //   { name: 'front_registration', path: '/registration', component: () => import('src/pages/Front/Registration.vue') },	
+        ]
+    },
+    {
+        path: '/admin',
+        name: 'admin',
+        component: () => import('src/pages/Admin/AdminLogin.vue'),
+
+    },
+    // admin_login
+    {
+        path: '/dashboardMain',
+        component: () => import('layouts/DashboardLayout.vue'),
+        children:
+        [
+           //  { name: 'dashboard_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },	  
+           { name: 'front_dashboardmain', path: 'dashboardmain', component: () => import('pages/Front/DashboardMain.vue') }, 
         ]
     },
     {
@@ -34,6 +61,7 @@ const routes =
             { name: 'documentation_forgot_passsword', path: 'forgot_password', component: () => import('pages/Documentation/ForgotPassword.vue') },
             { name: 'documentation_reset_passsword', path: 'reset_password/:key', component: () => import('pages/Documentation/ResetPassword.vue') },
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
+            { name: 'admin_login', path: 'admin/login', component: () => import('pages/Documentation/AdminLogin.vue') },
         ]
     },
     // Always leave this as last one,

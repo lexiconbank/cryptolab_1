@@ -46,7 +46,7 @@ span{
 }
 .custom__left{
 
-    margin-top:100px;
+    margin-top:50px;
 }
 .custom__right{
     padding:10px;
@@ -56,6 +56,7 @@ span{
     align-items: center;
     background-image:url("../../../public/icons/65978.png");
     background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
 }
 .notActive::after{

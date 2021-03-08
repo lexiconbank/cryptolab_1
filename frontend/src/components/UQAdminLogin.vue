@@ -34,10 +34,8 @@
                         </q-input>
                     </div>
 		       </div>
-               <div class=text-right>
-                   <p class="text-weight-medium custom__forgot" @click="$router.push({ name: 'front_forgotpassword' })" >Forgot Password?</p>
-               </div>
-		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="15px" class="full-width">Login</q-btn></div>
+
+		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="18px" class="full-width">Login</q-btn></div>
 
 	   		</q-form>
 	    </div>
@@ -45,7 +43,7 @@
 </template>
 
 <script>
-import { postLoginUser } from '../references/url';
+import { postAdminLogin, postLoginUser } from '../references/url';
 import Swal from "sweetalert2";
 
 export default
@@ -92,12 +90,12 @@ export default
         {
             this.$q.loading.show();
 
-            let login = await this.$_post(postLoginUser, this.form_data); //request
+            let login = await this.$_post(postAdminLogin, this.form_data); //request
 
             if(login)
             {
                 this.$q.dialog({ title: `Success Message`, message: "Login Successful" });
-                this.$router.push({path: 'front_registration'});
+               
             } else{
                 const Toast = Swal.mixin({
                 margin: 20,
@@ -131,4 +129,5 @@ export default
 .custom__forgot:hover{
     color:#1976D2;
 }
+
 </style>

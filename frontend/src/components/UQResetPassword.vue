@@ -1,30 +1,83 @@
 <template>
     <div class="row forgot_password">
+<<<<<<< HEAD
         <div class="custom_div col-12 text-h5 text-weight-bolder active" align="center">Reset Password</div>
         <div class="custom_div col-12"><q-input outlined v-model="form_data.password" label="Password" /></div>
         <div class="custom_div col-12"><q-input outlined v-model="form_data.password_1" label="Confirm Password" /></div>
         <div class="custom_div col-12"><q-btn  class="full-width q-mt-xl" size="20px" color="primary" label="RESET PASSWORD" @click="resetpassword()" /></div>
 
+=======
+        <div class="custom_div col-12 text-h4">Reset Password</div>
+        <div class="custom_div col-12">
+            <q-input outlined v-model="form_data.password" label="Password" :type="isPwd ? 'password' : 'text'" :rules="[val => !!val]">
+            <template v-slot:append>
+                <q-icon
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                />
+            </template>
+      </q-input>
+        </div>
+        <div class="custom_div col-12">
+            <q-input outlined v-model="form_data.confirm_password" :type="c_isPwd ? 'password' : 'text'" label="Confirm Password" :rules="[val => !!val]">
+                <template v-slot:append>
+                    <q-icon
+                        :name="c_isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="c_isPwd = !c_isPwd"
+                    />
+                </template>
+            </q-input>
+        </div>
+        <div class="custom_div col-12"><q-btn outline rounded color="primary" label="Reset Password" @click="resetpassword()" /></div>
+>>>>>>> 9e6c98678895716bcd29af97547614452e9c7388
     </div>
 </template>
 
 <script>
-    import { postResetPassword } from '../references/url';
+    import { getValidateLinkKey, postResetPassword } from '../references/url';
         
     export default
     {
         data: () =>
         ({
+            isPwd   : true,
+            c_isPwd : true,
             form_data:
             {
-                email: '',
-            }
+                password: '',
+                confirm_password: '',
+            },
         }),
         
+        beforeMount()
+        {
+            this.validateLinkKey();
+        },
+
         methods:
         {
+            async validateLinkKey()
+            {
+                let key = this.$route.params.key;
+                console.log('key', key);
+
+                let reset_obj = await this.$_get(`${getValidateLinkKey}/${key}`);
+                console.log('reset_obj', reset_obj);
+
+                // if (reset_obj.data.status == 'error') {
+                //     this.$router.push('/');
+                // }
+            },
             async resetpassword()
             {
+                this.$q.loading.show();
+                let key = this.$route.params.key;
+                let link = `${postResetPassword}/${key}`;
+                let forgot_link_obj = await this.$_post(link, this.form_data);
+                this.$q.loading.hide();
+                this.$router.push({name: 'front_success_password'});
             }
     }
     }

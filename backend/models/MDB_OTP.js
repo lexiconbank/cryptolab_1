@@ -37,6 +37,7 @@ class MDB_OTP extends MODEL
 
     async createUserOtp(options = {})
     {
+
         let { otp_for } = options;
 
         let otp = {};
@@ -102,6 +103,7 @@ class MDB_OTP extends MODEL
 
         return res;
     }
+
 }
 
 module.exports = MDB_OTP;
