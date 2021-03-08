@@ -2,22 +2,22 @@
     <div class="row" style="height:100vh">
         <div class="custom__left col-12 col-md-3">
             <div class="custom__row row" align="center">
-                <div class="col-5"><h5 @click="$router.push({ name: 'front_login' })" class="notActive ">LOGIN</h5></div>
-                <div class="col-2"><span></span></div>
-                <div class="col-5"><h5 class="active text-weight-bold" >SIGN UP</h5></div>
+              <div class="col-12" align="center">
+                      <q-img src="icons/main_logo.png" @click="$router.push({ name: 'front_login' })" style="cursor:pointer" width="250px" id="logo"/>
+                </div>
             </div>
-            <u-q-registration class="q-px-xl"></u-q-registration>
+            <u-q-success-reset-password class="q-px-xl"></u-q-success-reset-password>
         </div>       
         <div class="custom__right col-9">
         </div>
     </div>
 </template>
 <script>
-import UQRegistration from '../../components/UQRegistration'
+import UQSuccessResetPassword from '../../components/UQSuccessResetPassword'
 
 export default {
     components:{
-        UQRegistration,
+        UQSuccessResetPassword,
     }
 }
 </script>

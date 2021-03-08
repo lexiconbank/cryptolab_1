@@ -14,6 +14,7 @@ module.exports =
         [
             { label: 'Login', route: 'documentation_login' },
             { label: 'Registration', route: 'documentation_registration' },
+            { label: 'Registration OTP', route: 'documentation_otp' },
             { label: 'Web3', route: 'documentation_web3' },
         ]
     },

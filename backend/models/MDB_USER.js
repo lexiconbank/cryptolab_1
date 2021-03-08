@@ -1,6 +1,7 @@
 const MONGOOSE  = require('../config/mongo');
 const MODEL     = require('./MODEL');
 const Schema    = MONGOOSE.Schema;
+const findOrCreate          = require('mongoose-findorcreate');
 
 const schema    = new Schema({
     full_name : 
@@ -102,8 +103,17 @@ const schema    = new Schema({
     kyc_submitted:
     {
         type:       Date
+    },
+    country: 
+    {
+        type:       String,
+        required:   true
     }
 });
+
+schema.plugin(findOrCreate);
+
+let User = new MONGOOSE.model("users", schema);
 
 class MDB_USER extends MODEL
 {
@@ -156,6 +166,13 @@ class MDB_USER extends MODEL
     }
 
 
+    async resetpass(email, new_password)
+    {
+        const res = await this.collection.findOneAndUpdate({email}, { password: new_password }, {new: true});   
+        console.log(res); 
+        return res ? res : null;
+    }
 }
 
 module.exports = MDB_USER;
+module.exports.User = User;

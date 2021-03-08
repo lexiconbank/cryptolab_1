@@ -1,5 +1,5 @@
 <template>
-    <q-layout class="custom__layout" view="hHh lpR fff">
+    <q-layout view="hHh lpR fff">
         <q-header class="text-white bg-white nav__main">
             <q-toolbar>
                 <q-toolbar-title> 
@@ -43,90 +43,18 @@
             </q-toolbar>
             
         </q-header>
-        <q-page-container >
+        <q-page-container>
            <router-view/>
        </q-page-container>
-   
-
-        <q-footer class="shadow-up-5 custom__footer bg-grey-10"> 
-          
-             <div class="row" align="center">
-                <div class="col-12 col-md-3 costum__col"><h5 class="custom__p text-weight-bolder">GET THE LATEST CRYPTO NEWS</h5></div>
-                <div class="col-12 col-md-6 costum__col"><q-input style="background:white;border-radius:10px;" outlined label="Email address" /></div>
-                <div class="col-12 col-md-1 costum__col"> <q-btn color="primary" class="custom__btn" size="20px" label="SUBSCRIBE" /></div>
-            </div>
-            <div class="row" style="margin-top:50px;" align="center">
-                 <div class="col-12 col-md-3">
-                        <a @click="$router.push({name: 'front_landing'})" style="cursor: pointer">
-                            <q-img src="icons/main_logo.png"  width="250px" id="logo"/>
-                        </a>
-                 </div>
-                 <div class="col-12 col-md-3">
-                        <h6 class="custom__h6">Services</h6>
-                        <ul class="custom__footer__ul">
-                        <li ><a>Blockchain Development</a></li>
-                        <li ><a>Custom Software</a></li>
-                        <li ><a>Mobile App</a></li>
-                        <li ><a>Data Science</a></li>
-                        <li ><a>Artificial Intelligence</a></li>
-                        <li ><a>Machine Learning</a></li>
-                        <li ><a>Internet-of-things</a></li>
-                        <li ><a>Robotics Software</a></li>
-                        <li ><a>Consultancy</a></li>
-                        </ul>
-                 </div>
-                    <div class="col-12 col-md-3">
-                        <h6 class="custom__h6">Company</h6>
-                        <ul class="custom__footer__ul">
-                        <li ><a>About</a></li>
-                        <li ><a>Partners</a></li>
-                        <li ><a>Projects</a></li>
-                        <li ><a>Industries</a></li>
-                        <li ><a>Event</a></li>
-                        <li ><a>Careers</a></li>
-                        <li ><a>Blogs</a></li>
-                        <li ><a>Contacts</a></li>
-                        <li ><a>Supports</a></li>
-                        </ul>
-                 </div>
-                    <div class="col-12 col-md-3">
-                        <h6 class="custom__h6">Follow</h6>
-                        <ul class="custom__footer__ul">
-                        <li ><a>News</a></li>
-                        <li ><a>Facebook</a></li>
-                        <li ><a>Linkedin</a></li>
-                        <li ><a>Telegram</a></li>
-                        <li ><a>Twitter</a></li>
-                        <li ><a>Youtube</a></li>
-                        <li ><a>Affiliate Program</a></li>
-                
-                        </ul>
+        <q-drawer side="right" v-model="drawerLeft" bordered>
+                <q-toolbar>
+                    <div class="column full-width">
+                    asdasdsa
                     </div>
+                </q-toolbar>
+        </q-drawer>
 
-            </div>
-            <q-separator color="white" style="margin-top:50px;margin-bottom:10px;" />
-            <div class="row">
-                <div class="col-12 col-md-6">
-                     <h6 class="text-weight-medium">Copryright&#169; 2021 Baristocrat. All right reserved</h6>
-                </div>
-                <div class="col-12 col-md-6">
-                    <ul class="custom__footer__second">
-                        <li><a>Term of use</a></li>
-                        <li><span></span></li>
-                        <li><a>Privacy Legal</a></li>
-                        <li><span></span></li>
-                        <li><a>Disclaimer</a></li>
-                        <li><span></span></li>
-                        <li><a>But Bitcoin</a></li>
-                        <li><span></span></li>
-                        <li><a>Wallet</a></li>
-
-                    </ul>
-                </div>
-            </div>
-
-
-        </q-footer>  
+      
     </q-layout>
 </template>
 <script>
@@ -148,9 +76,7 @@ export default
     padding:0;
     box-sizing: border-box;
 }
-.custom__layout{
-    position:relative;
-}
+
 
 /* CUSTOMIZATION FOR HEADER ANDN AV BAR */
 
@@ -223,9 +149,8 @@ all:unset;
 .custom__footer{
     display:flex;
     flex-direction:column;
-   position: absolute;
-  bottom: 0;
- padding:30px 120px;
+   
+    padding:30px 120px;
 }
 .custom__btn{
     margin-left:20px;

@@ -6,7 +6,7 @@
 	    	<q-form @submit="findUser()">
 		     	<div class="field">
 		       		<div  class="field q-mt-md">
-                        <label>Email address or Username</label>
+                        <label>Email address</label>
                         <q-input v-model="form_data.email" placeholder="cryptolab@xxxxx.com or cryptolab" :rules="validateEmailField" outlined>
                             <template v-slot:prepend>
                                 <q-icon name="email" color="grey-10" />
@@ -16,18 +16,29 @@
 		       </div>
 
 		        <div class="field q-mt-md">
-		  
 		       		<div>
                         <label>Password</label>
-                        <q-input v-model="form_data.password" type="password" placeholder="************" :rules="validatePasswordField"  outlined>
+                        <q-input v-model="form_data.password" :type="isPwd ? 'password' : 'text' " placeholder="************" :rules="validatePasswordField"  outlined>
                             <template v-slot:prepend>
-                                <q-icon name="lock" color="grey-10" />
+                              <q-icon
+                                name="lock" color="grey-10"
+                              />
+                            </template>
+                            <template v-slot:append>
+                              <q-icon
+                                :name="isPwd ? 'visibility_off' : 'visibility'"
+                                class="cursor-pointer"
+                                @click="isPwd = !isPwd"
+                              />
                             </template>
                         </q-input>
                     </div>
 		       </div>
-		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="18px" class="full-width">Login</q-btn></div>
-		
+               <div class=text-right>
+                   <p class="text-weight-medium custom__forgot" @click="$router.push({ name: 'front_forgotpassword' })" >Forgot Password?</p>
+               </div>
+		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="15px" class="full-width">Login</q-btn></div>
+
 	   		</q-form>
 	    </div>
     </div>
@@ -35,6 +46,7 @@
 
 <script>
 import { postLoginUser } from '../references/url';
+import Swal from "sweetalert2";
 
 export default
 {
@@ -49,6 +61,8 @@ export default
             is_empty: '',
 
         },
+        isPwd:true,
+
     }),
     mounted()
     {
@@ -83,6 +97,25 @@ export default
             if(login)
             {
                 this.$q.dialog({ title: `Success Message`, message: "Login Successful" });
+                this.$router.push({path: 'front_registration'});
+            } else{
+                const Toast = Swal.mixin({
+                margin: 20,
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+                })
+                Toast.fire({
+                icon: 'error',
+                title: 'Invalid Password!'
+                })
+            
             }
             this.$q.loading.hide();
         }
@@ -90,5 +123,12 @@ export default
 }
 </script>
 <style scoped>
+.custom__forgot{
+    text-decoration:underline;cursor:pointer;
+    font-size:15px;
 
+}
+.custom__forgot:hover{
+    color:#1976D2;
+}
 </style>
