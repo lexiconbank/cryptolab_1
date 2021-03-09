@@ -56,8 +56,23 @@ const routes =
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
         ]
     },
-    // Always leave this as last one,
-    // but you can also remove it
+    //admin routes
+    {
+        path: '/admin',
+        component: () => import('layouts/AdminLoginLayout.vue'),
+        children:
+        [
+            { name: 'administration_login', path: '', component: () => import('pages/Admin/Login.vue') },
+        ]
+    },
+    {
+        path: '/admin',
+        component: () => import('layouts/AdminLayout.vue'),
+        children:
+        [
+            { name: 'administration_dashboard', path: 'dashboard', component: () => import('pages/Admin/Dashboard.vue') },
+        ]
+    },
     {
         path: '*',
         component: () => import('pages/Error404.vue')

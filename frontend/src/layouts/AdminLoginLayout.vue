@@ -2,18 +2,18 @@
     <q-layout class="main" view="hHh Lpr lFf">
         <q-header>
             <q-toolbar>
-                <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
+                <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" /> -->
 
                 <q-toolbar-title>
-                    Uniq Builder Documentation
+                    <span class="gt-xs">Cryptolab Admin-Side</span> 
                 </q-toolbar-title>
-
-                <div><b>v1.0</b></div>
+                <div><q-icon name="lock" size="20px" color="white" /></div>
             </q-toolbar>
         </q-header>
 
-           <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
-			<div class="nav-title">Navigation</div>
+        <!-- <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
+		
+            <div class="text-center q-pa-xl bg-white"> logo </div>
 			<q-list class="nav-list" v-for="(nav,key) of navigation" :key="key" >
 				<template >
 					<q-item class="nav" v-if="!nav.hasOwnProperty('sub')" @click="$router.push({ name: nav.route })" clickable v-ripple :active="$route.name == nav.route">
@@ -29,7 +29,7 @@
 					</q-expansion-item>
 				</template>
 			</q-list>
-        </q-drawer>
+        </q-drawer> -->
 
         <q-page-container>
             <router-view />
@@ -39,7 +39,7 @@
 <script>
 import EssentialLink    from 'components/EssentialLink.vue'
 import Layout           from './DocumentationLayout.scss'
-import navigation       from '../references/nav'
+// import navigation       from '../references/nav'
 
 export default
 {
@@ -50,12 +50,12 @@ export default
 	data: () =>
 	({
 		package_data: { version: '0.0.0' },
-		leftDrawerOpen: false,
-		navigation: [],
+		// leftDrawerOpen: false,
+		// navigation: [],
 	}),
     mounted()
     {
-        this.navigation = navigation;
+        // this.navigation = navigation;
     },
     methods:
     {
