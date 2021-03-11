@@ -51,4 +51,15 @@ module.exports =
         icon: 'fa fa-question',
         route: 'documentation_guide',
     },
+ 
+    {
+        key: 'adminsecurity',
+        label: 'Admin Security',
+        icon: 'fa fa-home',
+        sub:
+        [
+            { label: 'Security', route: 'documentation_admin_security' },
+        
+        ]
+    },
 ]

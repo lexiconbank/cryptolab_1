@@ -12,8 +12,8 @@
             </q-toolbar>
         </q-header>
 
-           <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
-			<div class="nav-title">Navigation</div>
+        <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
+			<div class="nav-title">Security</div>
 			<q-list class="nav-list" v-for="(nav,key) of navigation" :key="key" >
 				<template >
 					<q-item class="nav" v-if="!nav.hasOwnProperty('sub')" @click="$router.push({ name: nav.route })" clickable v-ripple :active="$route.name == nav.route">

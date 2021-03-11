@@ -110,42 +110,33 @@
             </q-toolbar>
         </q-drawer>
         
-        <!-- <q-page-container align="center">
+        <q-page-container align="center">
            <router-view/>
            <q-toolbar-title align="center" style="margin-top:20px; font-size:20px">  
-               
-                    <ul class="custom__nav">        <q-toolbar-title align="right">    
+                <ul class="custom__nav">        
+                    <q-toolbar-title align="right">    
                         <li class="self-center custom__li" style="margin-left :15px;" >
-                            <img src=" https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/BTC_Logo.svg/1200px-BTC_Logo.svg.png" width="80px" height="auto">  
-                            <a style="margin-left :10px;"> BTC</a><br><a style="margin-left :10px;"> BTC</a>
+                            <img src="https://tse2.mm.bing.net/th?id=OIP.bxAitM5G7_M9fL-_PkxdngAAAA&pid=Api&P=0&w=300&h=300" width="80px" height="auto">  
+                             BTC
                         </li></q-toolbar-title>    <q-toolbar-title align="right">    
                         <li class="self-center custom__li" style="margin-left :15px;">
-                           <img src=" https://tse4.mm.bing.net/th?id=OIP.9ZCocQVloQfL9hQzSz-NwgHaHa&pid=Api&P=0&w=300&h=300" width="40px" height="auto">  
-                            <a style="margin-left :10px;">EHP</a>
+                           <img src="https://tse3.mm.bing.net/th?id=OIP.qmVhM5ozTeopQTnY4qdjWAHaHa&pid=Api&P=0&w=300&h=300" width="80px" height="auto">  
+                            <a style="margin-left :10px;">USD</a>
                         </li></q-toolbar-title>    <q-toolbar-title align="right">    
                         <li class="self-center custom__li" style="margin-left :15px;">
-                           <img src="https://tse3.mm.bing.net/th?id=OIP.JFVk-kftTOQAa8nUsnPZ0AAAAA&pid=Api&P=0&w=300&h=300" width="40px" height="auto">  
-                            <a style="margin-left :10px;">BCH</a>
+                           <img src="https://tse2.mm.bing.net/th?id=OIP.c_M_VL-BH8A1w1Dx3qTXYQAAAA&pid=Api&P=0&w=300&h=300" width="80px" height="auto">  
+                            <a style="margin-left :10px;">GBP</a>
                         </li></q-toolbar-title>    <q-toolbar-title align="right">    </q-toolbar-title>
                         </ul>
-
-
-<q-markdown >
-All Account
-===
-
-</q-markdown>
-
-
-<div class="component q-ma-lg">
-    <div class="form-container">
-        <u-q-info></u-q-info>
-    </div>
-</div>
-
-                    </q-toolbar-title>
-                    
-        <q-drawer v-model="rightDrawerOpen" show-if-above bordered content-class="bg-grey-1" side="right">
+                <div class="component q-ma-lg">
+                    <div class="form-container">
+                        <u-q-dashboard-main>
+                           
+                        </u-q-dashboard-main>
+                    </div>
+                </div>
+            </q-toolbar-title>          
+        <q-drawer v-model="rightDrawerOpen" show-if-above bordered content-class="bg-grey-1" side="right"> 
 			<div class="nav-title" style="margin-top:20px; font-size:20px">BTC WALLET</div>
 			<q-list class="nav-list" v-for="(nav,key) of navigation" :key="key" >
 				<template >
@@ -153,37 +144,37 @@ All Account
 				</template>
 			</q-list>
         </q-drawer>
-       </q-page-container>   -->
+       </q-page-container>  
     </q-layout>
 </template>
 <script>
 import countryCodeLst from 'country-codes-list'
-// import UQDashboardMain from '../../components/UQDashboardMain.vue'
-
+ import UQDashboardMain    from 'components/UQDashboardMain.vue'
 export default {
   data () {
     return {
         country_options: [],
-        
         country: '',
         right: false,
         options:[],
 
-// 	package_data: { version: '0.0.0' },
-// 		leftDrawerOpen: false,
-// 		navigation: [],
+	package_data: { version: '0.0.0' },
+		leftDrawerOpen: false,
+		navigation: [],
 
-//         code: `<div class="component q-ma-lg">
-//     <div class="form-container">
-//         <u-q-info></u-q-info>
-//     </div>
-// </div>`
+	package_data: { version: '0.0.0' },
+		rightDrawerOpen: false,
+		navigation: [],
+        code: `<div class="component q-ma-lg">
+    <div class="form-container">
+        <u-q-dashboard></u-q-dashboard>
+    </div>
+</div>`
     }
-  },
-//    components: { UQDashboardMain },
+  },    
+   components: { UQDashboardMain },
   mounted(){
   this.country_options = countryCodeLst.all("all");
-    //  this.navigation = navigation;
   },
   methods:{
         flags(){

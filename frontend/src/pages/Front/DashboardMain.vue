@@ -1,6 +1,6 @@
 <template>
     <div>
-        <u-q-hero-main></u-q-hero-main>
+        <u-q-dashboard-main></u-q-dashboard-main>
 
     </div>
 </template>
@@ -8,7 +8,7 @@
 import UQDashboardMain from '../../components/UQDashboardMain.vue'
 export default {
     components:{
-        UQHeroMain
+        UQDashboardMain
     }
 }
 </script>

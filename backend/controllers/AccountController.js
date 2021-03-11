@@ -113,7 +113,7 @@ module.exports =
 
             const salt = bcrypt.genSaltSync(saltRounds);
             // const hash = bcrypt.hashSync(reset_data.password, salt);
-            password = bcrypt.hashSync(password, salt);
+            // password = bcrypt.hashSync(password, salt);
             // console.log(hash);
 
             // bcrypt.compareSync - compare has & pass from frontend
@@ -126,4 +126,4 @@ module.exports =
         }
     }
    
-}
+}   
