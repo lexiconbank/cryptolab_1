@@ -1,6 +1,5 @@
 const WalletClass   = require('../classes/WalletClass');
 const MDB_WALLET    = require('../models/MDB_WALLET');
-
 module.exports =
 {
     async sendwallet(req, res)

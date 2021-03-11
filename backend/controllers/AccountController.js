@@ -24,6 +24,23 @@ module.exports =
         }
     },
 
+    async loginAdmin(req, res)
+    {
+        let email           = req.body.email;
+        let password        = req.body.password;
+
+        let authenticate    = await new AccountClass({email:email, password:password}).authenticateAdmin();
+        
+        if(authenticate.status == "success")
+        {
+            res.send(true);
+        }
+        else if(authenticate.status == "error")
+        {
+            res.status(400).send({ message: authenticate.message })
+        }
+    },
+
     async registration(req, res)
     {
         // remove {req, res} parameter if MDB.register doesn't need extra params anymore {req, res}
