@@ -18,6 +18,8 @@ const routes =
         { name: 'front_resetpassword', path: 'login/reset_password/:key', component: () => import('src/pages/Front/ResetPassword.vue') },
         { name: 'front_forgotpassword', path: 'login/forgot_password', component: () => import('src/pages/Front/ForgotPassword.vue') },
         { name: 'front_success_password', path: 'success/reset_password', component: () => import('src/pages/Front/SuccessResetPassword.vue') },
+        { name: 'front_success_registration', path: 'confirm/registration', component: () => import('src/pages/Front/ConfirmRegistration.vue') },
+        { name: 'profile', path: '/profile', component: () => import('components/UQProfile.vue') },
         ]
     },
     
@@ -54,6 +56,7 @@ const routes =
             { name: 'documentation_forgot_passsword', path: 'forgot_password', component: () => import('pages/Documentation/ForgotPassword.vue') },
             { name: 'documentation_reset_passsword', path: 'reset_password/:key', component: () => import('pages/Documentation/ResetPassword.vue') },
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
+            { name: 'documentation_profile', path: 'profile', component: () => import('pages/Documentation/Profile.vue') },
         ]
     },
     //admin routes

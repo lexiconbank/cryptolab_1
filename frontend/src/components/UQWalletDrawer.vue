@@ -5,8 +5,8 @@
         <div class="text-grey-7">100,87871.15 PHP</div>
 
         <div class="row wallet_btn">
-                <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Receive" />
-                <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Send" />
+            <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Receive" @click="is_show_receive_modal = true" />
+            <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Send" @click="is_show_send_modal = true"/>
         </div>
 
         <div class="wallet_all">
@@ -31,8 +31,83 @@
                 </div>
             </div>
         </div>
+
+         <!-- Send Dialog -->
+        <q-dialog v-model="is_show_send_modal" persistent>
+            <q-card style="width: 450px; border-radius: 20px">
+                <!-- UQClientSend Component -->
+                <q-card-section class="q-pt-none">
+                    <u-q-client-send>
+                    </u-q-client-send>
+                </q-card-section>
+            </q-card>
+        </q-dialog>
+
+         <!-- Send Dialog -->
+        <q-dialog v-model="is_show_receive_modal" persistent>
+            <q-card style="width: 450px; border-radius: 20px">
+                <!-- UQClientReceive Component -->
+                <q-card-section class="q-pt-none">
+                    <u-q-client-receive :address="wallet">
+                    </u-q-client-receive>
+                </q-card-section>
+            </q-card>
+        </q-dialog>
+    
     </div>
 </template>
+
+<script>
+import {postGetUser}      from '../references/url'; 
+import UQClientSend     from './UQClientSend';
+import UQClientReceive  from './UQClientReceive';
+   
+export default
+{
+    components: 
+    { 
+        UQClientSend, UQClientReceive
+    },
+
+    data:() =>
+    ({   
+        wallet : '',
+        form_data : {
+            _id : '60481014081a1b0c106708a4',
+            amount : ''
+        },
+        is_show_send_modal : false,
+        is_show_receive_modal : false,
+
+    }),
+
+    async mounted()
+    { 
+       await this.authenticate_user();
+    },
+
+    methods:
+    {
+       async authenticate_user()
+	    {
+            console.log('here', this.form_data.address);
+            let user = await this.$_post(postGetUser, this.form_data);
+            console.log('user', user);
+
+            this.wallet = user.data.wallet;
+			// let auth = await this.$_isUserAuthenticated();
+			// if(auth.data.status == 'authenticated')
+			// {
+			// 	this.user = auth.data.user;
+			// }
+			// else
+			// {
+			// 	this.$router.push({ name: 'front_login'})
+			// }
+	    },
+    }
+}
+</script>
 
 <style lang="scss">
     .wallet_main div {

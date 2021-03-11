@@ -3,14 +3,14 @@
         <div class="custom_div col-12 text-h4">Reset Password</div>
         <div class="custom_div col-12">
             <q-input outlined v-model="form_data.password" label="Password" :type="isPwd ? 'password' : 'text'" :rules="[val => !!val]">
-            <template v-slot:append>
-                <q-icon
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                />
-            </template>
-      </q-input>
+                <template v-slot:append>
+                    <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                    />
+                </template>
+            </q-input>
         </div>
         <div class="custom_div col-12">
             <q-input outlined v-model="form_data.confirm_password" :type="c_isPwd ? 'password' : 'text'" label="Confirm Password" :rules="[val => !!val]">
