@@ -54,6 +54,7 @@ const routes =
             { name: 'documentation_forgot_passsword', path: 'forgot_password', component: () => import('pages/Documentation/ForgotPassword.vue') },
             { name: 'documentation_reset_passsword', path: 'reset_password/:key', component: () => import('pages/Documentation/ResetPassword.vue') },
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
+            { name: 'documentation_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Documentation/ClientsMasterlist.vue') },  
         ]
     },
     // Always leave this as last one,

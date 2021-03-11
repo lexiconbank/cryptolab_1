@@ -25,6 +25,8 @@ module.exports =
         sub:
         [
 
+            { label: 'Clients Masterlist', route: 'documentation_clientsmasterlist' },
+           
         ]
     },
     {
