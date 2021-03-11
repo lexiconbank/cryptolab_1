@@ -3,7 +3,6 @@ const MDB_OTP           = require('../models/MDB_OTP');
 const nodemailer        = require("nodemailer");
 const ejs               = require("ejs");
 
-
 module.exports = class AccountClass
 {
     constructor(user_information)
@@ -14,23 +13,35 @@ module.exports = class AccountClass
 
     async validate()
     { 
-        let res = {};
         if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '')
         {
-            res.status      = "error";
-            res.message     = "You need to fill up all fields in order to proceed.";
+            return {status : "error", message : "You need to fill up all fields in order to proceed."};
         }
         else if(this.user_information.confirm_password !== this.user_information.password)
         {
-            res.status      = "error";
-            res.message     = "The password you entered didn't match.";
+            return {status : "error", message : "The password you entered didn't match."};
         }
+        // else if(this.user_information.value == false || this.user_information.value == null)
+        // {
+        //     return {status : "error", message : "Before you complete your registration, you must accept the Terms and Conditions."};
+        // }
         else
         {
-            res.status = "success";
+            console.log('validate email');
+
+            let is_email_exist = await this.mdb_user.findByEmail(this.user_information.email);
+            console.log(is_email_exist);
+            if (is_email_exist) 
+            {
+                return {status : "error", message :  "The email address you entered is already in use"};
+            } 
+            else 
+            {
+                await this.sendUserOtp(this.user_information.email, "", "registration");
+                return {status : 'success'};
+            }
         }
 
-        return res;
     }
 
     async authenticate()
@@ -65,33 +76,11 @@ module.exports = class AccountClass
         return res;
     }
 
-    async validate()
-    { 
-        let res = {};
-        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '')
-        {
-            res.status      = "error";
-            res.message     = "You need to fill up all fields in order to proceed.";
-        }
-        else if(this.user_information.confirm_password !== this.user_information.password)
-        {
-            res.status      = "error";
-            res.message     = "The password you entered didn't match.";
-        }
-        else
-        {
-            res.status = "success";
-        }
-
-        return res;
-    }
-
     async create()
     {
         let res = {};
         try
         {
-            res.status = "success";
 
             let add_form =
             { 
@@ -102,6 +91,9 @@ module.exports = class AccountClass
             }
 
             await this.mdb_user.add(add_form);
+
+            res.status = "success";
+            res.message = "Successfully Registered";
         }   
         catch (error)
         {
@@ -112,8 +104,15 @@ module.exports = class AccountClass
         return res;
     }
 
+     async getUser()
+     {
+        console.log(this.user_information, 'user');
+        let { user_id } = this.user_information;
+        let user_info = await this.mdb_user.findByUserId(user_id);
 
-
+        return user_info;
+     }
+ 
 
     //FORGOT PASSWORD
 
@@ -304,27 +303,50 @@ module.exports = class AccountClass
     }
 
     
-static async fetchClientsByKyc({kyc_status})
-{
-    let res                 = {};
-    const mdb_user          = new MDB_USER();
-    const clients_res_obj   = await mdb_user.fetchClientsByKyc({kyc_status});
-
-    if(Array.isArray(clients_res_obj))
+    static async fetchClientsByKyc({kyc_status})
     {
-        res.status  = 'success';
-        res.clients = clients_res_obj;
+        let res                 = {};
+        const mdb_user          = new MDB_USER();
+        const clients_res_obj   = await mdb_user.fetchClientsByKyc({kyc_status});
+
+        if(Array.isArray(clients_res_obj))
+        {
+            res.status  = 'success';
+            res.clients = clients_res_obj;
+        }
+
+        if(clients_res_obj == null)
+        {
+
+            res.status  = 'error';
+            res.message = 'returned data is equal to null';
+        }
+
+        return res;
+
     }
 
-    if(clients_res_obj == null)
+    async resendUserOtp(email, username, otp_for)
     {
-
-        res.status  = 'error';
-        res.message = 'returned data is equal to null';
+        let res         = {};
+        let mdb_otp     = new MDB_OTP();
+        // delete existing user otp
+        let deleted_otp = await mdb_otp.removeOtpByUserOrEmailAndFor(email, otp_for);
+        // create new user otp
+        let otp_result  = await this.createUserOtp(email, username, otp_for);
+        // check if otp_result is json object and if empty
+        if(Object.keys(otp_result).length == 0)
+        {
+            res.status  = 'error';
+            res.message = otp_result
+        }
+        else
+        {
+            res.status  = 'success';
+        }
+        return res;
     }
 
-    return res;
-}
 
     static async fetchUserKyc(_id)
     {

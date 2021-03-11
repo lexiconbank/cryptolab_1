@@ -2,9 +2,9 @@
     <div class="row" style="height:100vh">
         <div class="custom__left col-12 col-md-3">
             <div class="custom__row row" align="center">
-                <div class="col-5"><h5 @click="$router.push({ name: 'front_login' })" class="notActive ">LOGIN</h5></div>
+                <div class="col-5"><h6 @click="$router.push({ name: 'front_login' })" class="notActive ">LOGIN</h6></div>
                 <div class="col-2"><span></span></div>
-                <div class="col-5"><h5 class="active text-weight-bold" >SIGN UP</h5></div>
+                <div class="col-5"><h6 class="active text-weight-bold" >SIGN UP</h6></div>
             </div>
             <u-q-registration class="q-px-xl"></u-q-registration>
         </div>       
@@ -39,14 +39,13 @@ h5{
 span{
     display:block;
     background:black;
-    height:50%;
+    height:30%;
     width:2px;
-    margin-top:20px;
-    
+    margin-top:45px;
 }
 .custom__left{
 
-    margin-top:100px;
+    margin-top:10px;
 }
 .custom__right{
     padding:10px;

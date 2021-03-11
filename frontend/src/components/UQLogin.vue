@@ -97,7 +97,7 @@ export default
             if(login)
             {
                 this.$q.dialog({ title: `Success Message`, message: "Login Successful" });
-                this.$router.push({path: 'front_registration'});
+                this.$router.push({path: '/dashboard'});
             } else{
                 const Toast = Swal.mixin({
                 margin: 20,

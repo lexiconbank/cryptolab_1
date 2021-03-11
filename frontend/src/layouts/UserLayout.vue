@@ -2,39 +2,39 @@
     <q-layout view="hHh lpR fFf">
         <q-header elevated class="bg-white text-black" >            
             <q-toolbar>
-                <q-toolbar-title class="custom__logo" align="left" style="margin-left :20px;">         
+                <q-toolbar-title class="custom__logo" >         
                     <q-img  src="icons/main_logo.png" id="logo"/>    
                 </q-toolbar-title> 
-                <q-toolbar-title align="center">  
+                <q-toolbar-title>  
                     <ul class="custom__nav">    
-                        <li class="self-center custom__li" style="margin-left :15px;" >
+                        <li class="self-center custom__li">
                             <img src=" https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/BTC_Logo.svg/1200px-BTC_Logo.svg.png" width="40px" height="auto">  
                             <a style="margin-left :10px;"> BTC</a>
                         </li>
-                        <li class="self-center custom__li" style="margin-left :15px;">
+                        <li class="self-center custom__li">
                            <img src=" https://tse4.mm.bing.net/th?id=OIP.9ZCocQVloQfL9hQzSz-NwgHaHa&pid=Api&P=0&w=300&h=300" width="40px" height="auto">  
                             <a style="margin-left :10px;">EHP</a>
                         </li>
-                        <li class="self-center custom__li" style="margin-left :15px;">
+                        <li class="self-center custom__li">
                            <img src="https://tse3.mm.bing.net/th?id=OIP.JFVk-kftTOQAa8nUsnPZ0AAAAA&pid=Api&P=0&w=300&h=300" width="40px" height="auto">  
                             <a style="margin-left :10px;">BCH</a>
                         </li>
-                        <li class="self-center custom__li" style="margin-left :15px;">
+                        <li class="self-center custom__li">
                              <img src="https://tse4.mm.bing.net/th?id=OIP.BctgoU0IQI3Gjh1Zqohj6QAAAA&pid=Api&P=0&w=300&h=300" width="40px" height="auto">  
                             <a style="margin-left :10px;">XRP</a>
                         </li>
-                        <li class="self-center custom__li" style="margin-left :15px;">     
+                        <li class="self-center custom__li">     
                             <img src="https://tse4.mm.bing.net/th?id=OIP.rKBfz4ncKYROpovDqSxW3gHaHa&pid=Api&P=0&w=300&h=300" width="40px" height="auto"> <a style="margin-left :10px;">XRP</a>
                         </li></ul>
                     </q-toolbar-title>
             <q-select
                 :options="country_options"
-
                 :rules="[val => !!val]"
                 v-model="country"
                 option-value="countryNameEn"
                 option-label="countryNameEn"
                 behavior="menu"
+                borderless 
             >
                 <template v-slot:prepend>
                     <img :src="'https://www.countryflags.io/' + country.countryCode + '/flat/32.png'" />
@@ -53,20 +53,38 @@
                     </q-item>
                 </template>
             </q-select>
-
-                    <q-btn round  style="margin-left :20px;" > <img src="https://tse2.mm.bing.net/th?id=OIP.eCrcK2BiqwBGE1naWwK3UwHaHa&pid=Api&P=0&w=300&h=300" width="40px" height="auto"/>
-                    </q-btn>
-                    <q-btn color="secondary" label="LOG OUT" style="margin-left :20px; margin-right:50px;"/>
-                    <q-btn dense flat  class="custom__humburger" round icon="menu" @click="right = !right"  />
+            <q-btn round style="margin-left :20px;"> <img src="https://i.imgur.com/XplLIk9.png" width="40px" height="auto" class="custom_avatar">
+                 <q-menu>
+                    <q-list style="min-width: 100px"> 
+                        <q-item clickable v-close-popup>
+                        <q-item-section>Profile</q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                        <q-item-section>Wallet</q-item-section>
+                        </q-item>
+                        <q-separator />
+                        <q-item clickable v-close-popup>
+                        <q-item-section>User Settings</q-item-section>
+                        </q-item>
+                        <q-item clickable v-close-popup>
+                        <q-item-section>Logout</q-item-section>
+                        </q-item>
+                    </q-list>
+                    </q-menu>
+            </q-btn>
+            <q-btn color="primary" label="LOG OUT" style="margin-left :20px; margin-right:50px;"/>
+            <q-btn dense flat  class="custom__humburger" round icon="menu" @click="right = !right"  />
             </q-toolbar>
-            <q-tabs align="justify">
-                <q-route-tab to="/wallet"  style=" font-size:20px">wallet</q-route-tab>
-                <q-route-tab to="/convert"   style="margin-left :20px;  font-size:20px">CONVERT</q-route-tab>
-                <q-route-tab to="/transaction_history" style="margin-left :20px; font-size:20px">TRANSACTION HISTORY</q-route-tab>
-                <q-route-tab to="/invite_friends" style="margin-left :20px; font-size:20px">INVITE FRIENDS</q-route-tab>
-            </q-tabs>
+            <div class="custom__tab">
+                <q-tabs align="justify">
+                    <q-route-tab to="/wallet"  style="font-size:17px">WALLET</q-route-tab>
+                    <q-route-tab to="/convert"   style="font-size:17px">CONVERT</q-route-tab>
+                    <q-route-tab to="/transaction_history" style="font-size:17px">TRANSACTION HISTORY</q-route-tab>
+                    <q-route-tab to="/invite_friends" style="font-size:17px">INVITE FRIENDS</q-route-tab>
+                </q-tabs>
+            </div>
         </q-header>     
-        <q-drawer side="right" v-model="right" >
+        <q-drawer side="left" v-model="right" >
             <q-toolbar>
                 <div class="column full-width">
                      <q-toolbar-title align="right">                           
@@ -165,7 +183,7 @@ export default {
     return {
         country_options: [],
         
-        country: '',
+        country: { countryNameEn :  '', countryCode : 'PH'},
         right: false,
         options:[],
 
@@ -195,7 +213,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #logo{
 height:auto;
 max-width:50%;
@@ -206,10 +224,22 @@ max-width:50%;
 .custom__nav{
     display:flex;
     flex-direction: row;
-    align-items: center;
+    align-items: left;
     list-style: none;
     padding:0;
     margin:0;
+}
+.custom__tab{
+    padding: 0px 200px 0 200px;
+    align: justify;
+}
+.custom__li{
+    padding: 0px 20px 0 20px;
+    color: $grey-7;
+    font-size: 15px;
+}
+.custom_avatar{
+    border-radius: 100px;
 }
 @media (max-width:1000px){
     .custom__humburger{

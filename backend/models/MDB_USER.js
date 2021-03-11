@@ -1,7 +1,6 @@
 const MONGOOSE  = require('../config/mongo');
 const MODEL     = require('./MODEL');
 const Schema    = MONGOOSE.Schema;
-const findOrCreate          = require('mongoose-findorcreate');
 
 const schema    = new Schema({
     first_name : 
@@ -59,8 +58,15 @@ const schema    = new Schema({
     {
         type        : Number,
     },
- 
+    
+    wallet              :
+    [{ 
+        type: Schema.Types.ObjectId,
+        ref: 'wallets' 
+    }],
 },
+
+
 {
     timestamps          :
     {
@@ -97,7 +103,13 @@ class MDB_USER extends MODEL
     async resetpass(email, new_password)
     {
         const res = await this.collection.findOneAndUpdate({email}, { password: new_password }, {new: true});   
-        console.log(res); 
+        console.log(res);
+        return res ? res : null;
+    }
+
+    async findByUserId(id)
+    {
+        const res = await this.collection.findById(id).populate('wallet');
         return res ? res : null;
     }
 
