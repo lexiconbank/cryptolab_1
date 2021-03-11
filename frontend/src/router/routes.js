@@ -18,6 +18,7 @@ const routes =
         { name: 'front_resetpassword', path: 'login/reset_password/:key', component: () => import('src/pages/Front/ResetPassword.vue') },
         { name: 'front_forgotpassword', path: 'login/forgot_password', component: () => import('src/pages/Front/ForgotPassword.vue') },
         { name: 'front_success_password', path: 'success/reset_password', component: () => import('src/pages/Front/SuccessResetPassword.vue') },
+        { name: 'front_success_registration', path: 'confirm/registration', component: () => import('src/pages/Front/ConfirmRegistration.vue') },
         { name: 'profile', path: '/profile', component: () => import('components/UQProfile.vue') },
         ]
     },

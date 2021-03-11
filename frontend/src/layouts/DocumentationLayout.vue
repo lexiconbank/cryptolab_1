@@ -12,21 +12,24 @@
             </q-toolbar>
         </q-header>
 
-          <q-drawer
-        side="left"
-        v-model="drawerRight"
-        show-if-above
-        bordered
-        :width="200"
-        :breakpoint="500"
-        content-class="bg-grey-3"
-      >
-        <q-scroll-area class="fit">
-          <div class="q-pa-sm">
-            <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
-          </div>
-        </q-scroll-area>
-      </q-drawer>
+           <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
+			<div class="nav-title">Navigation</div>
+			<q-list class="nav-list" v-for="(nav,key) of navigation" :key="key" >
+				<template >
+					<q-item class="nav" v-if="!nav.hasOwnProperty('sub')" @click="$router.push({ name: nav.route })" clickable v-ripple :active="$route.name == nav.route">
+						<q-item-section avatar>
+							<q-icon :name="nav.icon" />
+						</q-item-section>
+						<q-item-section>{{ nav.label }}</q-item-section>
+					</q-item>
+					<q-expansion-item group="sidenav" v-if="nav.hasOwnProperty('sub')" expand-separator class="nav" :icon="nav.icon" :label="nav.label">
+						<q-card class="nav-sub">
+							<div v-for="(sub,key) in nav.sub" :key="key" class="nav-item" :class="$route.name == sub.route ? 'active' : ''" @click="$router.push({ name: sub.route })">{{ sub.label }}</div>
+						</q-card>
+					</q-expansion-item>
+				</template>
+			</q-list>
+        </q-drawer>
 
         <q-page-container>
             <router-view />

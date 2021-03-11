@@ -1,23 +1,23 @@
 <template>
     <div class="row" style="height:100vh">
-        <div class=" custom__left col-12 col-md-3">
+        <div class="custom__left col-12 col-md-3">
             <div class="custom__row row" align="center">
-                <div class="col-5"><h6 class="active text-weight-bold">LOGIN</h6></div>
-                <div class="col-2"><span></span></div>
-                <div class="col-5"><h6 class="notActive" @click="$router.push({ name: 'front_registration' })">SIGN UP</h6></div>
+              <div class="col-12" align="center">
+                      <q-img src="icons/main_logo.png" @click="$router.push({ name: 'front_login' })" style="cursor:pointer" width="250px" id="logo"/>
+                </div>
             </div>
-            <u-q-login class="q-px-xl"></u-q-login>
+            <u-q-confirm-registration class="q-px-xl"></u-q-confirm-registration>
         </div>       
         <div class="custom__right col-9">
         </div>
     </div>
 </template>
 <script>
+import UQConfirmRegistration from '../../components/UQConfirmRegistration'
 
-import UQLogin from '../../components/UQLogin'
 export default {
     components:{
-        UQLogin,
+        UQConfirmRegistration,
     }
 }
 </script>
@@ -39,9 +39,9 @@ h5{
 span{
     display:block;
     background:black;
-    height:30%;
+    height:50%;
     width:2px;
-    margin-top:40px;
+    margin-top:20px;
     
 }
 .custom__left{
