@@ -18,6 +18,8 @@ const routes =
         { name: 'front_resetpassword', path: 'login/reset_password/:key', component: () => import('src/pages/Front/ResetPassword.vue') },
         { name: 'front_forgotpassword', path: 'login/forgot_password', component: () => import('src/pages/Front/ForgotPassword.vue') },
         { name: 'front_success_password', path: 'success/reset_password', component: () => import('src/pages/Front/SuccessResetPassword.vue') },
+        { name: 'front_success_registration', path: 'confirm/registration', component: () => import('src/pages/Front/ConfirmRegistration.vue') },
+        { name: 'profile', path: '/profile', component: () => import('components/UQProfile.vue') },
         ]
     },
     
@@ -58,10 +60,30 @@ const routes =
             { name: 'documentation_kycbackend', path: 'kycbackend', component: () => import('pages/Documentation/KycBackend.vue') },
 
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
+            // { name: 'documentation_registration_admin', path: 'registration_admin', component: () => import('pages/Documentation/RegistrationAdmin.vue') },
+            { name: 'documentation_admin_user_table', path: 'admin_user_table', component: () => import('pages/Documentation/AdminUserTable.vue') },
+            { name: 'documentation_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Documentation/ClientsMasterlist.vue') },  
+            { name: 'documentation_profile', path: 'profile', component: () => import('pages/Documentation/Profile.vue') },
         ]
     },
-    // Always leave this as last one,
-    // but you can also remove it
+    //admin routes
+    {
+        path: '/admin',
+        component: () => import('layouts/AdminLoginLayout.vue'),
+        children:
+        [
+            { name: 'administration_login', path: '', component: () => import('pages/Admin/Login.vue') },
+        ]
+    },
+    {
+        path: '/admin',
+        component: () => import('layouts/AdminLayout.vue'),
+        children:
+        [
+            { name: 'administration_dashboard', path: 'dashboard', component: () => import('pages/Admin/Dashboard.vue') },
+            { name: 'administration_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Admin/ClientMasterlist.vue') },  
+        ]
+    },
     {
         path: '*',
         component: () => import('pages/Error404.vue')

@@ -27,6 +27,11 @@ module.exports =
             { label: 'Kyc', route: 'documentation_kyc' },
             { label: 'Multer', route: 'documentation_multer' },
             { label: 'Kyc Backend', route: 'documentation_kycbackend' },
+            // { label: 'Registration', route: 'documentation_registration_admin' },
+            { label: 'Admin User Tables', route: 'documentation_admin_user_table' },
+
+            { label: 'Clients Masterlist', route: 'documentation_clientsmasterlist' },
+           
         ]
     },
     {

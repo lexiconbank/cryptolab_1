@@ -1,13 +1,12 @@
 <template>
     <div>
-
 	    <!-- content -->
 	    <div class='content text-left'>
 	    	<q-form @submit="findUser()">
 		     	<div class="field">
 		       		<div  class="field q-mt-md">
-                        <label>Email address</label>
-                        <q-input v-model="form_data.email" placeholder="cryptolab@xxxxx.com or cryptolab" :rules="validateEmailField" outlined>
+                        <label>Admin Email address</label>
+                        <q-input v-model="form_data.email" placeholder="cryptolab@example.com" :rules="validateEmailField" outlined>
                             <template v-slot:prepend>
                                 <q-icon name="email" color="grey-10" />
                             </template>
@@ -34,9 +33,6 @@
                         </q-input>
                     </div>
 		       </div>
-               <div class=text-right>
-                   <p class="text-weight-medium custom__forgot" @click="$router.push({ name: 'front_forgotpassword' })" >Forgot Password?</p>
-               </div>
 		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="15px" class="full-width">Login</q-btn></div>
 
 	   		</q-form>
@@ -45,7 +41,7 @@
 </template>
 
 <script>
-import { postLoginUser } from '../references/url';
+import { postLoginAdmin } from '../references/url';
 import Swal from "sweetalert2";
 
 export default
@@ -56,13 +52,8 @@ export default
         {
             email: '',
             password: '',
-            user_name: 'snake_snake',
-            gender_options:'',
-            is_empty: '',
-
         },
         isPwd:true,
-
     }),
     mounted()
     {
@@ -92,12 +83,12 @@ export default
         {
             this.$q.loading.show();
 
-            let login = await this.$_post(postLoginUser, this.form_data); //request
+            let login = await this.$_post(postLoginAdmin, this.form_data); //request
 
             if(login)
             {
                 this.$q.dialog({ title: `Success Message`, message: "Login Successful" });
-                this.$router.push({path: '/dashboard'});
+                this.$router.push({path: '/admin/dashboard'});
             } else{
                 const Toast = Swal.mixin({
                 margin: 20,
