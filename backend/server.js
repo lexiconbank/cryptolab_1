@@ -2,10 +2,18 @@ const express           = require('express');
 const app               = express();
 const cors              = require('cors')
 const AccountController = require('./controllers/AccountController');
+const AdminController = require('./controllers/AdminController');
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.post('/api/admin/users/insert', AdminController.insert);
+app.post('/api/admin/users/update', AdminController.update);
+app.post('/api/admin/users/deleteThis', AdminController.deleteThis);
+app.post('/api/admin/users/fetch', AdminController.fetch);
+
+app.post('/api/admin/users/roleFetch', AdminController.roleFetch);
 
 app.post('/api/front/login', AccountController.login);
 app.post('/api/front/registration', AccountController.registration);

@@ -24,7 +24,8 @@ module.exports =
         icon: 'fa fa-home',
         sub:
         [
-
+            // { label: 'Registration', route: 'documentation_registration_admin' },
+            { label: 'Admin User Tables', route: 'documentation_admin_user_table' },
         ]
     },
     {
