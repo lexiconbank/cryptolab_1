@@ -77,7 +77,6 @@ const schema    = new Schema({
 });
 
 
-schema.plugin(findOrCreate);
 
 let User = new MONGOOSE.model("users", schema);
 

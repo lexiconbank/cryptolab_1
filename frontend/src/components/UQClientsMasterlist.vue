@@ -1,34 +1,22 @@
 <template>
-  <div>
-      <div class="q-pa-md">
-        <div class="q-gutter-sm">     
-
-              <!-- <q-select
-                filled
-                v-model="kyc_status"
-                label="KYC STATUS"
-                :options="client_master_list_table.status"
-                style="width: 250px"
-                behavior="menu"
-                @input="fetchfilteredClients"
-                 />          -->
-
-                <q-option-group 
-                :options="client_master_list_table.status"
-                type="toggle"
-                label="Status"
-                color="primary"
-                inline
-                v-model="kyc_status"
-                @input="fetchfilteredClients"
+  <div class="q-mt-xl">
+      <div class="q-mr-sm">
+        <div class="q-pa-md text-right">    
+            <q-option-group 
+            :options="client_master_list_table.status"
+            type="toggle"
+            label="Status"
+            color="primary"
+            inline
+            v-model="kyc_status"
+            @input="fetchfilteredClients"
             />
-           
-         
         </div>
-        
       </div>
       <u-q-table 
-      :tbl_data="client_master_list_table">
+        :tbl_data="client_master_list_table"
+        class="q-ma-sm"
+      >
             <template v-slot:table_rows="props">
                 <q-td key="created_at" align="center">{{moment(props.data.created_at).format('YYYY-MMM-DD')}}</q-td>
                 <q-td key="updated_at" align="center">{{moment(props.data.updated_at).format('YYYY-MMM-DD')}}</q-td>
@@ -53,13 +41,9 @@
                         <q-item-section>
                             <q-item-label>NAME</q-item-label>
                         </q-item-section>
-                        <!-- <q-item-section>
-                            <q-item-label>{{props.data.full_name ? props.data.full_name.toUpperCase() : '' }} </q-item-label>
-                        </q-item-section> -->
                         <q-item-section>
                             <q-item-label>{{props.data.first_name ? props.data.first_name.toUpperCase() : '' }} {{props.data.middle_name ? props.data.middle_name.toUpperCase() : '' }} {{props.data.last_name ? props.data.last_name.toUpperCase() : '' }}</q-item-label>
                         </q-item-section>
-                        
                     </q-item>
                     <q-item>
                         <q-item-section>
@@ -146,11 +130,11 @@
                             <q-item-label>ID IMAGE</q-item-label>
                         </q-item-section>
                         <q-item-section>
-                            <q-img 
+                            <!-- <q-img 
                                 :src="`${server.IMAGE_URL}/${props.data._id}/images/${props.data.id_image}`" 
                                 alt="id"
                                 @click="zoomImage(`${server.IMAGE_URL}/${props.data._id}/images/${props.data.id_image}`)"
-                            />
+                            /> -->
                         </q-item-section>
                     </q-item>
                     <q-item clickable v-ripple>
@@ -158,10 +142,10 @@
                             <q-item-label>SELFIE IMAGE</q-item-label>
                         </q-item-section>
                         <q-item-section>
-                            <q-img 
+                            <!-- <q-img 
                                 :src="`${server.IMAGE_URL}/${props.data._id}/images/${props.data.selfie_image}`" alt="selfie"
                                @click="zoomImage(`${server.IMAGE_URL}/${props.data._id}/images/${props.data.selfie_image}`)"
-                            />
+                            /> -->
                         </q-item-section>
                     </q-item>
                 </q-list>
@@ -189,40 +173,44 @@ export default {
     data: () => 
     ({
         
-   
         moment      : moment,
-        
         server: {
             IMAGE_URL: config.IMAGE_URL
         },
-         kyc_status  : [],  
-        client_modal: {
+        kyc_status  : [],  
+        client_modal: 
+        {
             title   : 'Client Details',
             data    : []
         },
-        client_master_list_table: {
+        client_master_list_table:
+        {
             title   : 'Clients Master List',
-            status  : [
-                    {
-                        label: 'APPROVED',
-                        value:  'approved'
-                    },
-                    {
-                        label: 'REJECTED',
-                        value:  'rejected'
-                    },
-                    {
-                        label: 'SUBMITTED',
-                        value:  'submitted'
-                    },
-                    {
-                        label: 'NOT SUBMITTED',
-                        value:  'not submitted'
-                    }
-                ],   
+            status  : 
+            [
+                {
+                    label: 'Approved',
+                    value:  'approved'
+                },
+                {
+                    color: "grey-9",
+                    label: 'Rejected',
+                    value:  'rejected'
+                },
+                {
+                    label: 'Submitted',
+                    value:  'submitted'
+                },
+                {
+                    color: "grey-9",
+                    label: 'Not Submitted',
+                    value:  'not submitted'
+                }
+            ],   
             prompt: false,
-            columns : [
-                 { 
+            columns : 
+            [
+                { 
                     name    : 'created_at', 
                     label   : 'Date Created', 
                     field   : 'created_at',
@@ -289,7 +277,6 @@ export default {
             
             this.client_master_list_table.data = clients_res_obj.data.clients;
         },
-
         async viewDetails(user_data)
         {
             this.client_modal.data = user_data;
@@ -301,5 +288,7 @@ export default {
 </script>
 
 <style>
-
+    .q-list{
+        min-width: 400px !important;
+    }
 </style>

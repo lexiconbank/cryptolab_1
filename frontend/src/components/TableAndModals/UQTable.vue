@@ -1,7 +1,7 @@
 <template>
     <div>
         <q-table
-            class="font-monseratt text-weight-bold"
+            class="own__table"
             :title="$props.tbl_data.title"
             row-key="name"
             :data="$props.tbl_data.data"
@@ -9,7 +9,6 @@
             :columns="$props.tbl_data.columns"
             :pagination.sync="table.pagination"
             :filter="table.filter"
-            color
         >
                       
             <template v-slot:top-right>
@@ -20,19 +19,17 @@
                     color="primary"
                     v-model="table.filter"
                     class="search-bar"
-                    rounded
                     standout
+                    unelevated
                     bg-color="white"
                     label-color="black"
                     input-class="text-black"
                     placeholder="Search"
                 >
                     <template v-slot:append>
-                        <q-icon name="search" />
+                        <q-icon color="grey-9" name="search" />
                     </template>
                 </q-input>
-
-                
             </template>
             <template v-slot:body="props">
                 <q-tr>
@@ -65,25 +62,12 @@ export default {
 }
 </script>
 
-<style scoped>
-.search-bar {
-  width: 51px;
-  transition: 0.5s;
-}
-
-.search-bar:hover {
-  width: 150px;
-}
-
-div.q-table__container > div:first-child {
-    background: #9a67ac !important;
-    color: white !important;
-}
-
-table.q-table thead{
-    text-transform: uppercase !important;
-}
-table.q-table tbody tr{
-    text-transform: capitalize;
+<style lang="scss" scoped>
+.search-bar{
+  border: solid 1px #999;
+} 
+.own__table{
+    box-shadow: 0px 0px 0px 0px #cfcfcf; 
+    border: solid 1px rgb(224, 224, 224);
 }
 </style>

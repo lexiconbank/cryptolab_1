@@ -1,13 +1,17 @@
-const express           = require('express');
-const app               = express();
-const cors              = require('cors')
-const AccountController = require('./controllers/AccountController');
-const WalletController  = require('./controllers/WalletController');
+const express                   = require('express');
+const app                       = express();
+const cors                      = require('cors')
+const AccountController         = require('./controllers/AccountController');
+const AdminAccountController    = require('./controllers/AdminController');
+const WalletController          = require('./controllers/WalletController');
 
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+//admin
+app.post('/api/front/admin/login', AdminAccountController.login);
 
 app.post('/api/front/login', AccountController.login);
 app.post('/api/front/registration', AccountController.registration);
@@ -20,7 +24,6 @@ app.post('/api/users/all', AccountController.getUsersData);
 
 
 //  wallet
-
 app.post('/api/wallet/send', WalletController.sendwallet);
 
 

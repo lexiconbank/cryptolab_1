@@ -1,5 +1,6 @@
 // front
 exports.postLoginUser 	        = 'front/login'
+exports.postLoginAdmin 	        = 'front/admin/login'
 exports.postRegistrationUser    = 'front/registration'
 exports.postForgotPassword      = 'front/forgotpassword'
 exports.postResetPassword       = 'front/forgotpassword'

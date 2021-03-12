@@ -75,6 +75,7 @@ const routes =
         children:
         [
             { name: 'administration_dashboard', path: 'dashboard', component: () => import('pages/Admin/Dashboard.vue') },
+            { name: 'administration_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Admin/ClientMasterlist.vue') },  
         ]
     },
     {

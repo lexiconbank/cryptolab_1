@@ -1,50 +1,28 @@
 <template>
-<div class="documentation">
-
-<!-- markdown -->
-<q-markdown >
-Login Form
-===
-
-</q-markdown>
-<!-- /markdown -->
-
-<div class="component q-ma-lg">
-    <div class="form-container">
-        <u-q-login></u-q-login>
-    </div>
-</div>
-
-<!-- markdown -->
-<q-markdown >
-
-The __code below__ is for `Login Form`
-
-``` html
-{{ code }}
-```
-
-</q-markdown>
-<!-- /markdown -->
-
-
-</div>
+        <div>
+            <div class="q-mt-xl full-width" >
+                <div class=" q-pa-md" style="max-width:400px;margin:auto">
+                <u-q-admin-login></u-q-admin-login>
+                </div>
+            </div>
+        </div>
 </template>
 
 <script>
-import UQLogin from '../../components/UQLogin'
+import UQAdminLogin from '../../components/UQAdminLogin'
 
 export default
 {
     data:() =>
     ({
-        code: `<div class="component q-ma-lg">
-    <div class="form-container">
-        <u-q-login></u-q-login>
-    </div>
-</div>`
+        code: 
+        `<div class="component q-ma-lg">
+            <div class="form-container">
+                <u-q-admin-login></u-q-admin-login>
+            </div>
+        </div>`
     }),
-    components: { UQLogin },
+    components: { UQAdminLogin },
     mounted()
     {
     },
