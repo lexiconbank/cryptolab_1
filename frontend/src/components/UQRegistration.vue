@@ -1,13 +1,11 @@
 <template>
     <div>
-
 	    <!-- content -->
-	    <div class='content text-left'>
+	    <div class='content text-left' v-if="is_submitted == false">
 	    	<q-form @submit="findUser()">
                 <div class="field">
 		       	<label>Country</label>
-                    <q-select
-                                
+                    <q-select        
                             label="Select a country"
                             :options="options"
                             outlined
@@ -17,9 +15,7 @@
                             option-label="countryNameEn" 
                             behavior="menu">
                                <!-- <template v-slot:prepend>
-                                    <img :src="'https://www.countryflags.io/' + form_data.country.code + '/flat/32.png'" v-if="form_data.country != '' || form_data.country != {}" />
-                                    
-                                     
+                                    <img :src="'https://www.countryflags.io/' + form_data.country.code + '/flat/32.png'" v-if="form_data.country != '' || form_data.country != {}" />                     
                                 </template> -->
                                 <template v-slot:prepend>
                                 <q-icon
@@ -44,7 +40,7 @@
 		     	<div class="field">
 		       		<label>Full Name</label>
 		       		<div>
-                        <q-input v-model="form_data.full_name" placeholder="Firstname | Middlename | Lastname" outlined >
+                        <q-input v-model="form_data.full_name" placeholder="Firstname | Middlename | Lastname"  :rules="[val => !!val]" outlined >
                         </q-input>
                     </div>
 		       </div>
@@ -55,7 +51,8 @@
                         <q-input 
                         type="email" 
                         v-model="form_data.email" 
-                        placeholder="cryptolab@xxxxxxx.com" 
+                        :rules="[val => !!val]"
+                        placeholder="cryptolab@xxxx.com" 
                         outlined
                         >
                         <template v-slot:prepend>
@@ -130,15 +127,44 @@
                         </q-input>
                     </div>
 		       </div>
-                <q-toggle v-model="value" label="I accept the Terms and Conditions"/>
-		       <div class="q-mt-lg"><q-btn type="submit" color="primary" size="18px" unelevated class="full-width">Create Account</q-btn></div>
+                <q-toggle v-model="form_data.value" label="I accept the Terms and Conditions"/>
+		       <div class="q-mt-lg"><q-btn type="submit" color="primary" size="15px" unelevated class="full-width">Create Account</q-btn></div>
 	   		</q-form>
 	    </div>
+    
+        <div class="row main__div" v-if="is_submitted == true">
+            <p class = "text-h5">Confirm Account Registration</p>
+            <p class = "text-grey-7">Please check your email for your One-Time Passcode.</p>
+            <q-input outlined v-model="form_data.otp" label="One Time Passcode" class= "full-width"/>
+            <q-btn class="full-width" size="15px" color="primary" label="Submit" @click="confirm_email()" />
+            <q-btn class="full-width" size="15px" label="Resend OTP" outline @click="resend_otp()" />
+            <template>
+                <div class="q-pa-md q-gutter-sm">
+                    <q-dialog v-model="persistent" persistent transition-show="scale" transition-hide="scale">
+                    <q-card class="bg-primary text-white" style="width: 300px">
+                        
+                        <q-card-section>
+                        <div class="text-h6"><i class="fas fa-check-square" aria-hidden="true"></i> Account has been verified</div>
+                        </q-card-section>
+
+                        <q-card-section class="q-pt-none">
+                        You can now log in your account.
+                        </q-card-section>
+
+                        <q-card-actions align="right" class="bg-white text-primary">
+                        <q-btn flat label="LOGIN" @click="$router.push({name: 'front_login'})" v-close-popup />
+                        </q-card-actions>
+                    </q-card>
+                    </q-dialog>
+                </div>
+            </template>
+        </div>
     </div>
+    
 </template>
 
 <script>
-import { postRegistrationUser } from '../references/url';
+import { postRegistrationUser, postConfirmRegistration, postResendOneTimePasscode } from '../references/url';
 import country_code_list from "country-codes-list";
 import Swal from "sweetalert2";
 export default
@@ -152,7 +178,9 @@ export default
             email: '',
             password: '',
             confirm_password: '',
-            country:''
+            country:'',
+            value: false,
+            otp: '',
         },
         options:[],
         value:false,
@@ -165,26 +193,40 @@ export default
         is_weak: false,
         is_strong: false,
         is_very_strong: false,
-    }),
+        is_submitted: false,
+        persistent: false,
+        
+    }
+    ),
     mounted()
     {
-        this.options = country_code_list.all("all")
-     
-        // this.country = "Sadasd"
+        this.options = country_code_list.all("all");
     },
     methods:
     {
         async findUser()
         {
-            this.$q.loading.show();
+            // this.$q.loading.show();
             this.form_data.country = this.form_data.country.countryNameEn
             let register = await this.$_post(postRegistrationUser, this.form_data);
-            console.log("register status: ",register.status)
-            if(register.status==200)
+            console.log("register status: ", register.data)
+            if(register.data.status == "error")
             {
-                this.$q.dialog({ title: `Success Message`, message: "Successfully Registered" });
-            }else{
-                 const Toast = Swal.mixin({
+                 this.$q.notify({
+                    message: '<div style="color: red; font-weight: bold;"><i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>' + register.data.message + '</div>',
+                    position: 'top',
+                    color: 'white',
+                    html: true
+                });
+            }
+            else if(register.data.status == "success")
+            {
+                // this.$router.push({name: 'front_success_registration'});
+                this.is_submitted = true;
+            }
+            else
+            {
+                const Toast = Swal.mixin({
                 margin: 20,
                 toast: true,
                 position: 'bottom-end',
@@ -201,7 +243,7 @@ export default
                 title: 'Invalid Password!'
                 })
             }
-            this.$q.loading.hide();
+            // this.$q.loading.hide();
         },
 
         password_validations() {
@@ -243,6 +285,27 @@ export default
                 this.is_very_strong = false;
             }
         },
+        async confirm_email(){
+            let register = await this.$_post(postConfirmRegistration, this.form_data);
+            if(register.data.status == "success")
+            {
+                this.persistent = true;
+            }
+        },
+
+        async resend_otp(){
+            let resend = await this.$_post(postResendOneTimePasscode, this.form_data);
+            console.log(resend.data)
+            if(resend.data.status == "success")
+            {
+             this.$q.notify({
+                    message: '<div style="color: green; font-weight: bold;"><i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>' + 'OTP has been sent to your email' + '</div>',
+                    position: 'top',
+                    color: 'white',
+                    html: true
+                });
+            }
+        }
 
     }
 }
@@ -275,5 +338,16 @@ export default
     font-size: 12px;
     background: #23AD5C;
     color: white;
+}
+.main__div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-top: 20px;
+}
+.full-width{
+    color: $primary;
+    margin: 5px;
 }
 </style>

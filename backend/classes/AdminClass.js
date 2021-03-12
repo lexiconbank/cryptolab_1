@@ -1,8 +1,8 @@
-const MDB_ADMIN_USER = require('../models/MDB_ADMIN_USER')
-const MDB_ROLE = require('../models/MDB_ROLE')
-const MDB_OTP           = require('../models/MDB_OTP');
+const MDB_ADMIN_USER    = require('../models/MDB_ADMIN_USER')
+const MDB_ROLE          = require('../models/MDB_ROLE')
 const nodemailer        = require("nodemailer");
 const ejs               = require("ejs");
+
 module.exports = class AdminClass{
     constructor(data)
     {
@@ -13,6 +13,47 @@ module.exports = class AdminClass{
     }
 
     async update(){
+        this.data = data;
+    }
+
+
+    //admin -michael
+    
+    async authenticate()
+    {
+        let res = {};
+        try
+        {
+            let user_data = 
+            {
+                email: this.data.email,
+                password: this.data.password
+            }
+
+            let user = await this.mdb_admin_user.findByUsernameAndPassword(user_data);
+
+            if(user)
+            {
+                res.status = "success";
+            }
+            else
+            {
+                res.status = "error",
+                res.message = "Invalid Credentials";
+            }
+        }
+        catch(error)
+        {
+            res.status = "error",
+            res.message = error.message;
+        }
+
+        return res;
+    }
+    //end -michael
+
+    async update(){
+        console.log("class_update:", this.data);
         let response = {}
         let data = {}
 

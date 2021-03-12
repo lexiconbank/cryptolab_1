@@ -23,19 +23,38 @@ module.exports =
             res.status(400).send({ message: authenticate.message })
         }
     },
+
+    async loginAdmin(req, res)
+    {
+        let email           = req.body.email;
+        let password        = req.body.password;
+
+        let authenticate    = await new AccountClass({email:email, password:password}).authenticateAdmin();
+        
+        if(authenticate.status == "success")
+        {
+            res.send(true);
+        }
+        else if(authenticate.status == "error")
+        {
+            res.status(400).send({ message: authenticate.message })
+        }
+    },
+
     async registration(req, res)
     {
         // remove {req, res} parameter if MDB.register doesn't need extra params anymore {req, res}
-
-
         let user_information =
         {
             full_name: req.body.full_name,
             email: req.body.email,
             password: req.body.password,
             confirm_password: req.body.confirm_password,
-            country: req.body.country
+            country: req.body.country,
+            terms: req.body.value
         }
+
+        console.log(user_information, 'u');
 
         let account_class = new AccountClass(user_information);
 
@@ -43,13 +62,25 @@ module.exports =
 
         if(account_validation.status == "success")
         {
-            await account_class.create();
+            res.json({ status: 'success', message: 'Successfully Registered' }).status(200);
         }
         else if(account_validation.status == "error")
         {
-            res.status(400).send({ message: account_validation.message });
+            res.status(200).send({ status : 'error', message: account_validation.message });
         }
-        res.send(true);
+    },
+
+    async getUsersData(req, res)
+    {
+        console.log('req', req.body._id);
+        
+        let user_information = {
+			user_id : req.body._id
+		}
+
+		let account_class = new AccountClass(user_information);
+		let account = await account_class.getUser();
+        res.send(account);
     },
 
     async forgotPassword (req, res)
@@ -62,7 +93,7 @@ module.exports =
         if (forgot_pass.status == 'success') {
             res.json(forgot_pass).status(200);
         }
-        else if( forgot_pass.status =='not matched')
+        else if(forgot_pass.status =='not matched')
         {
             res.status(200).send({ status : 'not matched', message : forgot_pass.message });
         } 
@@ -83,6 +114,97 @@ module.exports =
             res.json({ status: 'success' }).status(200);
         } else {
             res.status(400).send({ status : 'error', message : is_valid.message });
+        }
+    },
+
+    async fetchClientsByKyc(req, res)
+    {
+        let kyc_status          = req.body.kyc_status;
+        
+        let clients_res_obj     = await AccountClass.fetchClientsByKyc({kyc_status});
+
+        if(clients_res_obj.status == 'success')
+        {
+            res.status(200).json({clients: clients_res_obj.clients});
+        }
+
+        if(clients_res_obj.status == 'error')
+        {
+            res.status(200).json({status: 'error', message: clients_res_obj.message});
+        }
+    },
+
+
+    async frontendMounted(req, res)
+    {
+        if(req.session.user_info == undefined) {
+            return;
+        }
+        else
+        {
+            let details = {
+                user_id: req.session.user_info._id
+            }
+
+            let account_class = new AccountClass(details);
+            let result = await account_class.frontendMounted();
+
+            if(result.status == "success")
+            {
+                res.status(200).json({ 
+                    status:     result.status, 
+                    user_info:  result.user_info,
+                    conversion: result.conversion
+                });
+            }
+            else
+            {
+                res.status(400).json({ status: result.status, message: result.message });
+            }
+        }
+    },
+
+    async fetchUserKyc(req, res)
+    {
+        const kyc_res_obj = await AccountClass.fetchUserKyc('6046c2383d635207c43f2b02');  //5f90343d21e259119cb22fcc
+        if(kyc_res_obj.status == 'success')
+        {
+            res.json({status: 'success', kyc: kyc_res_obj.kyc}).status(200);
+        }
+        else
+        if(kyc_res_obj.status == 'error')
+        {
+            res.json({status: 'error', message: kyc_res_obj.message}).status(400);
+        }
+    },  
+
+    async userMasterList(req, res)
+    {
+        let account_class = new AccountClass();
+        let result = await account_class.userMasterList();
+
+        if(result.status == 'success')
+        {
+            res.status(200).json({ status: result.status, data: result.data });
+        }
+        else if (result.status == 'error')
+        {
+            res.status(400).json({ status: result.status, message: result.message });
+        }
+    },
+
+    async fetch(req, res){
+    
+        const account_class = new AccountClass(req.body);
+        const result = await account_class.fetch();
+      
+        if(result.status == 'success')
+        {
+            res.json(result.data).status(200);
+        }
+        else
+        {
+            res.json(result.message).status(400);
         }
     },
 
@@ -120,6 +242,66 @@ module.exports =
         } else {
             res.status(400).send({ status : 'error', message : reset_password.message });
         }
-    }
+    },
+
+    async confirmRegistration(req, res)
+    {
+        let mdb_otp = new MDB_OTP();
+        let otp_res = await mdb_otp.findByOtp(req.body.otp);
+
+        const salt = bcrypt.genSaltSync(saltRounds);
+        // const hash = bcrypt.hashSync(reset_data.password, salt);
+        req.body.password = bcrypt.hashSync(req.body.password, salt);
+
+        let user_information =
+        {
+            full_name: req.body.full_name,
+            email: req.body.email,
+            password: req.body.password,
+            confirm_password: req.body.confirm_password,
+            country: req.body.country,
+            terms: req.body.value
+        }
+
+        let account_class = new AccountClass(user_information);
+        
+        // if invalid otp, notify user
+        if(otp_res == null)
+        {
+            res.status = 'error';
+            res.message= 'invalid OTP';
+            return res;
+        }
+
+        if(otp_res != {})
+        {
+            //  CREATE ACCOUNT
+            await account_class.create();
+
+            // delete otp after registration
+            await mdb_otp.removeUserOtp(otp_res.username, req.body.otp);
+
+            // -------------- BTC WALLET TESTNET --------------
+
+
+            res.json({ status: 'success' }).status(200);
+        }
+
+    },
+
+    async resendRegistrationOtp(req, res)
+    {
+        let account_class           = new AccountClass();
+        let resend_registration_otp = await account_class.resendUserOtp(req.body.email, req.body.username, 'registration');
+        // console.log(resend_registration_otp.status)
+        if(resend_registration_otp.status == 'success')
+        {
+            res.json(resend_registration_otp).status(200);
+        }
+        else
+        {
+            res.status(400).send({status: 'error', message: resend_registration_otp.message});
+        }
+    },
    
 }

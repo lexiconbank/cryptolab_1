@@ -41,6 +41,14 @@ class MDB_ADMIN_USER extends MODEL
         super('AdminUser', schema);
     }
 
+    //admin -michael
+    async findByUsernameAndPassword(info)
+    {
+        const res = await this.collection.findOne({ email: info.email, password: info.password });
+        return res ? res : null;
+    }
+    
+    //end -michael
     async fetch(){
         const query_data = await this.collection.find();
         return query_data ? query_data : null;
