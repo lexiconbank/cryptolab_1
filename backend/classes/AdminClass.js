@@ -8,6 +8,11 @@ module.exports = class AdminClass{
     {
         this.mdb_admin_user = new MDB_ADMIN_USER();
         this.mdb_role = new MDB_ROLE();
+        this.mdb_otp = new MDB_ROLE();
+        this.data = data;
+    }
+
+    async update(){
         this.data = data;
     }
 
@@ -89,9 +94,6 @@ module.exports = class AdminClass{
     }
 
     async delete(){
-        console.log("class_delete:", this.data)
-        console.log(this.data.id);
-        console.log(this.data.form);
         let response = {}
 
         try{
@@ -102,7 +104,6 @@ module.exports = class AdminClass{
             }else{
                 query_result = await this.mdb_admin_user.delete(this.data.id)
             }
-            console.log(query_result);
             if(query_result){
                 response.status = "success"
             }else{
@@ -113,7 +114,6 @@ module.exports = class AdminClass{
             response.status = "error"
             response.message = error.message
         }
-        console.log("class_respond:", response);
         return response
     } 
 
@@ -124,8 +124,6 @@ module.exports = class AdminClass{
             const query_result = await this.mdb_admin_user.fetch();
             response.status = 'success';
             response.data   = query_result;
-            // console.log(response.data)
-
         }catch(error){
             response.status  = 'error';
             response.message = error.message;
@@ -140,8 +138,6 @@ module.exports = class AdminClass{
             const query_result = await this.mdb_role.fetch();
             response.status = 'success';
             response.data   = query_result;
-            // console.log(response.data)
-
         }catch(error){
             response.status  = 'error';
             response.message = error.message;
@@ -150,7 +146,6 @@ module.exports = class AdminClass{
     }
 
     async insert(){
-        console.log("class_insert:", this.data)
         let response = {}
         let data = {}
 

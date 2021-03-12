@@ -30,4 +30,10 @@ exports.fetchPostfilteredClients= 'admin/fetch/clients';
 //wallet
 exports.postWalletSend           = 'wallet/send'
 
+// admin user
+exports.insert = 'admin/users/insert'
+exports.update = 'admin/users/update'
+exports.deleteThis = 'admin/users/deleteThis'
+exports.fetch = 'admin/users/fetch'
 
+exports.roleFetch = 'admin/users/roleFetch'

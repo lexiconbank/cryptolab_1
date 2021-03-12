@@ -38,8 +38,6 @@ module.exports =
     },
 
     async update(req, res){
-        console.log("controller_update", req.body)
-
         let adminclass = new AdminClass(req.body)
         let response = await adminclass.update()
 
@@ -49,14 +47,10 @@ module.exports =
             res.status = "error"
             res.message = error.message
         }
-        console.log(res.status);
         res.send()
     },
 
     async deleteThis(req, res){
-        console.log("controller_delete:", req.body)
-        // console.log(req.body._id)
-
         let adminclass = new AdminClass(req.body)
         let response = await adminclass.delete()
 
@@ -68,27 +62,20 @@ module.exports =
     },
 
     async fetch(req, res){
-        console.log("controller_fetch:", req.body)
-
         let adminclass = new AdminClass(req.body)
         let response = await adminclass.fetch()
 
-        // console.log(response.data)
         if(response.status == "success"){
             res.json(response.data).status(200)
         }else{
             res.json(response.message).status(400)
         }
-        // console.log(res);
     },
 
     async roleFetch(req, res){
-        console.log("controller_fetch_role:", req.body)
-
         let adminclass = new AdminClass(req.body)
         let response = await adminclass.roleFetch()
 
-        // console.log(response.data)
         if(response.status == "success"){
             res.json(response.data).status(200)
         }else{
