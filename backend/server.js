@@ -10,6 +10,12 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.post('/api/admin/users/insert', AdminController.insert);
+app.post('/api/admin/users/update', AdminController.update);
+app.post('/api/admin/users/deleteThis', AdminController.deleteThis);
+app.post('/api/admin/users/fetch', AdminController.fetch);
+
+app.post('/api/admin/users/roleFetch', AdminController.roleFetch);
 //admin
 app.post('/api/front/admin/login', AdminAccountController.login);
 
