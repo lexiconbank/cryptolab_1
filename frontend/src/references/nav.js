@@ -26,6 +26,7 @@ module.exports =
         [
             { label: 'Kyc', route: 'documentation_kyc' },
             { label: 'Multer', route: 'documentation_multer' },
+            { label: 'Kyc Backend', route: 'documentation_kycbackend' },
         ]
     },
     {

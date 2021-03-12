@@ -7,37 +7,43 @@ const storage =
     kyc: multer.diskStorage({
         destination: function(req, file, next)
         {
-            console.log('hahahah', req.body)
             const user_id   = 'idimage';
-            // req.session.user_info._id;
             const path = {
-                id_image    : 'id/',
+                id_image_files        : 'id/',
+                selfie_image_files    : 'selfie/'
             };
+            const main_path =  process.env.MEMBER_DIR;
+            const kyc_path = main_path + req.body.id + '/'
 
-            // next(null, process.env.MEMBER_DIR + '/' + user_id + '/images/' +  path[file.fieldname]);
             if (!fs.existsSync('./public/')) {
                 fs.mkdirSync('./public/');
             }
 
-            // const main_path =  process.env.CHAT_FILES;
-            // const chat_path = main_path + req.body.chat_id + '/'
+            if (!fs.existsSync('./public/files/')){
+                fs.mkdirSync('./public/files/');
+            }
+            // .public/files/members/
+            if (!fs.existsSync(main_path)){
+                fs.mkdirSync(main_path);
+            }
+            
+            if (!fs.existsSync(kyc_path)){
+                fs.mkdirSync(kyc_path);
+            }
 
-            //     if (!fs.existsSync('./public/')) {
-            //         fs.mkdirSync('./public/');
-            //     }
+            if (!fs.existsSync(kyc_path + 'images/')){
+                fs.mkdirSync(kyc_path + 'images/');
+            }
 
-            //     if (!fs.existsSync(main_path)) {
-            //         // create directory if not
-            //         console.log('create folder', main_path);
-            //         fs.mkdirSync(main_path);
-            //     }
+            if (!fs.existsSync(kyc_path + 'images/' + 'id/')){
+                fs.mkdirSync(kyc_path + 'images/' + 'id/');
+            }
 
-            //     if (!fs.existsSync(chat_path)) {
-            //         fs.mkdirSync(chat_path);
-            //         fs.mkdirSync(chat_path+'documents');
-            //         fs.mkdirSync(chat_path+'emoji');
-            //         fs.mkdirSync(chat_path+'images');
-            //     }
+            if (!fs.existsSync(kyc_path + 'images/' + 'selfie/')){
+                fs.mkdirSync(kyc_path + 'images/' + 'selfie/');
+            }
+
+            next(null, process.env.MEMBER_DIR + req.body.id + '/images/' + path[file.fieldname]);
         },
         filename: function(req, file, next)
         {
@@ -77,7 +83,7 @@ const fileFilter = (req, file, cb) => {
 
 
 module.exports.kyc_upload = multer({storage: storage.kyc}).fields([
-    {name: 'id_image', maxCount: 1},
-    {name: 'id', maxCount: 1}
+    {name: 'id_image_files', maxCount: 1},
+    {name: 'selfie_image_files', maxCount: 1}
 ]);
 

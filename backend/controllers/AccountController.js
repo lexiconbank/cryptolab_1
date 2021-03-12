@@ -74,29 +74,30 @@ module.exports =
 
     async kyc(req, res)
     {
-
         let kyc_info =
         {
-            id: req.body.id,
-            first_name: req.body.first_name,
-            middle_name: req.body.middle_name,
-            last_name: req.body.last_name,
-            birth_date: req.body.birth_date,
-            country: req.body.country,
-            nationality: req.body.nationality,
-            mobile_number: req.body.mobile_number,
-            address_line: req.body.address_line,
-            street: req.body.street,
-            city: req.body.city,
-            zip_code: req.body.zip_code,
-            id_type: req.body.id_type,
-            id_number: req.body.id_number,
-            id_expiry: req.body.id_expiry,
-            security_question: req.body.security_question,
-            security_answer: req.body.security_answer,
-            code: req.body.code,
-            frontId: req.body.frontId,
-            selfieId: req.body.selfieId
+            id                  : req.body.id,
+            first_name          : req.body.first_name,
+            middle_name         : req.body.middle_name,
+            last_name           : req.body.last_name,
+            birth_date          : req.body.birth_date,
+            country             : req.body.country,
+            nationality         : req.body.nationality,
+            mobile_number       : req.body.mobile_number,
+            address_line        : req.body.address_line,
+            street              : req.body.street,
+            city                : req.body.city,
+            zip_code            : req.body.zip_code,
+            id_type             : req.body.id_type,
+            id_number           : req.body.id_number,
+            id_expiry           : req.body.id_expiry,
+            security_question   : req.body.security_question,
+            security_answer     : req.body.security_answer,
+            code                : req.body.code,
+            id_image            : 'id/' + req.files.id_image_files[0].filename,
+            selfie_image        : 'selfie/' + req.files.selfie_image_files[0].filename,
+            kyc_status          : 'pending',
+            kyc_submitted       : Date.now()
         }
         let account_class = new AccountClass(kyc_info);
         let resp = await account_class.postKyc();
@@ -152,6 +153,45 @@ module.exports =
         } else {
             res.status(400).send({ status : 'error', message : reset_password.message });
         }
+    },
+
+    async kyc_data (req, res){
+        let account_class = new AccountClass();
+        let kyc_data = await account_class.getKyc_Data();
+        res.send(kyc_data);
+    },
+
+    async userInfoControlller (req, res){
+        let user = 
+        {
+            id: req.body.id
+        }
+        let account_class = new AccountClass(user);
+        let user_info = await account_class.userInfoClass();
+        res.send(user_info);
+    },
+
+    async kyc_approved (req, res){
+        let kyc_details =
+        {
+            id: req.body.id,
+            kyc_status: 'approved'
+        }
+        let account_class = new AccountClass(kyc_details);
+        let resp = await account_class.updateKycStatus();
+        res.send(resp);
+    },
+
+    async kyc_rejected (req, res){
+        let kyc_details =
+        {
+            id: req.body.id,
+            kyc_status: 'rejected',
+            remarks: req.body.remarks
+        }
+        let account_class = new AccountClass(kyc_details);
+        let resp = await account_class.update_kyc();
+        res.send(resp);
     }
    
 }

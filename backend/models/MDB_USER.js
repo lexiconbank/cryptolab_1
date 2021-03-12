@@ -1,7 +1,6 @@
 const MONGOOSE  = require('../config/mongo');
 const MODEL     = require('./MODEL');
 const Schema    = MONGOOSE.Schema;
-const findOrCreate          = require('mongoose-findorcreate');
 
 const schema    = new Schema({
     full_name : 
@@ -88,11 +87,11 @@ const schema    = new Schema({
     {
         type:       String,
     },
-    frontId:
+    id_image:
     {
         type:       String,
     },
-    selfieId: 
+    selfie_image: 
     {
         type:       String,
     },
@@ -107,11 +106,12 @@ const schema    = new Schema({
     country: 
     {
         type:       String,
-        required:   true
+    },
+    remarks:
+    {
+        type: String
     }
 });
-
-schema.plugin(findOrCreate);
 
 let User = new MONGOOSE.model("users", schema);
 
@@ -136,35 +136,34 @@ class MDB_USER extends MODEL
 
     async postKyc(kycInfo)
     {
+        
         const res = await this.collection.findByIdAndUpdate(
             {_id: kycInfo.id}, 
             { 
-                first_name: kycInfo.first_name,
-                middle_name: kycInfo.middle_name,
-                last_name: kycInfo.last_name,
-                birth_date: kycInfo.birth_date,
-                country: kycInfo.country,
-                nationality: kycInfo.nationality,
-                mobile_number: kycInfo.mobile_number,
-                address_line: kycInfo.address_line,
-                street: kycInfo.street,
-                city: kycInfo.city,
-                zip_code: kycInfo.zip_code,
-                id_type: kycInfo.id_type,
-                id_number: kycInfo.id_number,
-                id_expiry: kycInfo.id_expiry,
-                security_question: kycInfo.security_question,
-                security_answer: kycInfo.security_answer,
-                code: kycInfo.code,
-                frontId: kycInfo.frontId,
-                selfieId: kycInfo.selfieId,
-                kyc_status: 'pending',
-                kyc_submitted: Date.now()
+                first_name          : kycInfo.first_name,
+                middle_name         : kycInfo.middle_name,
+                last_name           : kycInfo.last_name,
+                birth_date          : kycInfo.birth_date,
+                country             : kycInfo.country,
+                nationality         : kycInfo.nationality,
+                mobile_number       : kycInfo.mobile_number,
+                address_line        : kycInfo.address_line,
+                street              : kycInfo.street,
+                city                : kycInfo.city,
+                zip_code            : kycInfo.zip_code,
+                id_type             : kycInfo.id_type,
+                id_number           : kycInfo.id_number,
+                id_expiry           : kycInfo.id_expiry,
+                security_question   : kycInfo.security_question,
+                security_answer     : kycInfo.security_answer,
+                code                : kycInfo.code,
+                id_image            : kycInfo.id_image,
+                selfie_image        : kycInfo.selfie_image,
+                kyc_status          : kycInfo.kyc_status,
+                kyc_submitted       : kycInfo.kyc_submitted
             });
-            
         return res ? res : null;
     }
-
 
     async resetpass(email, new_password)
     {
@@ -172,6 +171,45 @@ class MDB_USER extends MODEL
         console.log(res); 
         return res ? res : null;
     }
+
+    async getKycData(){
+        try 
+        {
+            const collection     = this.collection;
+            const res            = await collection.find({kyc_status: "pending"});
+            return res;
+        } 
+        catch (error) 
+        {
+            return error;
+        }
+    }
+
+    async userInfoModel(user){
+        try 
+        {
+            const collection     = this.collection;
+            const res            = await collection.find({_id: user.id});
+            return res;
+        } 
+        catch (error) 
+        {
+            return error;
+        }
+    }
+
+    async update_kycstatus(details)
+    {
+        const res = await this.collection.findByIdAndUpdate({_id: details.id}, {kyc_status: details.kyc_status});
+        return res ? res : null;
+    }
+
+    async update_kyc_rejected(details)
+    {
+        const res = await this.collection.findByIdAndUpdate({_id: details.id}, {kyc_status: details.kyc_status, remarks: details.remarks});
+        return res ? res : null;
+    }
+
 }
 
 module.exports = MDB_USER;

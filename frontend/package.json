@@ -16,13 +16,10 @@
     "country-codes": "0.0.3",
     "country-codes-list": "^1.6.8",
     "country-list": "^2.2.0",
-<<<<<<< HEAD
+    "moment": "^2.29.1",
     "npm-nationality-list": "^1.0.0",
-    "quasar": "^1.13.2"
-=======
     "quasar": "^1.13.2",
     "sweetalert2": "^10.15.5"
->>>>>>> 9e6c98678895716bcd29af97547614452e9c7388
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

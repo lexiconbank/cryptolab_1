@@ -53,13 +53,11 @@ const routes =
             { name: 'documentation_convert', path: 'convert', component: () => import('pages/Documentation/Convert.vue') },
             { name: 'documentation_forgot_passsword', path: 'forgot_password', component: () => import('pages/Documentation/ForgotPassword.vue') },
             { name: 'documentation_reset_passsword', path: 'reset_password/:key', component: () => import('pages/Documentation/ResetPassword.vue') },
-<<<<<<< HEAD
             { name: 'documentation_kyc', path: 'kyc', component: () => import('pages/Documentation/Kyc.vue') },
             { name: 'documentation_multer', path: 'multer', component: () => import('pages/Documentation/Multer.vue') },
+            { name: 'documentation_kycbackend', path: 'kycbackend', component: () => import('pages/Documentation/KycBackend.vue') },
 
-=======
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
->>>>>>> 9e6c98678895716bcd29af97547614452e9c7388
         ]
     },
     // Always leave this as last one,
