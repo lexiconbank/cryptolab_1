@@ -47,12 +47,12 @@ export default
     components: {
         EssentialLink
     },
-	data: () =>
-	({
-		package_data: { version: '0.0.0' },
-		leftDrawerOpen: false,
-		navigation: [],
-	}),
+        data: () =>
+        ({
+                package_data: { version: '0.0.0' },
+                leftDrawerOpen: false,
+                navigation: [],
+        }),
     mounted()
     {
         this.navigation = navigation;

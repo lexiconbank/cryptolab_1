@@ -117,6 +117,97 @@ module.exports =
         }
     },
 
+    async fetchClientsByKyc(req, res)
+    {
+        let kyc_status          = req.body.kyc_status;
+        
+        let clients_res_obj     = await AccountClass.fetchClientsByKyc({kyc_status});
+
+        if(clients_res_obj.status == 'success')
+        {
+            res.status(200).json({clients: clients_res_obj.clients});
+        }
+
+        if(clients_res_obj.status == 'error')
+        {
+            res.status(200).json({status: 'error', message: clients_res_obj.message});
+        }
+    },
+
+
+    async frontendMounted(req, res)
+    {
+        if(req.session.user_info == undefined) {
+            return;
+        }
+        else
+        {
+            let details = {
+                user_id: req.session.user_info._id
+            }
+
+            let account_class = new AccountClass(details);
+            let result = await account_class.frontendMounted();
+
+            if(result.status == "success")
+            {
+                res.status(200).json({ 
+                    status:     result.status, 
+                    user_info:  result.user_info,
+                    conversion: result.conversion
+                });
+            }
+            else
+            {
+                res.status(400).json({ status: result.status, message: result.message });
+            }
+        }
+    },
+
+    async fetchUserKyc(req, res)
+    {
+        const kyc_res_obj = await AccountClass.fetchUserKyc('6046c2383d635207c43f2b02');  //5f90343d21e259119cb22fcc
+        if(kyc_res_obj.status == 'success')
+        {
+            res.json({status: 'success', kyc: kyc_res_obj.kyc}).status(200);
+        }
+        else
+        if(kyc_res_obj.status == 'error')
+        {
+            res.json({status: 'error', message: kyc_res_obj.message}).status(400);
+        }
+    },  
+
+    async userMasterList(req, res)
+    {
+        let account_class = new AccountClass();
+        let result = await account_class.userMasterList();
+
+        if(result.status == 'success')
+        {
+            res.status(200).json({ status: result.status, data: result.data });
+        }
+        else if (result.status == 'error')
+        {
+            res.status(400).json({ status: result.status, message: result.message });
+        }
+    },
+
+    async fetch(req, res){
+    
+        const account_class = new AccountClass(req.body);
+        const result = await account_class.fetch();
+      
+        if(result.status == 'success')
+        {
+            res.json(result.data).status(200);
+        }
+        else
+        {
+            res.json(result.message).status(400);
+        }
+    },
+
     async resetUserPassword(req, res)
     {
         let reset_data =

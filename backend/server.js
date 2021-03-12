@@ -28,6 +28,19 @@ app.post('/api/wallet/send', WalletController.sendwallet);
 
 
 
+//rei
+app.post('/api/admin/user_masterlist', AccountController.userMasterList);
+app.post('/api/front/fetch', AccountController.fetch)
+
+                // fetch user kyc status
+
+app.post('/api/member/kyc/user/fetch', AccountController.fetchUserKyc);
+app.post('/api/admin/fetch/clients', AccountController.fetchClientsByKyc);
+
+
+
+
+
 app.listen({port: 4000}, (err) => {
     if(err) {
         console.log(err);

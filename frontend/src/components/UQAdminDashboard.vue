@@ -1,47 +1,47 @@
 <template>
-<div>
-   <div class="row q-mt-lg">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
-            <q-card class="no-shadow q-pa-md shadow">
-                <q-item class="q-pb-none q-pt-xs bg-primary">
-                    <q-item-section class="q-py-lg">
-                    <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Submitted Client</q-item-label>
-                    <q-item-label class="text-h4 text-center text-white" style="font-weight: 500;letter-spacing: 3px;">{{submitted_client}}</q-item-label>
-                    </q-item-section>
-                </q-item>
-            </q-card>
+    <div>
+        <div class="row q-mt-lg">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
+                <q-card class="no-shadow q-pa-md shadow">
+                    <q-item class="q-pb-none q-pt-xs bg-primary">
+                        <q-item-section class="q-py-lg">
+                        <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Submitted Client</q-item-label>
+                        <q-item-label class="text-h4 text-center text-white" style="font-weight: 500;letter-spacing: 3px;">{{submitted_client}}</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-card>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
+                <q-card class="no-shadow q-pa-md shadow">
+                    <q-item class="q-pb-none q-pt-xs bg-grey-7">
+                        <q-item-section class="q-py-lg">
+                        <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Not Submitted Client</q-item-label>
+                        <q-item-label class="text-h4 text-center text-white text-no-w" style="font-weight: 500;letter-spacing: 3px; text-wra">{{not_submitted_client}}</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-card>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
+                <q-card class="no-shadow q-pa-md shadow">
+                    <q-item class="q-pb-none q-pt-xs bg-grey-7">
+                        <q-item-section class="q-py-lg">
+                        <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Rejected Client</q-item-label>
+                        <q-item-label class="text-h4 text-center text-white" style="font-weight: 500;letter-spacing: 3px;">{{rejected_data}}</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-card>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
+                <q-card class="no-shadow q-pa-md shadow">
+                    <q-item class="q-pb-none q-pt-xs bg-primary">
+                        <q-item-section class="q-py-lg">
+                        <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Approved Client</q-item-label>
+                        <q-item-label class="text-h4 text-center text-white" style="font-weight: 500;letter-spacing: 3px;">{{approved_client}}</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-card>
+            </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
-            <q-card class="no-shadow q-pa-md shadow">
-                <q-item class="q-pb-none q-pt-xs bg-grey-7">
-                    <q-item-section class="q-py-lg">
-                    <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Not Submitted Client</q-item-label>
-                    <q-item-label class="text-h4 text-center text-white text-no-w" style="font-weight: 500;letter-spacing: 3px; text-wra">{{not_submitted_client}}</q-item-label>
-                    </q-item-section>
-                </q-item>
-            </q-card>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
-            <q-card class="no-shadow q-pa-md shadow">
-                <q-item class="q-pb-none q-pt-xs bg-grey-7">
-                    <q-item-section class="q-py-lg">
-                    <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Rejected Client</q-item-label>
-                    <q-item-label class="text-h4 text-center text-white" style="font-weight: 500;letter-spacing: 3px;">{{rejected_data}}</q-item-label>
-                    </q-item-section>
-                </q-item>
-            </q-card>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" >
-            <q-card class="no-shadow q-pa-md shadow">
-                <q-item class="q-pb-none q-pt-xs bg-primary">
-                    <q-item-section class="q-py-lg">
-                    <q-item-label class="text-center text-white" style="letter-spacing: 1px;">Approved Client</q-item-label>
-                    <q-item-label class="text-h4 text-center text-white" style="font-weight: 500;letter-spacing: 3px;">{{approved_client}}</q-item-label>
-                    </q-item-section>
-                </q-item>
-            </q-card>
-        </div>
-    </div>
         <div class="text-right q-ma-sm">
             <q-btn 
                 outline
@@ -121,7 +121,7 @@
             </q-table>
         </q-card>
     
-</div>
+    </div>
 </template>
 
 <script>
