@@ -42,7 +42,7 @@
                 </q-card>
             </div>
         </div>
-        <div class="text-right q-ma-sm">
+        <div class="text-right q-mt-lg">
             <q-btn 
                 outline
                 unelevated
@@ -51,10 +51,12 @@
                 label="Export to CSV"
                 no-caps
                 @click="exportTable"
+                class="q-ma-sm"
             />
         </div>
         <q-card flat bordered class="shadow q-mx-sm">
             <q-table
+            flat bordered
                 :data="data"
                 :hide-header="mode === 'grid'"
                 :columns="columns"
@@ -63,8 +65,8 @@
                 :filter="filter"
                 :pagination.sync="pagination"
             >
-                <template v-slot:top-left="props">
-                    <div class="text-h6 text-primary">Transactions</div>
+                <template v-slot:top-left="">
+                    <div class="text-h6 text-primary">Clients Data</div>
                 </template>
                 <!-- <template v-slot:body-cell-status="props">
                 <q-td :props="props" class="text-center">
@@ -85,7 +87,7 @@
                         <q-icon name="search"/>
                     </template>
                     </q-input>
-
+                    
                     <q-btn
                     flat
                     round

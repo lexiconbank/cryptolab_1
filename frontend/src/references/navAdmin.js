@@ -12,6 +12,12 @@ module.exports =
         icon: 'receipt_long',
         route: 'administration_clientsmasterlist',
     },
+    {
+        key: 'administration_wallet',
+        label: 'Mother Wallet',
+        icon: 'account_balance_wallet',
+        route: 'administration_wallet',
+    },
 
     //add other nav button here
 ]

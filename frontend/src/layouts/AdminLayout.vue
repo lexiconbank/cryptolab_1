@@ -24,7 +24,7 @@
 						<q-item-section>{{ nav.label }}</q-item-section>
 					</q-item>
 					<q-expansion-item group="sidenav" v-if="nav.hasOwnProperty('sub')" expand-separator class="nav" :icon="nav.icon" :label="nav.label">
-						<q-card class="nav-sub">
+						<q-card class="nav-sub ">
 							<div v-for="(sub,key) in nav.sub" :key="key" class="nav-item" :class="$route.name == sub.route ? 'active' : ''" @click="$router.push({ name: sub.route })">{{ sub.label }}</div>
 						</q-card>
 					</q-expansion-item>

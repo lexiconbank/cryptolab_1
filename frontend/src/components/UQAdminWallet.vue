@@ -5,12 +5,12 @@
         <div class="text-grey-7">100,87871.15 PHP</div>
 
         <div class="row wallet_btn">
-            <q-btn color="white" class="col-6 custom_btn" text-color="primary" label="Receive" @click="is_show_receive_modal = true" />
+            <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Receive" @click="is_show_receive_modal = true" />
             <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Send" @click="is_show_send_modal = true"/>
         </div>
 
         <div class="wallet_all">
-            <p class=" text-h6">All Wallet</p>
+            <p class="text-h6 text-left q-pl-md">All Wallet</p>
             <q-separator></q-separator>
             <div>
                 <div class="row wallet_all_select text-h6">
@@ -37,8 +37,8 @@
             <q-card style="width: 450px; border-radius: 20px">
                 <!-- UQClientSend Component -->
                 <q-card-section class="q-pt-none">
-                    <u-q-client-send>
-                    </u-q-client-send>
+                    <u-q-admin-send>
+                    </u-q-admin-send>
                 </q-card-section>
             </q-card>
         </q-dialog>
@@ -58,15 +58,15 @@
 </template>
 
 <script>
-import {postGetUser}      from '../references/url'; 
-import UQClientSend     from './UQClientSend';
+// import {postGetUser}      from '../references/url'; 
+import UQAdminSend     from './UQAdminSend';
 import UQClientReceive  from './UQClientReceive';
    
 export default
 {
     components: 
     { 
-        UQClientSend, UQClientReceive
+        UQAdminSend, UQClientReceive
     },
 
     data:() =>
@@ -118,15 +118,11 @@ export default
         flex-direction:column;
         justify-content:center;
         align-items:center;
-        
     }
     .wallet_main .wallet_name{
         font-size: 20px;
         font-weight: normal;
-        margin: 0px 0 20px;
-    }
-    .wallet_btn{
-        margin-top: 10px;
+        margin: 0px 0 20px 0;
     }
     .wallet_main .wallet_btn .custom_btn{
         border-radius: 10px;
@@ -135,7 +131,7 @@ export default
         margin: 10px;
     }
     .wallet_main .wallet_all{
-        margin-top: 40px; 
+        margin-top: 20px; 
         font-weight: normal;
         width: 75%;
         text-align: center;

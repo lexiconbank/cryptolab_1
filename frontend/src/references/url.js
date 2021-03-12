@@ -1,6 +1,5 @@
 // front
 exports.postLoginUser 	        = 'front/login'
-exports.postLoginAdmin 	        = 'front/admin/login'
 exports.postRegistrationUser    = 'front/registration'
 exports.postForgotPassword      = 'front/forgotpassword'
 exports.postResetPassword       = 'front/forgotpassword'
@@ -17,6 +16,9 @@ exports.fetch = 'front/fetch'
 exports.postListUsers           = 'admin/users/list';
 exports.postAddUser             = 'admin/users/add';
 exports.postAddEdit             = 'admin/users/edit';
+
+exports.postLoginAdmin 	        = 'front/admin/login'
+// exports.postLoginWallet 	    = 'front/admin/wallet'
 
 //rei
 

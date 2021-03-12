@@ -12,6 +12,7 @@ app.use(express.json());
 
 //admin
 app.post('/api/front/admin/login', AdminAccountController.login);
+// app.post('/api/front/admin/wallet', AdminAccountController.login);
 
 app.post('/api/front/login', AccountController.login);
 app.post('/api/front/registration', AccountController.registration);

@@ -25,7 +25,10 @@ module.exports =
         sub:
         [
 
+            { label: 'Dashboard', route: 'documentation_admin_dashboard' },
             { label: 'Clients Masterlist', route: 'documentation_clientsmasterlist' },
+            { label: 'Wallet', route: 'documentation_admin_wallet' },
+            { label: 'Wallet Drawer', route: 'documentation_admin_wallet_drawer' },
            
         ]
     },
