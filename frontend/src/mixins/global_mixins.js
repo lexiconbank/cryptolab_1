@@ -19,7 +19,6 @@ export default
     {
         async $_post(url, data)
         {
-            alert(url + ' : ' + data);
             return await this.$axios.post(url, data).catch((e) =>
             {
                 this.$q.dialog({ title: `Something's not quite right`, message: e.response.data.message });

@@ -140,7 +140,6 @@ module.exports = class AccountClass
 
      async getUser()
      {
-        console.log(this.user_information, 'user');
         let { user_id } = this.user_information;
         let user_info = await this.mdb_user.findByUserId(user_id);
 
@@ -283,7 +282,6 @@ module.exports = class AccountClass
     async validateResetUserPasswordData(reset_data)
     {
         const { password, confirm_password, key } = reset_data;
-        console.log(reset_data.key, 'gg');
         let res = {};
 
         try {
@@ -318,6 +316,48 @@ module.exports = class AccountClass
         }
     }
 
+    async userMasterList()
+    {
+        const mdb_user = new MDB_USER();
+        let res = {}
+
+        try {
+            let users = await mdb_user.findAllClients();
+
+            res.data   = users;
+            res.status = "success";
+        }
+        catch (error) {
+            res.status  = "error";
+            res.message = error.message;
+        }
+        return res;
+    }
+
+    
+    static async fetchClientsByKyc({kyc_status})
+    {
+        let res                 = {};
+        const mdb_user          = new MDB_USER();
+        const clients_res_obj   = await mdb_user.fetchClientsByKyc({kyc_status});
+
+        if(Array.isArray(clients_res_obj))
+        {
+            res.status  = 'success';
+            res.clients = clients_res_obj;
+        }
+
+        if(clients_res_obj == null)
+        {
+
+            res.status  = 'error';
+            res.message = 'returned data is equal to null';
+        }
+
+        return res;
+
+    }
+
     async resendUserOtp(email, username, otp_for)
     {
         let res         = {};
@@ -338,7 +378,49 @@ module.exports = class AccountClass
         }
         return res;
     }
-    
+
+
+    static async fetchUserKyc(_id)
+    {
+            let res = {}
+            const mdb_user      = new MDB_USER();
+            const kyc_res_obj   = await mdb_user.fetchUserKyc(_id);
+
+            if (kyc_res_obj == null || kyc_res_obj == '')
+            {
+                res.status      = 'error';
+                res.message     = 'no document found';
+            }
+
+            if (res.status == undefined || res.status == null || res.status == '')
+            {
+                res.status      = 'success';
+                res.kyc         = kyc_res_obj;
+            }
+
+            return res;
+            }
+
+    async frontendMounted()
+    {
+        const mdb_user       = new MDB_USER();
+        let res = {};
+
+        try
+        {
+            let user_info  = await mdb_user.findByUserId(this.user_information.user_id);
+            let conversion = await mdb_conversion.findByAbbreviation('USD');
+
+            res.user_info  = user_info;
+            res.conversion = conversion;
+            res.status     = "success";
+        }
+        catch(error)
+        {
+            res.status  = "error";
+            res.message = error.message;
+        }
+        return res;
+    }
+
 }
-
-

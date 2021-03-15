@@ -56,6 +56,9 @@ const routes =
             { name: 'documentation_forgot_passsword', path: 'forgot_password', component: () => import('pages/Documentation/ForgotPassword.vue') },
             { name: 'documentation_reset_passsword', path: 'reset_password/:key', component: () => import('pages/Documentation/ResetPassword.vue') },
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
+            // { name: 'documentation_registration_admin', path: 'registration_admin', component: () => import('pages/Documentation/RegistrationAdmin.vue') },
+            { name: 'documentation_admin_user_table', path: 'admin_user_table', component: () => import('pages/Documentation/AdminUserTable.vue') },
+            { name: 'documentation_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Documentation/ClientsMasterlist.vue') },  
             { name: 'documentation_profile', path: 'profile', component: () => import('pages/Documentation/Profile.vue') },
         ]
     },
@@ -74,6 +77,7 @@ const routes =
         children:
         [
             { name: 'administration_dashboard', path: 'dashboard', component: () => import('pages/Admin/Dashboard.vue') },
+            { name: 'administration_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Admin/ClientMasterlist.vue') },  
         ]
     },
     {
