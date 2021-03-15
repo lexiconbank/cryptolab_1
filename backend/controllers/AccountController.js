@@ -47,14 +47,13 @@ module.exports =
         let user_information =
         {
             full_name: req.body.full_name,
+            username: req.body.username,
             email: req.body.email,
             password: req.body.password,
             confirm_password: req.body.confirm_password,
             country: req.body.country,
             terms: req.body.value
         }
-
-        console.log(user_information, 'u');
 
         let account_class = new AccountClass(user_information);
 
@@ -72,8 +71,6 @@ module.exports =
 
     async getUsersData(req, res)
     {
-        console.log('req', req.body._id);
-        
         let user_information = {
 			user_id : req.body._id
 		}
@@ -250,12 +247,13 @@ module.exports =
         let otp_res = await mdb_otp.findByOtp(req.body.otp);
 
         const salt = bcrypt.genSaltSync(saltRounds);
-        // const hash = bcrypt.hashSync(reset_data.password, salt);
+
         req.body.password = bcrypt.hashSync(req.body.password, salt);
 
         let user_information =
         {
             full_name: req.body.full_name,
+            username: req.body.username,
             email: req.body.email,
             password: req.body.password,
             confirm_password: req.body.confirm_password,

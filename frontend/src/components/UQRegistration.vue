@@ -37,13 +37,13 @@
                                 </template>
                     </q-select>
 		       </div>
-		     	<div class="field">
+		        <div class="field">
 		       		<label>Full Name</label>
 		       		<div>
-                        <q-input v-model="form_data.full_name" placeholder="Firstname | Middlename | Lastname"  :rules="[val => !!val]" outlined >
+                        <q-input v-model="form_data.full_name" placeholder="Firstname | Lastname"  :rules="[val => !!val]" outlined >
                         </q-input>
                     </div>
-		       </div>
+		        </div>
 
 		     	<div class="field q-mt-md">
 		       		<label>Email</label>
@@ -63,6 +63,14 @@
                         </q-input>
                     </div>
 		       </div>
+
+               <div class="field">
+		       		<label>Username</label>
+		       		<div>
+                        <q-input v-model="form_data.username" placeholder="Username"  :rules="[val => !!val]" outlined >
+                        </q-input>
+                    </div>
+		        </div>
 
 		        <div class="field q-mt-md">
 		       		<label>Password</label>
@@ -175,6 +183,7 @@ export default
         form_data:
         {
             full_name: '',
+            username: '',
             email: '',
             password: '',
             confirm_password: '',

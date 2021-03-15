@@ -26,7 +26,8 @@ exports.fetchPostfilteredClients= 'admin/fetch/clients';
 
 
 //wallet
-exports.postWalletSend           = 'wallet/send'
+exports.postWalletSend          = 'wallet/send'
+exports.postClientReceiving     = 'wallet/receiving'
 
 // admin user
 exports.insert = 'admin/users/insert'

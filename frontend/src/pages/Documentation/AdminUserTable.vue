@@ -32,7 +32,7 @@ The __code below__ is for `Login Form`
 </template>
 
 <script>
-import UQAdminusertable from '../../components/UQAdminusertable'
+// import UQAdminusertable from '../../components/UQAdminusertable'
 
 export default
 {

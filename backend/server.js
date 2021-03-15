@@ -2,9 +2,11 @@ const express                   = require('express');
 const app                       = express();
 const cors                      = require('cors')
 const AccountController         = require('./controllers/AccountController');
+const AdminController           = require('./controllers/AdminController');
 const AdminAccountController    = require('./controllers/AdminController');
 const WalletController          = require('./controllers/WalletController');
 
+// app.use(ScheduleClass);
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -31,7 +33,7 @@ app.post('/api/users/all', AccountController.getUsersData);
 
 //  wallet
 app.post('/api/wallet/send', WalletController.sendwallet);
-
+// app.post('/api/wallet/receiving', WalletController.sendwallet);
 
 
 //rei
