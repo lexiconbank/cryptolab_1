@@ -14,6 +14,7 @@ exports.postAddUser             = 'admin/users/add'
 exports.postAddEdit             = 'admin/users/edit'
 
 //wallet
-exports.postWalletSend           = 'wallet/send'
+exports.postWalletSend          = 'wallet/send'
+exports.postClientReceiving     = 'wallet/receiving'
 
 

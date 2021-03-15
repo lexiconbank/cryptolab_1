@@ -1,7 +1,9 @@
 const MDB_USER          = require('../models/MDB_USER');
+const MDB_WALLET        = require('../models/MDB_WALLET');
 const MDB_OTP           = require('../models/MDB_OTP');
 const nodemailer        = require("nodemailer");
 const ejs               = require("ejs");
+const axios             = require('axios');
 
 module.exports = class AccountClass
 {
@@ -13,24 +15,20 @@ module.exports = class AccountClass
 
     async validate()
     { 
-        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '')
+        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '' || this.user_information.username == '')
         {
             return {status : "error", message : "You need to fill up all fields in order to proceed."};
         }
+
         else if(this.user_information.confirm_password !== this.user_information.password)
         {
             return {status : "error", message : "The password you entered didn't match."};
         }
-        // else if(this.user_information.value == false || this.user_information.value == null)
-        // {
-        //     return {status : "error", message : "Before you complete your registration, you must accept the Terms and Conditions."};
-        // }
+
         else
         {
-            console.log('validate email');
-
             let is_email_exist = await this.mdb_user.findByEmail(this.user_information.email);
-            console.log(is_email_exist);
+            
             if (is_email_exist) 
             {
                 return {status : "error", message :  "The email address you entered is already in use"};
@@ -86,11 +84,47 @@ module.exports = class AccountClass
             { 
                 full_name: this.user_information.full_name,
                 email: this.user_information.email,
+                username: this.user_information.username,
                 password: this.user_information.password,
                 country:this.user_information.country
             }
 
-            await this.mdb_user.add(add_form);
+            let user_info  = await this.mdb_user.add(add_form);
+
+            console.log('user registered : ', user_info);
+
+            // ************* BTC WALLET **************
+
+            const mdb_wallet        = new MDB_WALLET();
+            const mdb_user          = new MDB_USER();
+
+            let res  = {};
+            let _id     = user_info._id;
+            let username = user_info.username;
+
+            const btc_network = process.env.BTC_NETWORK;
+            const btc_api = btc_network == 'mainnet' ? 
+                'http://178.128.92.211:3000/api/create_address/' : 
+                'http://178.128.92.211:3000/api/testnet/create_address/';
+                await axios.post(btc_api, { name: username })
+                .then(async (response) => {
+                    let wallet_details_btc 		=
+                    {
+                        user_id:                _id,
+                        currency_name:          "Bitcoin",
+                        currency_abbreviation:  "BTC",
+                        decimal_places:         8,
+                        public_key:             response.data.result,
+                        balance:                0
+                    }
+
+                    let btc_wallet = await mdb_wallet.add(wallet_details_btc); // DB save
+                    mdb_user.update( _id, {         // DB update
+                        $addToSet: { wallet: btc_wallet._id }
+                    })
+                }, (error) => {
+                    console.log(error)
+                });
 
             res.status = "success";
             res.message = "Successfully Registered";
