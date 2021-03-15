@@ -415,7 +415,6 @@ module.exports = class AccountClass
         return res;
     }
 
-}
     async userMasterList()
     {
         const mdb_user = new MDB_USER();

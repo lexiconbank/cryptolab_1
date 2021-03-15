@@ -9,11 +9,11 @@ Admin User Table
 </q-markdown>
 <!-- /markdown -->
 
-<div class="component q-ma-lg">
+<!-- <div class="component q-ma-lg">
     <div class="">
       <u-q-adminusertable></u-q-adminusertable>
     </div>
-</div>
+</div> -->
 
 <!-- markdown -->
 <q-markdown >
@@ -32,7 +32,7 @@ The __code below__ is for `Login Form`
 </template>
 
 <script>
-import UQAdminusertable from '../../components/UQAdminusertable'
+// import UQAdminusertable from '../../components/UQAdminusertable'
 
 export default
 {
@@ -44,7 +44,7 @@ export default
     </div>
 </div>`
     }),
-    components: { UQAdminusertable },
+    // components: { UQAdminusertable },
     mounted()
     {
     },

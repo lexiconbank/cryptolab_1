@@ -3,6 +3,7 @@ const app                       = express();
 const cors                      = require('cors')
 const multer                    = require('./middlewares/multer');
 const AccountController         = require('./controllers/AccountController');
+const AdminController           = require('./controllers/AdminController');
 const AdminAccountController    = require('./controllers/AdminController');
 const WalletController          = require('./controllers/WalletController');
 
