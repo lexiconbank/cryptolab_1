@@ -10,7 +10,7 @@ const routes =
         
         { name: 'front_landing', path: '/', component: () => import('pages/Front/Landing.vue') },	    
         { name: 'front_login', path: '/login', component: () => import('src/pages/Front/Login.vue') },	    
-        { name: 'front_registration', path: '/registration', component: () => import('src/pages/Front/Registration.vue') },	
+        { name: 'front_registration', path: '/registration', component: () => import('src/pages/Front/Registration.vue') },	    
         { name: 'wallet_balance', path: 'wallet/balance', component: () => import('components/UQWalletBalance.vue') },
         { name: 'transaction_history', path: 'transanction_history', component: () => import('components/UQTransactionHistory.vue') },
         { name: 'reset_password', path: 'forgot_password/:key', component: () => import('components/UQResetPassword.vue') },
@@ -60,14 +60,18 @@ const routes =
             { name: 'documentation_kycbackend', path: 'kycbackend', component: () => import('pages/Documentation/KycBackend.vue') },
 
             { name: 'documentation_otp', path: 'registration_otp', component: () => import('pages/Documentation/RegistrationOtp.vue') },
+            { name: 'documentation_admin_dashboard', path: 'admin_dashboard', component: () => import('pages/Documentation/Dashboard.vue') },  
             // { name: 'documentation_registration_admin', path: 'registration_admin', component: () => import('pages/Documentation/RegistrationAdmin.vue') },
             { name: 'documentation_admin_user_table', path: 'admin_user_table', component: () => import('pages/Documentation/AdminUserTable.vue') },
             { name: 'documentation_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Documentation/ClientsMasterlist.vue') },  
+            { name: 'documentation_admin_wallet', path: 'admin_wallet', component: () => import('pages/Documentation/WalletBalance.vue') },  
+            { name: 'documentation_admin_wallet_drawer', path: 'admin_wallet_drawer', component: () => import('pages/Documentation/Wallet.vue') },  
             { name: 'documentation_profile', path: 'profile', component: () => import('pages/Documentation/Profile.vue') },
         ]
     },
     //admin routes
     {
+        
         path: '/admin',
         component: () => import('layouts/AdminLoginLayout.vue'),
         children:
@@ -82,6 +86,8 @@ const routes =
         [
             { name: 'administration_dashboard', path: 'dashboard', component: () => import('pages/Admin/Dashboard.vue') },
             { name: 'administration_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Admin/ClientMasterlist.vue') },  
+            { name: 'administration_wallet', path: 'wallet', component: () => import('pages/Admin/Wallet.vue') },  
+            { name: 'administration_admin_user', path: 'admin_user', component: () => import('pages/Admin/AdminUser.vue') },  
         ]
     },
     {

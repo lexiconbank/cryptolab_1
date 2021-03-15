@@ -2,7 +2,6 @@
     <div>
         <q-table
             class="own__table"
-            :title="$props.tbl_data.title"
             row-key="name"
             :data="$props.tbl_data.data"
             :loading="table.is_loading"
@@ -10,7 +9,9 @@
             :pagination.sync="table.pagination"
             :filter="table.filter"
         >
-                      
+            <template v-slot:top-left="">
+                <div class="text-h6 text-primary">Clients Master List</div>
+            </template>   
             <template v-slot:top-right>
                 <q-space />
                 <q-input

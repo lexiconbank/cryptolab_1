@@ -30,7 +30,10 @@ module.exports =
             // { label: 'Registration', route: 'documentation_registration_admin' },
             { label: 'Admin User Tables', route: 'documentation_admin_user_table' },
 
+            { label: 'Dashboard', route: 'documentation_admin_dashboard' },
             { label: 'Clients Masterlist', route: 'documentation_clientsmasterlist' },
+            { label: 'Wallet', route: 'documentation_admin_wallet' },
+            { label: 'Wallet Drawer', route: 'documentation_admin_wallet_drawer' },
            
         ]
     },

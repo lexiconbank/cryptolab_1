@@ -3,7 +3,7 @@
 
 <!-- markdown -->
 <q-markdown >
-Client Masterlist
+Admin Dashboard
 ===
 
 </q-markdown>
@@ -11,14 +11,14 @@ Client Masterlist
 
 <div class="component q-ma-lg">
     <div class="form-container">
-         <u-q-clients-masterlist></u-q-clients-masterlist>
+        <u-q-admin-dashboard></u-q-admin-dashboard>
     </div>
 </div>
 
 <!-- markdown -->
 <q-markdown >
 
-The __code below__ is for `Client Masterlist`
+The __code below__ is for `Admin Dashboard`
 
 ``` html
 {{ code }}
@@ -32,7 +32,7 @@ The __code below__ is for `Client Masterlist`
 </template>
 
 <script>
-import UQClientsMasterlist from '../../components/UQClientsMasterlist'
+import UQAdminDashboard from '../../components/UQAdminDashboard'
 
 export default
 {
@@ -40,11 +40,11 @@ export default
     ({
         code: `<div class="component q-ma-lg">
     <div class="form-container">
-        <u-q-clients-masterlist></u-q-clients-masterlist>
+        <u-q-admin-dashboard></u-q-admin-dashboard>
     </div>
 </div>`
     }),
-    components: { UQClientsMasterlist},
+    components: { UQAdminDashboard },
     mounted()
     {
     },
