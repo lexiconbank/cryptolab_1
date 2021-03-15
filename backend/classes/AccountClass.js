@@ -1,8 +1,9 @@
 const MDB_USER          = require('../models/MDB_USER');
+const MDB_WALLET        = require('../models/MDB_WALLET');
 const MDB_OTP           = require('../models/MDB_OTP');
 const nodemailer        = require("nodemailer");
 const ejs               = require("ejs");
-
+const axios             = require('axios');
 
 module.exports = class AccountClass
 {
@@ -14,23 +15,31 @@ module.exports = class AccountClass
 
     async validate()
     { 
-        let res = {};
-        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '')
+        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '' || this.user_information.username == '')
         {
-            res.status      = "error";
-            res.message     = "You need to fill up all fields in order to proceed.";
-        }
-        else if(this.user_information.confirm_password !== this.user_information.password)
-        {
-            res.status      = "error";
-            res.message     = "The password you entered didn't match.";
-        }
-        else
-        {
-            res.status = "success";
+            return {status : "error", message : "You need to fill up all fields in order to proceed."};
         }
 
-        return res;
+        else if(this.user_information.confirm_password !== this.user_information.password)
+        {
+            return {status : "error", message : "The password you entered didn't match."};
+        }
+
+        else
+        {
+            let is_email_exist = await this.mdb_user.findByEmail(this.user_information.email);
+            
+            if (is_email_exist) 
+            {
+                return {status : "error", message :  "The email address you entered is already in use"};
+            } 
+            else 
+            {
+                await this.sendUserOtp(this.user_information.email, "", "registration");
+                return {status : 'success'};
+            }
+        }
+
     }
 
     async authenticate()
@@ -65,43 +74,60 @@ module.exports = class AccountClass
         return res;
     }
 
-    async validate()
-    { 
-        let res = {};
-        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '')
-        {
-            res.status      = "error";
-            res.message     = "You need to fill up all fields in order to proceed.";
-        }
-        else if(this.user_information.confirm_password !== this.user_information.password)
-        {
-            res.status      = "error";
-            res.message     = "The password you entered didn't match.";
-        }
-        else
-        {
-            res.status = "success";
-        }
-
-        return res;
-    }
-
     async create()
     {
         let res = {};
         try
         {
-            res.status = "success";
 
             let add_form =
             { 
                 full_name: this.user_information.full_name,
                 email: this.user_information.email,
+                username: this.user_information.username,
                 password: this.user_information.password,
                 country:this.user_information.country
             }
 
-            await this.mdb_user.add(add_form);
+            let user_info  = await this.mdb_user.add(add_form);
+
+            console.log('user registered : ', user_info);
+
+            // ************* BTC WALLET **************
+
+            const mdb_wallet        = new MDB_WALLET();
+            const mdb_user          = new MDB_USER();
+
+            let res  = {};
+            let _id     = user_info._id;
+            let username = user_info.username;
+
+            const btc_network = process.env.BTC_NETWORK;
+            const btc_api = btc_network == 'mainnet' ? 
+                'http://178.128.92.211:3000/api/create_address/' : 
+                'http://178.128.92.211:3000/api/testnet/create_address/';
+                await axios.post(btc_api, { name: username })
+                .then(async (response) => {
+                    let wallet_details_btc 		=
+                    {
+                        user_id:                _id,
+                        currency_name:          "Bitcoin",
+                        currency_abbreviation:  "BTC",
+                        decimal_places:         8,
+                        public_key:             response.data.result,
+                        balance:                0
+                    }
+
+                    let btc_wallet = await mdb_wallet.add(wallet_details_btc); // DB save
+                    mdb_user.update( _id, {         // DB update
+                        $addToSet: { wallet: btc_wallet._id }
+                    })
+                }, (error) => {
+                    console.log(error)
+                });
+
+            res.status = "success";
+            res.message = "Successfully Registered";
         }   
         catch (error)
         {
@@ -112,8 +138,14 @@ module.exports = class AccountClass
         return res;
     }
 
+     async getUser()
+     {
+        let { user_id } = this.user_information;
+        let user_info = await this.mdb_user.findByUserId(user_id);
 
-
+        return user_info;
+     }
+ 
 
     //FORGOT PASSWORD
 
@@ -160,11 +192,11 @@ module.exports = class AccountClass
         let otp_result = {};
 
         if (otp_for == 'forgot_password') {
-            // await this.sendOtpEmail(email, otp, otp_for);
+            await this.sendOtpEmail(email, otp, otp_for);
             let deleted_otp = await mdb_otp.removeOtpByUserOrEmail(email);
             otp_result  = await mdb_otp.createUserOtp({email: email, otp: otp, otp_for: otp_for});
         } else {
-            // await this.sendOtpEmail(email, otp);
+            await this.sendOtpEmail(email, otp);
             let deleted_otp = await mdb_otp.removeOtpByUserOrEmail(username);
             otp_result  = await mdb_otp.createUserOtp({email: email, username: username, otp: otp, otp_for: otp_for});
         }
@@ -187,7 +219,6 @@ module.exports = class AccountClass
         otp = (otp_for == 'forgot_password') ? `${process.env.RESET_PASSWORD_LINK}/${otp}` : otp;
         let email_template = (otp_for == 'forgot_password') ? 'email_template_forgot_password.ejs' : 'email_template.ejs';
         let html = await ejs.renderFile(`./views/${email_template}`, { otp });
-        console.log(otp)
 
         let from = `"Cryptolab One Time Passcode" ${process.env.EMAIL}`;
         let subject = 'One Time Passcode';
@@ -229,19 +260,58 @@ module.exports = class AccountClass
         return Math.random() * (max - min) + min;
     }
 
+    async postKyc(){
+        let res = {};
+        try
+        {
+            res.status = "success";
+
+            let kyc_info =
+            { 
+                id                  : this.user_information.id,
+                first_name          : this.user_information.first_name,
+                middle_name         : this.user_information.middle_name,
+                last_name           : this.user_information.last_name,
+                birth_date          : this.user_information.birth_date,
+                country             : this.user_information.country,
+                nationality         : this.user_information.nationality,
+                mobile_number       : this.user_information.mobile_number,
+                address_line        : this.user_information.address_line,
+                street              : this.user_information.street,
+                city                : this.user_information.city,
+                zip_code            : this.user_information.zip_code,
+                id_type             : this.user_information.id_type,
+                id_number           : this.user_information.id_number,
+                id_expiry           : this.user_information.id_expiry,
+                security_question   : this.user_information.security_question,
+                security_answer     : this.user_information.security_answer,
+                code                : this.user_information.code,
+                id_image            : this.user_information.id_image,
+                selfie_image        : this.user_information.selfie_image,
+                kyc_status          : this.user_information.kyc_status,
+                kyc_submitted       : this.user_information.kyc_submitted,
+            }
+           await this.mdb_user.postKyc(kyc_info);
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
     async validatepassword(reset_data)
     {
-        console.log(reset_data,'g');
         if(reset_data.password != reset_data.confirm_password)
         {
             // res.status      = "error";
             // res.message     = "The password you entered didn't match.";
-            console.log(reset_data.password, 'asas');
             return {status : "error", message : "The password you entered didn't match."};
         }
         else
         {
-            console.log('asdfghjkl');
             let is_valid = await this.validateResetUserPasswordData(reset_data);
             if (is_valid.status == 'success' && is_valid.email) {
                 return { status : "success", email : is_valid.email, user_id: is_valid.user_id };
@@ -254,13 +324,11 @@ module.exports = class AccountClass
     async validateResetUserPasswordData(reset_data)
     {
         const { password, confirm_password, key } = reset_data;
-        console.log(reset_data.key, 'gg');
         let res = {};
 
         try {
             let mdb_otp = new MDB_OTP();
             let otp_data = await mdb_otp.findByOtp(key);
-            console.log(otp_data, 'otp');
 
             if (otp_data) {
                 res.status = 'success';
@@ -275,16 +343,13 @@ module.exports = class AccountClass
             res.message = error.message;
         }
         
-        console.log('res', res);
         return res;
     }
 
     async resetpassword(email, new_password)
     {
-        console.log(email, new_password, 'reset');
         let res        = {};
         let reset      = await this.mdb_user.resetpass(email, new_password);
-        console.log('hereeeee');
         if (reset) {
             res.status = 'success';
         } else {
@@ -293,6 +358,200 @@ module.exports = class AccountClass
         }
     }
 
+    async getKyc_Data()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+            let response = await this.mdb_user.getKycData();
+            res.data = response;
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
+    async userInfoClass()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+            let user = 
+            {
+                id: this.user_information.id
+            }
+            let response = await this.mdb_user.userInfoModel(user);
+            res.data = response;
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
+    async updateKycStatus()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+
+            let kyc_info =
+            { 
+                id: this.user_information.id,
+                kyc_status: this.user_information.kyc_status
+                
+            }
+           await this.mdb_user.update_kycstatus(kyc_info);
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
+    async update_kyc()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+
+            let kyc_info =
+            { 
+                id: this.user_information.id,
+                kyc_status: this.user_information.kyc_status,
+                remarks: this.user_information.remarks
+                
+            }
+           await this.mdb_user.update_kyc_rejected(kyc_info);
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
+    async userMasterList()
+    {
+        const mdb_user = new MDB_USER();
+        let res = {}
+
+        try {
+            let users = await mdb_user.findAllClients();
+
+            res.data   = users;
+            res.status = "success";
+        }
+        catch (error) {
+            res.status  = "error";
+            res.message = error.message;
+        }
+        return res;
+    }
+
+    
+    static async fetchClientsByKyc({kyc_status})
+    {
+        let res                 = {};
+        const mdb_user          = new MDB_USER();
+        const clients_res_obj   = await mdb_user.fetchClientsByKyc({kyc_status});
+
+        if(Array.isArray(clients_res_obj))
+        {
+            res.status  = 'success';
+            res.clients = clients_res_obj;
+        }
+
+        if(clients_res_obj == null)
+        {
+
+            res.status  = 'error';
+            res.message = 'returned data is equal to null';
+        }
+
+        return res;
+
+    }
+
+    async resendUserOtp(email, username, otp_for)
+    {
+        let res         = {};
+        let mdb_otp     = new MDB_OTP();
+        // delete existing user otp
+        let deleted_otp = await mdb_otp.removeOtpByUserOrEmailAndFor(email, otp_for);
+        // create new user otp
+        let otp_result  = await this.createUserOtp(email, username, otp_for);
+        // check if otp_result is json object and if empty
+        if(Object.keys(otp_result).length == 0)
+        {
+            res.status  = 'error';
+            res.message = otp_result
+        }
+        else
+        {
+            res.status  = 'success';
+        }
+        return res;
+    }
+
+
+    static async fetchUserKyc(_id)
+    {
+            let res = {}
+            const mdb_user      = new MDB_USER();
+            const kyc_res_obj   = await mdb_user.fetchUserKyc(_id);
+
+            if (kyc_res_obj == null || kyc_res_obj == '')
+            {
+                res.status      = 'error';
+                res.message     = 'no document found';
+            }
+
+            if (res.status == undefined || res.status == null || res.status == '')
+            {
+                res.status      = 'success';
+                res.kyc         = kyc_res_obj;
+            }
+
+            return res;
+            }
+
+    async frontendMounted()
+    {
+        const mdb_user       = new MDB_USER();
+        let res = {};
+
+        try
+        {
+            let user_info  = await mdb_user.findByUserId(this.user_information.user_id);
+            let conversion = await mdb_conversion.findByAbbreviation('USD');
+
+            res.user_info  = user_info;
+            res.conversion = conversion;
+            res.status     = "success";
+        }
+        catch(error)
+        {
+            res.status  = "error";
+            res.message = error.message;
+        }
+        return res;
+    }
+
 }
-
-

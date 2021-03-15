@@ -225,7 +225,7 @@ all:unset;
     flex-direction:column;
    position: absolute;
   bottom: 0;
-    padding:30px 120px;
+ padding:30px 120px;
 }
 .custom__btn{
     margin-left:20px;

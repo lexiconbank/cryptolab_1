@@ -5,7 +5,7 @@
 
 <!-- markdown -->
 <q-markdown >
-Wallet Drawer
+Wallet Form
 ===
 
 </q-markdown>

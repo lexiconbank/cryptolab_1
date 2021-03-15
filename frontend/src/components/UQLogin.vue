@@ -37,7 +37,7 @@
                <div class=text-right>
                    <p class="text-weight-medium custom__forgot" @click="$router.push({ name: 'front_forgotpassword' })" >Forgot Password?</p>
                </div>
-		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="18px" class="full-width">Login</q-btn></div>
+		       <div class="q-mt-xl"><q-btn type="submit" color="primary" size="15px" class="full-width">Login</q-btn></div>
 
 	   		</q-form>
 	    </div>
@@ -97,7 +97,7 @@ export default
             if(login)
             {
                 this.$q.dialog({ title: `Success Message`, message: "Login Successful" });
-                this.$router.push({path: 'front_registration'});
+                this.$router.push({path: '/dashboard'});
             } else{
                 const Toast = Swal.mixin({
                 margin: 20,

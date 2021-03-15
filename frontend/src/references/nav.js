@@ -24,7 +24,17 @@ module.exports =
         icon: 'fa fa-home',
         sub:
         [
+            { label: 'Kyc', route: 'documentation_kyc' },
+            { label: 'Multer', route: 'documentation_multer' },
+            { label: 'Kyc Backend', route: 'documentation_kycbackend' },
+            // { label: 'Registration', route: 'documentation_registration_admin' },
+            { label: 'Admin User Tables', route: 'documentation_admin_user_table' },
 
+            { label: 'Dashboard', route: 'documentation_admin_dashboard' },
+            { label: 'Clients Masterlist', route: 'documentation_clientsmasterlist' },
+            { label: 'Wallet', route: 'documentation_admin_wallet' },
+            { label: 'Wallet Drawer', route: 'documentation_admin_wallet_drawer' },
+           
         ]
     },
     {
