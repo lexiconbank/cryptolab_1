@@ -218,7 +218,6 @@ export default
             // this.$q.loading.show();
             this.form_data.country = this.form_data.country.countryNameEn
             let register = await this.$_post(postRegistrationUser, this.form_data);
-            console.log("register status: ", register.data)
             if(register.data.status == "error")
             {
                  this.$q.notify({

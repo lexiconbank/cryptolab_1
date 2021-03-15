@@ -43,7 +43,7 @@ module.exports =
 
     async registration(req, res)
     {
-        // remove {req, res} parameter if MDB.register doesn't need extra params anymore {req, res}
+        
         let user_information =
         {
             full_name: req.body.full_name,
@@ -56,16 +56,15 @@ module.exports =
         }
 
         let account_class = new AccountClass(user_information);
+        let account_validation = await account_class.registerClient();
 
-        let account_validation = await account_class.validate();
-
-        if(account_validation.status == "success")
+        if(registrations_res.status == 'success')
         {
-            res.json({ status: 'success', message: 'Successfully Registered' }).status(200);
+            res.json(registrations_res).status(200);
         }
-        else if(account_validation.status == "error")
+        else
         {
-            res.status(200).send({ status : 'error', message: account_validation.message });
+            res.status(400).send({status: 'error', message: registrations_res.message});
         }
     },
 
@@ -241,51 +240,51 @@ module.exports =
         }
     },
 
-    async confirmRegistration(req, res)
-    {
-        let mdb_otp = new MDB_OTP();
-        let otp_res = await mdb_otp.findByOtp(req.body.otp);
+    // async confirmRegistration(req, res)
+    // {
+    //     let mdb_otp = new MDB_OTP();
+    //     let otp_res = await mdb_otp.findByOtp(req.body.otp);
 
-        const salt = bcrypt.genSaltSync(saltRounds);
+    //     const salt = bcrypt.genSaltSync(saltRounds);
 
-        req.body.password = bcrypt.hashSync(req.body.password, salt);
+    //     req.body.password = bcrypt.hashSync(req.body.password, salt);
 
-        let user_information =
-        {
-            full_name: req.body.full_name,
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            confirm_password: req.body.confirm_password,
-            country: req.body.country,
-            terms: req.body.value
-        }
+    //     let user_information =
+    //     {
+    //         full_name: req.body.full_name,
+    //         username: req.body.username,
+    //         email: req.body.email,
+    //         password: req.body.password,
+    //         confirm_password: req.body.confirm_password,
+    //         country: req.body.country,
+    //         terms: req.body.value
+    //     }
 
-        let account_class = new AccountClass(user_information);
+    //     let account_class = new AccountClass(user_information);
         
-        // if invalid otp, notify user
-        if(otp_res == null)
-        {
-            res.status = 'error';
-            res.message= 'invalid OTP';
-            return res;
-        }
+    //     // if invalid otp, notify user
+    //     if(otp_res == null)
+    //     {
+    //         res.status = 'error';
+    //         res.message= 'invalid OTP';
+    //         return res;
+    //     }
 
-        if(otp_res != {})
-        {
-            //  CREATE ACCOUNT
-            await account_class.create();
+    //     if(otp_res != {})
+    //     {
+    //         //  CREATE ACCOUNT
+    //         await account_class.create();
 
-            // delete otp after registration
-            await mdb_otp.removeUserOtp(otp_res.username, req.body.otp);
+    //         // delete otp after registration
+    //         await mdb_otp.removeUserOtp(otp_res.username, req.body.otp);
 
-            // -------------- BTC WALLET TESTNET --------------
+    //         // -------------- BTC WALLET TESTNET --------------
 
 
-            res.json({ status: 'success' }).status(200);
-        }
+    //         res.json({ status: 'success' }).status(200);
+    //     }
 
-    },
+    // },
 
     async resendRegistrationOtp(req, res)
     {
@@ -299,6 +298,21 @@ module.exports =
         else
         {
             res.status(400).send({status: 'error', message: resend_registration_otp.message});
+        }
+    },
+
+    async confirmRegistration(req, res)
+    {
+        let confirm_registration = await AccountClass.confirmRegistration(req.body.username, req.body.first_name, req.body.middle_name, req.body.last_name, req.body.gender, req.body.email, req.body.password, req.body.country, req.body.otp, req.body.local_currency, req.body.referral_reference);
+
+
+        if(confirm_registration.status == 'success')
+        {
+            res.json(confirm_registration).status(200);
+        }
+        else
+        {
+            res.status(400).send({status: 'error', message: confirm_registration.message});
         }
     },
    

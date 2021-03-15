@@ -6,42 +6,34 @@ const schema    = new Schema({
     first_name : 
     {
         type:       String,
-        required:   true
     },
     middle_name : 
     {
         type:       String,
-        required:   true
     },
     last_name : 
     {
         type:       String,
-        required:   true
     },
     full_name : 
     {
         type:       String,
-        required:   true
     },
     username :
     {
         type:       String,
-        required:   true
     },
     email: 
     {
         type:       String,
-        required:   true
     },
     password: 
     {
         type:       String,
-        required:   true
     },
     country: 
     {
         type:       String,
-        required:   true
     },
     kyc_status              :
     {
@@ -148,6 +140,13 @@ class MDB_USER extends MODEL
     {
         const res = await this.collection.findOne({_id}, {kyc_status: 1, kyc_remarks: 1});
         return res
+    }
+
+    async register(data)
+    {
+
+        let res = await User.register({username: data.username, first_name: data.first_name, middle_name: data.middle_name, gender: data.gender, email: data.email, country: data.country, first_name: data.first_name, last_name: data.last_name}, data.password);
+        return res;
     }
 }
 

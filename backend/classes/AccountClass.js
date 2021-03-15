@@ -13,35 +13,6 @@ module.exports = class AccountClass
         this.user_information = user_information;
     }
 
-    async validate()
-    { 
-        if(this.user_information.full_name.trim() == '' || this.user_information.password.trim() == '' || this.user_information.email.trim() == '' || this.user_information.username == '')
-        {
-            return {status : "error", message : "You need to fill up all fields in order to proceed."};
-        }
-
-        else if(this.user_information.confirm_password !== this.user_information.password)
-        {
-            return {status : "error", message : "The password you entered didn't match."};
-        }
-
-        else
-        {
-            let is_email_exist = await this.mdb_user.findByEmail(this.user_information.email);
-            
-            if (is_email_exist) 
-            {
-                return {status : "error", message :  "The email address you entered is already in use"};
-            } 
-            else 
-            {
-                await this.sendUserOtp(this.user_information.email, "", "registration");
-                return {status : 'success'};
-            }
-        }
-
-    }
-
     async authenticate()
     {
         let res = {};
@@ -423,4 +394,97 @@ module.exports = class AccountClass
         return res;
     }
 
+    //Client Registration
+    async registerClient()
+    {
+        let res         = {};
+        let result      = await this.validateUserRegistration(
+            this.user_information.username, 
+            this.user_information.first_name, 
+            this.user_information.last_name, 
+            this.user_information.email, 
+            this.user_information.password, 
+            this.user_information.confirm_password);
+        // if not registration failed
+        if(result.is_success == false)
+        {
+            res.message  = result.error;
+            res.status   = 'error';
+            return res;
+        }
+
+        let account_class   = new this();
+        await account_class.sendUserOtp(email, username, 'registration');
+
+        res.status   = 'success';
+
+        return res;
+    }
+
+    static async validateUserRegistration(username, first_name, last_name, email, password, confirm_password)
+    {
+        let result = {
+            is_success   : true
+        }
+
+        let mdb_user    = new MDB_USER();
+        email           = await mdb_user.findByEmail(email);
+        username        = await mdb_user.findByUsername(username);
+
+        if(username != null)
+        {
+            result.is_success   = false;
+            result.error        = 'username is already in use';
+            return result;
+        }else
+        if(email != null)
+        {
+            result.is_success   = false;
+            result.error        = 'email is already in use.';
+            return result;
+        }else
+        if(password != confirm_password)
+        {
+            result.is_success   = false;
+            result.error        = 'password not match';
+            return result;
+        }
+        return result;
+    }
+
+    static async confirmRegistration(username, first_name, middle_name, last_name, gender, email, password, country, otp, local_currency)
+    {
+
+        // let res     = {};
+        // let mdb_otp = new MDB_OTP();
+        // let otp_res = await mdb_otp.findUserOtp(email, otp);
+
+        // // if invalid otp, notify user
+        // if(otp_res == null)
+        // {
+        //     res.status = 'error';
+        //     res.message= 'invalid OTP';
+        //     return res;
+        // }
+        // if otp found with corresponding email or username, then new user is created
+
+        // if(otp_res != {})
+        // {
+            const mdb_user          = new MDB_USER();
+
+            // let hashed_password = await bcrypt.hash(password, 10);
+            let user_res        = await mdb_user.register({username, first_name, middle_name, last_name, gender, email, password: password, country});
+            // create user's directory
+            // await fs.promises.mkdir(`${process.env.MEMBER_DIR}/${user_res._id}/images/id/`, {recursive: true});
+            // await fs.promises.mkdir(`${process.env.MEMBER_DIR}/${user_res._id}/images/selfie/`, {recursive: true});
+            // await fs.promises.mkdir(`${process.env.MEMBER_DIR}/${user_res._id}/images/transactions/`, {recursive: true});
+            // await fs.promises.mkdir(`${process.env.REVIEW_DIR}/${user_res._id}/`, {recursive: true});
+            // await fs.mkdirSync(`${proccess.env.MEMBER_DIR}/${user_res._id}/images/reviews/`, {recursive: true});
+
+            // delete otp after registration
+            // await mdb_otp.removeUserOtp(username, otp);
+
+            return res;
+        // }
+    }
 }
