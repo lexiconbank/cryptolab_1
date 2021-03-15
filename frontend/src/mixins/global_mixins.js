@@ -19,16 +19,15 @@ export default
     {
         async $_post(url, data)
         {
-            // alert(url + ' : ' + data);
             return await this.$axios.post(url, data).catch((e) =>
             {
-                // this.$q.dialog({ title: `Something's not quite right`, message: e.response.data.message });
-                // this.$q.notify({
-                //     message: '<div style="color: red; font-weight: bold;"><i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>' + error.response.data.message + '</div>',
-                //     position: 'top',
-                //     color: 'white',
-                //     html: true
-                // });
+                this.$q.dialog({ title: `Something's not quite right`, message: e.response.data.message });
+                this.$q.notify({
+                    message: '<div style="color: red; font-weight: bold;"><i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>' + error.response.data.message + '</div>',
+                    position: 'top',
+                    color: 'white',
+                    html: true
+                });
             });
         },
 
