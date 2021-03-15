@@ -9,11 +9,11 @@ Admin User Table
 </q-markdown>
 <!-- /markdown -->
 
-<div class="component q-ma-lg">
+<!-- <div class="component q-ma-lg">
     <div class="">
       <u-q-adminusertable></u-q-adminusertable>
     </div>
-</div>
+</div> -->
 
 <!-- markdown -->
 <q-markdown >
@@ -44,7 +44,7 @@ export default
     </div>
 </div>`
     }),
-    components: { UQAdminusertable },
+    // components: { UQAdminusertable },
     mounted()
     {
     },

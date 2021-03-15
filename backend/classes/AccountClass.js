@@ -260,6 +260,48 @@ module.exports = class AccountClass
         return Math.random() * (max - min) + min;
     }
 
+    async postKyc(){
+        let res = {};
+        try
+        {
+            res.status = "success";
+
+            let kyc_info =
+            { 
+                id                  : this.user_information.id,
+                first_name          : this.user_information.first_name,
+                middle_name         : this.user_information.middle_name,
+                last_name           : this.user_information.last_name,
+                birth_date          : this.user_information.birth_date,
+                country             : this.user_information.country,
+                nationality         : this.user_information.nationality,
+                mobile_number       : this.user_information.mobile_number,
+                address_line        : this.user_information.address_line,
+                street              : this.user_information.street,
+                city                : this.user_information.city,
+                zip_code            : this.user_information.zip_code,
+                id_type             : this.user_information.id_type,
+                id_number           : this.user_information.id_number,
+                id_expiry           : this.user_information.id_expiry,
+                security_question   : this.user_information.security_question,
+                security_answer     : this.user_information.security_answer,
+                code                : this.user_information.code,
+                id_image            : this.user_information.id_image,
+                selfie_image        : this.user_information.selfie_image,
+                kyc_status          : this.user_information.kyc_status,
+                kyc_submitted       : this.user_information.kyc_submitted,
+            }
+           await this.mdb_user.postKyc(kyc_info);
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
     async validatepassword(reset_data)
     {
         if(reset_data.password != reset_data.confirm_password)
@@ -314,6 +356,95 @@ module.exports = class AccountClass
             res.status = 'error';
             res.message = 'Error in changing password';
         }
+    }
+
+    async getKyc_Data()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+            let response = await this.mdb_user.getKycData();
+            res.data = response;
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
+    async userInfoClass()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+            let user = 
+            {
+                id: this.user_information.id
+            }
+            let response = await this.mdb_user.userInfoModel(user);
+            res.data = response;
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
+    async updateKycStatus()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+
+            let kyc_info =
+            { 
+                id: this.user_information.id,
+                kyc_status: this.user_information.kyc_status
+                
+            }
+           await this.mdb_user.update_kycstatus(kyc_info);
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
+    }
+
+    async update_kyc()
+    {
+        let res = {};
+        try
+        {
+            res.status = "success";
+
+            let kyc_info =
+            { 
+                id: this.user_information.id,
+                kyc_status: this.user_information.kyc_status,
+                remarks: this.user_information.remarks
+                
+            }
+           await this.mdb_user.update_kyc_rejected(kyc_info);
+        }
+        catch (error)
+        {
+            res.status = "error";
+            res.message = error.message;
+        }
+
+        return res;
     }
 
     async userMasterList()
