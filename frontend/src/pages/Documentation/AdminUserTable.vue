@@ -9,11 +9,11 @@ Admin User Table
 </q-markdown>
 <!-- /markdown -->
 
-<div class="component q-ma-lg">
+<!-- <div class="component q-ma-lg">
     <div class="">
         <u-q-admin-user-table></u-q-admin-user-table>
     </div>
-</div>
+</div> -->
 
 <!-- markdown -->
 <q-markdown >

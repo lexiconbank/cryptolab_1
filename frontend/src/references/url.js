@@ -2,6 +2,16 @@
 exports.postLoginUser 	        = 'front/login'
 exports.postRegistrationUser    = 'front/registration'
 exports.postForgotPassword      = 'front/forgotpassword'
+exports.postKyc                 = 'front/kyc'
+// exports.getFile                 = 'front/file'
+exports.getKycData              = 'front/kycdata' 
+exports.postApproved              = 'front/kycapproved' 
+exports.postRejected              = 'front/kycrejected' 
+exports.get_user                = 'front/user'
+
+
+
+
 exports.postResetPassword       = 'front/forgotpassword'
 exports.getValidateLinkKey      = 'front/forgotpassword'
 exports.postConfirmRegistration = 'front/confirmregistration'
@@ -28,7 +38,8 @@ exports.fetchPostfilteredClients= 'admin/fetch/clients';
 
 
 //wallet
-exports.postWalletSend           = 'wallet/send'
+exports.postWalletSend          = 'wallet/send'
+exports.postClientReceiving     = 'wallet/receiving'
 
 // admin user
 exports.insert = 'admin/users/insert'
