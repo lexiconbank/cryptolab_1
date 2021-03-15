@@ -1,8 +1,10 @@
 const express                   = require('express');
 const app                       = express();
 const cors                      = require('cors')
-const multer                    = require('./middlewares/multer');
 const AccountController         = require('./controllers/AccountController');
+const DashboardController       = require('./controllers/DashboardController');
+const AdminSecurityController   = require('./controllers/AdminSecurityController');
+const multer                    = require('./middlewares/multer');
 const AdminController           = require('./controllers/AdminController');
 const AdminAccountController    = require('./controllers/AdminController');
 const WalletController          = require('./controllers/WalletController');
@@ -10,7 +12,6 @@ const WalletController          = require('./controllers/WalletController');
 // app.use(ScheduleClass);
 
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
@@ -25,6 +26,9 @@ app.post('/api/front/admin/login', AdminAccountController.login);
 // app.post('/api/front/admin/wallet', AdminAccountController.login);
 
 app.post('/api/front/login', AccountController.login);
+app.post('/api/front/dashboardmain', DashboardController.viewDashboard);
+app.post('/api/front/adminsecurity', AdminSecurityController.adminSecurityupdate);
+app.post('/api/front/findemail', AdminSecurityController.findemail);
 app.post('/api/front/registration', AccountController.registration);
 app.post('/api/front/forgotpassword', AccountController.forgotPassword);
 app.post('/api/front/kyc', multer.kyc_upload, AccountController.kyc);
@@ -65,7 +69,7 @@ app.listen({port: 4000}, (err) => {
     if(err) {
         console.log(err);
         process.exit(1);
-    }else {
+    }else {     
         console.log('Cryptolab server is running on port 4000...');
     }
 });

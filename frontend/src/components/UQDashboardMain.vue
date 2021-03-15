@@ -9,12 +9,13 @@
 
 <script>
 
-import { postView } from '../references/url';
+import { postdashboardmain } from '../references/url';
 export default {
   data: () => ({
     columns: [
       {
-        name: 'number',
+        
+        name: '_id',
         required: true,
         label: 'ID',
         align: 'center',
@@ -22,7 +23,8 @@ export default {
         sortable: true,
         classes: 'my-class',
         style: 'width: 500px'
-      },{
+      },   {
+        
         name: 'last_name',
         required: true,
         label: 'Last Name',
@@ -54,7 +56,6 @@ export default {
     ] , 
     tableData: []
       }),
-
      mounted()
     {
         this.getdatas()
@@ -64,7 +65,7 @@ export default {
         async getdatas()
         {
             this.$q.loading.show();
-            let information = await this.$_post(postView);
+            let information = await this.$_post(postdashboardmain);
                 this.tableData= information.data.data
             this.$q.loading.hide();
         }

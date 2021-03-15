@@ -22,25 +22,28 @@ const routes =
         { name: 'profile', path: '/profile', component: () => import('components/UQProfile.vue') },
         ]
     },
-    
+      
     {
         path: '/dashboard',
         component: () => import('layouts/UserLayout.vue'),
         children:
         [
-          //   { name: 'dashboard_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },	  
-        //   { name: 'front_registration', path: '/registration', component: () => import('src/pages/Front/Registration.vue') },	
+        
+          //  { name: 'documentation_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },
+        //     { name: 'dashboard_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },	  
+        //   {  name: 'dashboardmain', path: 'dashboardmain', component: () => import('components/UQDashboardMain.vue')  },	
         ]
     },
     {
-        path: '/dashboardMain',
-        component: () => import('layouts/DashboardLayout.vue'),
+        path: '/adminsecurity',
+        component: () => import('layouts/SecurityLayout.vue'),
         children:
         [
-           //  { name: 'dashboard_wallet', path: 'wallet', component: () => import('pages/Documentation/Wallet.vue') },	  
-           { name: 'front_dashboardmain', path: 'dashboardmain', component: () => import('pages/Front/DashboardMain.vue') }, 
+            { name: 'documentation_admin_security', path: 'adminsecurity', component: () => import('pages/Documentation/AdminSecurity.vue') },
+     
         ]
     },
+  
     {
         path: '/documentation',
         component: () => import('layouts/DocumentationLayout.vue'),
