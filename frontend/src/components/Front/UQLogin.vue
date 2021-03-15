@@ -6,6 +6,7 @@
 	    	<q-form @submit="findUser()">
 		     	<div class="field">
 		       		<div  class="field q-mt-md">
+                           
                         <label>Email address</label>
                         <q-input v-model="form_data.email" placeholder="cryptolab@xxxxx.com or cryptolab" :rules="validateEmailField" outlined>
                             <template v-slot:prepend>
@@ -45,8 +46,9 @@
 </template>
 
 <script>
-import { postLoginUser } from '../references/url';
+import { postLoginUser } from '../../references/url';
 import Swal from "sweetalert2";
+import config   from '../../../config';
 
 export default
 {
@@ -55,13 +57,11 @@ export default
         form_data:
         {
             email: '',
-            password: '',
-            user_name: 'snake_snake',
-            gender_options:'',
-            is_empty: '',
+            password: ''
 
         },
         isPwd:true,
+        config: config
 
     }),
     mounted()
@@ -90,15 +90,19 @@ export default
     {
         async findUser() // camelCase
         {
+
             this.$q.loading.show();
-
-            let login = await this.$_post(postLoginUser, this.form_data); //request
-
-            if(login)
+            let login_obj = await this.$_post(postLoginUser, this.form_data);
+            
+            if (login_obj.data.status != 'invalid password')
             {
-                this.$q.dialog({ title: `Success Message`, message: "Login Successful" });
-                this.$router.push({path: '/dashboard'});
-            } else{
+                sessionStorage.setItem('user_info', JSON.stringify(login_obj.data.data));
+                await this.$_getInfo();
+                let path = this.$store.state.user.client_history ? this.$store.state.user.client_history : '/';
+                this.$router.push({path: path});
+            }
+            else
+            {
                 const Toast = Swal.mixin({
                 margin: 20,
                 toast: true,
@@ -115,9 +119,9 @@ export default
                 icon: 'error',
                 title: 'Invalid Password!'
                 })
-            
             }
             this.$q.loading.hide();
+        
         }
     }
 }

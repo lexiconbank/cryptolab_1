@@ -3,26 +3,12 @@ const User           = require('../models/MDB_USER').User;
 const MDB_OTP        = require('../models/MDB_OTP');
 const bcrypt         = require('bcryptjs');
 const saltRounds     = 10;
-
-const { render } = require('ejs');
+const passport_local = require('../config/passport');
+const jwt            = require('jsonwebtoken');
+const passport       = require("passport");
+require('dotenv');
 module.exports =
 {
-    async login(req, res)
-    {
-        let email           = req.body.email;
-        let password        = req.body.password;
-
-        let authenticate    = await new AccountClass({email:email, password:password}).authenticate();
-        
-        if(authenticate.status == "success")
-        {
-            res.send(true);
-        }
-        else if(authenticate.status == "error")
-        {
-            res.status(400).send({ message: authenticate.message })
-        }
-    },
 
     async loginAdmin(req, res)
     {
@@ -246,12 +232,12 @@ module.exports =
 
     async confirmRegistration(req, res)
     {
-        let mdb_otp = new MDB_OTP();
-        let otp_res = await mdb_otp.findByOtp(req.body.otp);
+        // let mdb_otp = new MDB_OTP();
+        // let otp_res = await mdb_otp.findByOtp(req.body.otp);
 
-        const salt = bcrypt.genSaltSync(saltRounds);
+        // const salt = bcrypt.genSaltSync(saltRounds);
         // const hash = bcrypt.hashSync(reset_data.password, salt);
-        req.body.password = bcrypt.hashSync(req.body.password, salt);
+        // req.body.password = bcrypt.hashSync(req.body.password, salt);
 
         let user_information =
         {
@@ -259,33 +245,32 @@ module.exports =
             email: req.body.email,
             password: req.body.password,
             confirm_password: req.body.confirm_password,
-            country: req.body.country,
-            terms: req.body.value
+            country: req.body.country
         }
 
         let account_class = new AccountClass(user_information);
         
         // if invalid otp, notify user
-        if(otp_res == null)
-        {
-            res.status = 'error';
-            res.message= 'invalid OTP';
-            return res;
-        }
+        // if(otp_res == null)
+        // {
+        //     res.status = 'error';
+        //     res.message= 'invalid OTP';
+        //     return res;
+        // }
 
-        if(otp_res != {})
-        {
+        // if(otp_res != {})
+        // {
             //  CREATE ACCOUNT
-            await account_class.create();
+            await account_class.registerUser();
 
             // delete otp after registration
-            await mdb_otp.removeUserOtp(otp_res.username, req.body.otp);
+            // await mdb_otp.removeUserOtp(otp_res.username, req.body.otp);
 
             // -------------- BTC WALLET TESTNET --------------
 
 
             res.json({ status: 'success' }).status(200);
-        }
+        // }
 
     },
 
@@ -303,5 +288,49 @@ module.exports =
             res.status(400).send({status: 'error', message: resend_registration_otp.message});
         }
     },
+
+    async localLogin(req, res, next)
+    {
+        passport_local.authenticate('client-login', async (err, user_info, info) => {
+            if (err) {
+                console.log(err, 'error passport');
+            }
+
+            if (user_info && user_info.email) {
+                let email = user_info.email;
+                // sign token
+
+                let now = new Date();
+                let time = now.getTime();
+                time += 3600 * 1000;
+                now.setTime(time);
+
+                let token = jwt.sign({ email }, process.env.PASSPORT_SECRET_KEY,
+                {
+                    // expiresIn: now.toUTCString()
+                    expiresIn: 60000
+                });
+
+                let user_to_return = { ...user_info.toJSON(), ...{ token } };
+
+                let account_class = new AccountClass();
+                user_to_return = await account_class.updateUserOnlineStatus(user_to_return._id);
+
+                delete user_to_return.salt;
+                delete user_to_return.hash;
+                user_to_return.data.password = undefined;
+                user_to_return.data.security_question = undefined;
+                user_to_return.data.security_answer = undefined;
+                user_to_return.data.wallet = undefined;
+                user_to_return.data.google_authenticator = undefined;
+
+                res.status(200).json(user_to_return);
+            }
+
+            if (info) {
+                res.status(200).send({ status: 'invalid password', message : info.message });
+            }
+        })(req, res, next);
+    }
    
 }

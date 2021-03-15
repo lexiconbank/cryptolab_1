@@ -14,7 +14,7 @@
 </template>
 <script>
 
-import UQLogin from '../../components/UQLogin'
+import UQLogin from '../../components/Front/UQLogin'
 export default {
     components:{
         UQLogin,

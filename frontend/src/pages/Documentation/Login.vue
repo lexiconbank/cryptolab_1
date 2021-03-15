@@ -32,7 +32,7 @@ The __code below__ is for `Login Form`
 </template>
 
 <script>
-import UQLogin from '../../components/UQLogin'
+import UQLogin from '../../components/Front/UQLogin'
 
 export default
 {

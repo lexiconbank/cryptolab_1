@@ -1,5 +1,8 @@
-const MONGOOSE  = require('../config/mongo');
-const MODEL     = require('./MODEL');
+const MONGOOSE              = require('../config/mongo');
+const MODEL                 = require('./MODEL');
+const passport              = require('passport');
+const passportLocalMongoose = require("passport-local-mongoose");
+const findOrCreate          = require('mongoose-findorcreate');
 const Schema    = MONGOOSE.Schema;
 
 const schema    = new Schema({
@@ -76,7 +79,8 @@ const schema    = new Schema({
     
 });
 
-
+schema.plugin(passportLocalMongoose);
+schema.plugin(findOrCreate);
 
 let User = new MONGOOSE.model("users", schema);
 
@@ -143,6 +147,13 @@ class MDB_USER extends MODEL
     {
         const res = await this.collection.findOne({_id}, {kyc_status: 1, kyc_remarks: 1});
         return res
+    }
+    async register(data)
+    {
+        // console.log(data,'mdb register')
+        let res = await User.register({ email: data.email, full_name: data.full_name ,country: data.country}, data.password);
+        console.log(res, 'mdb register')
+        return res;
     }
 }
 

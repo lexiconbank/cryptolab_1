@@ -76,12 +76,13 @@ module.exports = class AccountClass
         return res;
     }
 
-    async create()
+    async registerUser()
     {
+        console.log('register user');
         let res = {};
         try
         {
-
+            
             let add_form =
             { 
                 full_name: this.user_information.full_name,
@@ -90,8 +91,9 @@ module.exports = class AccountClass
                 country:this.user_information.country
             }
 
-            await this.mdb_user.add(add_form);
-
+            // await this.mdb_user.add(add_form);
+            let user_res        = await this.mdb_user.register(add_form);
+            console.log(user_res,'controller')
             res.status = "success";
             res.message = "Successfully Registered";
         }   
