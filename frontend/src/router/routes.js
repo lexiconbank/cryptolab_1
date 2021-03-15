@@ -83,6 +83,7 @@ const routes =
             { name: 'administration_dashboard', path: 'dashboard', component: () => import('pages/Admin/Dashboard.vue') },
             { name: 'administration_clientsmasterlist', path: 'clientsmasterlist', component: () => import('pages/Admin/ClientMasterlist.vue') },  
             { name: 'administration_wallet', path: 'wallet', component: () => import('pages/Admin/Wallet.vue') },  
+            { name: 'administration_admin_user', path: 'admin_user', component: () => import('pages/Admin/AdminUser.vue') },  
         ]
     },
     {

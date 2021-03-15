@@ -5,7 +5,7 @@
         <div class="text-grey-7">100,87871.15 PHP</div>
 
         <div class="row wallet_btn">
-            <q-btn color="white" class="col-6 custom_btn" text-color="primary" label="Receive" @click="is_show_receive_modal = true" />
+            <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Receive" @click="is_show_receive_modal = true" />
             <q-btn color="white" outline class="col-6 custom_btn" text-color="primary" label="Send" @click="is_show_send_modal = true"/>
         </div>
 

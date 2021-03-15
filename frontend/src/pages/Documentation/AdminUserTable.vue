@@ -11,7 +11,7 @@ Admin User Table
 
 <div class="component q-ma-lg">
     <div class="">
-      <u-q-adminusertable></u-q-adminusertable>
+        <u-q-admin-user-table></u-q-admin-user-table>
     </div>
 </div>
 
@@ -32,19 +32,18 @@ The __code below__ is for `Login Form`
 </template>
 
 <script>
-// import UQAdminusertable from '../../components/UQAdminusertable'
-
+import UQAdminUserTable from '../../components/UQAdminUserTable'
 export default
 {
     data:() =>
     ({
         code: `<div class="component q-ma-lg">
     <div class="form-container">
-        <u-q-adminusertable></u-q-adminusertable>
+        <u-q-admin-user-table></u-q-admin-user-table>
     </div>
 </div>`
     }),
-    components: { UQAdminusertable },
+    components: { UQAdminUserTable },
     mounted()
     {
     },

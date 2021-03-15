@@ -58,7 +58,7 @@
 </template>
 
 <script>
-// import {postGetUser}      from '../references/url'; 
+import {postGetUser}      from '../references/url'; 
 import UQAdminSend     from './UQAdminSend';
 import UQClientReceive  from './UQClientReceive';
    

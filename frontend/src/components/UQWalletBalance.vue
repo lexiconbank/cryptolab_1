@@ -60,8 +60,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        // border-top: 2px solid #f4f4f4
-        background-color: $primary;
-
+        border-top: 2px solid #f4f4f4
     }
 </style>

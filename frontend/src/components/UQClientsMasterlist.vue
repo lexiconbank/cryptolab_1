@@ -156,7 +156,7 @@
       </u-q-modal>
   </div>
 </template>
-
+ 
 <script>
 import moment   from 'moment';
 import config   from '../../config';

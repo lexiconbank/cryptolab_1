@@ -2,6 +2,7 @@ const express                   = require('express');
 const app                       = express();
 const cors                      = require('cors')
 const AccountController         = require('./controllers/AccountController');
+const AdminController           = require('./controllers/AdminController');
 const AdminAccountController    = require('./controllers/AdminController');
 const WalletController          = require('./controllers/WalletController');
 
