@@ -92,6 +92,10 @@ module.exports = class AccountClass
             let user_info  = await this.mdb_user.add(add_form);
 
             console.log('user registered : ', user_info);
+            // ************* UNIQ WALLET **************
+
+
+            // ************* END UNIQ WALLET **************
 
             // ************* BTC WALLET **************
 
